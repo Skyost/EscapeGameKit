@@ -1,0 +1,26 @@
+name: escape_game_kit_example
+description: A small demo of EscapeGameKit.
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.16.0 <3.0.0"
+
+dependencies:
+  escape_game_kit:
+    path: ../
+  flutter:
+    sdk: flutter
+  spring: ^2.0.2
+  window_manager: ^0.1.5
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^1.0.4
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/
+    - assets/backgrounds/
