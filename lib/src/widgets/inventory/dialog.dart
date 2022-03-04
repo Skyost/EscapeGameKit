@@ -1,7 +1,7 @@
 import 'package:escape_game_kit/src/game/game.dart';
 import 'package:escape_game_kit/src/game/inventory/object.dart';
+import 'package:escape_game_kit/src/widgets/alert_dialog.dart';
 import 'package:escape_game_kit/src/widgets/inventory/widget.dart';
-import 'package:escape_game_kit/src/widgets/padlocks/alert_dialog.dart';
 import 'package:escape_game_kit/src/widgets/render_settings_stack.dart';
 import 'package:flutter/material.dart';
 

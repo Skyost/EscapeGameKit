@@ -1,3 +1,4 @@
+import 'package:escape_game_kit/escape_game_kit.dart';
 import 'package:escape_game_kit/src/game/game.dart';
 import 'package:escape_game_kit/src/game/room/room.dart';
 import 'package:escape_game_kit/src/utils/animation_settings.dart';
@@ -50,6 +51,7 @@ class EscapeGameWidget extends StatefulWidget {
 
 class _EscapeGameWidgetState extends State<EscapeGameWidget> {
   AnimationSettings roomTransition = const AnimationSettings();
+  bool isDialogOpened = false;
   Room? currentRoom;
 
   @override
@@ -57,15 +59,18 @@ class _EscapeGameWidgetState extends State<EscapeGameWidget> {
     super.initState();
     WidgetsBinding.instance?.addPostFrameCallback((_) {
       refreshCurrentRoom();
+      refreshDialog();
       widget.escapeGame.addListener(refreshCurrentRoom);
+      widget.escapeGame.addListener(refreshDialog);
     });
   }
 
   @override
   void didUpdateWidget(covariant EscapeGameWidget oldWidget) {
     super.didUpdateWidget(oldWidget);
-    if (oldWidget.escapeGame != widget.escapeGame || oldWidget.escapeGame.currentRoom != widget.escapeGame.currentRoom) {
+    if (oldWidget.escapeGame != widget.escapeGame || oldWidget.escapeGame.currentRoom != widget.escapeGame.currentRoom || oldWidget.escapeGame.openedDialog != widget.escapeGame.openedDialog) {
       refreshCurrentRoom();
+      refreshDialog();
     }
   }
 
@@ -103,7 +108,17 @@ class _EscapeGameWidgetState extends State<EscapeGameWidget> {
   @override
   void dispose() {
     widget.escapeGame.removeListener(refreshCurrentRoom);
+    widget.escapeGame.removeListener(refreshDialog);
     super.dispose();
+  }
+
+  void refreshDialog() {
+    if (mounted && widget.escapeGame.isDialogOpened && !isDialogOpened) {
+      showDialog(
+        context: context,
+        builder: (context) => EscapeGameAlertDialog.fromEscapeGameDialog(escapeGameDialog: widget.escapeGame.openedDialog!),
+      );
+    }
   }
 
   void refreshCurrentRoom() {

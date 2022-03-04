@@ -26,4 +26,15 @@ class PatternCoordinate {
     required this.x,
     required this.y,
   });
+
+  @override
+  bool operator ==(Object other) {
+    if (other is PatternCoordinate) {
+      return x == other.x && y == other.y;
+    }
+    return super == other;
+  }
+
+  @override
+  int get hashCode => 17 * x + 17 * y;
 }

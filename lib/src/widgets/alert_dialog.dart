@@ -1,3 +1,4 @@
+import 'package:escape_game_kit/src/game/dialog.dart';
 import 'package:flutter/material.dart';
 
 class EscapeGameAlertDialog extends StatelessWidget {
@@ -32,6 +33,15 @@ class EscapeGameAlertDialog extends StatelessWidget {
           children: [child],
           actions: actions,
           bottom: bottom,
+        );
+
+  EscapeGameAlertDialog.fromEscapeGameDialog({
+    Key? key,
+    required EscapeGameDialog escapeGameDialog,
+  }) : this.oneChild(
+          key: key,
+          title: escapeGameDialog.title,
+          child: Text(escapeGameDialog.message),
         );
 
   @override

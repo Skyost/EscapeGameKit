@@ -1,7 +1,7 @@
-import 'package:escape_game_kit/src/game/room/interactables/action_result.dart';
 import 'package:escape_game_kit/src/game/game.dart';
-import 'package:escape_game_kit/src/game/room/interactables/interactable.dart';
 import 'package:escape_game_kit/src/game/padlocks/padlock.dart';
+import 'package:escape_game_kit/src/game/room/interactables/action_result.dart';
+import 'package:escape_game_kit/src/game/room/interactables/interactable.dart';
 import 'package:escape_game_kit/src/utils/animation_settings.dart';
 import 'package:escape_game_kit/src/utils/assets_extension.dart';
 import 'package:escape_game_kit/src/widgets/padlocks/dialogs.dart';
@@ -31,7 +31,7 @@ class InteractableWidget extends StatefulWidget {
     if (result.state == ActionResultState.needAction && result.object is Padlock) {
       await (result.object as Padlock).tryUnlockViaDialog(context);
       if ((result.object as Padlock).state.isUnlocked) {
-        onInteractableTapped(context);
+        interactable.onTap(escapeGame);
       }
     }
   }

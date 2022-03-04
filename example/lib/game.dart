@@ -22,7 +22,13 @@ final Room _bedroom = Room(
         width: 60,
       ),
       roomId: 'final',
-      padlock: DigitsPadlock(digits: 'test'),
+      padlock: PatternPadlock(
+        dimension: 3,
+        validPattern: [
+          PatternCoordinate(x: 0, y: 0),
+          PatternCoordinate(x: 1, y: 0),
+        ],
+      ),
     ),
   ],
 );

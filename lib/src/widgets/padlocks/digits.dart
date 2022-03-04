@@ -1,7 +1,6 @@
-import 'package:escape_game_kit/src/game/padlocks/credentials.dart';
 import 'package:escape_game_kit/src/game/padlocks/digits.dart';
 import 'package:escape_game_kit/src/game/padlocks/padlock.dart';
-import 'package:escape_game_kit/src/widgets/padlocks/alert_dialog.dart';
+import 'package:escape_game_kit/src/widgets/alert_dialog.dart';
 import 'package:flutter/material.dart';
 
 class DigitsPadlockDialog extends StatefulWidget {
