@@ -1,9 +1,7 @@
 import 'dart:collection';
 
-import 'package:escape_game_kit/src/game/room/interactables/interactable.dart';
-import 'package:escape_game_kit/src/game/padlocks/padlock.dart';
 import 'package:escape_game_kit/src/game/render/render_settings.dart';
-import 'package:escape_game_kit/src/widgets/room/background.dart';
+import 'package:escape_game_kit/src/game/room/interactables/interactable.dart';
 import 'package:flutter/material.dart';
 
 class Room with ChangeNotifier {
@@ -19,15 +17,21 @@ class Room with ChangeNotifier {
 
   HashSet<Interactable> get interactables => HashSet.of(_interactables);
 
-  void addInteractable(Interactable interactable) {
-    if(_interactables.add(interactable)) {
+  void addInteractable(Interactable interactable, {bool notify = true}) {
+    if (_interactables.add(interactable)) {
       interactable.addListener(notifyListeners);
+      if (notify) {
+        notifyListeners();
+      }
     }
   }
 
-  void removeInteractable(Interactable interactable) {
-    if(_interactables.remove(interactable)) {
+  void removeInteractable(Interactable interactable, {bool notify = true}) {
+    if (_interactables.remove(interactable)) {
       interactable.removeListener(notifyListeners);
+      if (notify) {
+        notifyListeners();
+      }
     }
   }
 

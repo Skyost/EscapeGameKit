@@ -43,11 +43,19 @@ class RenderSettingsStackWidget extends StatelessWidget {
       }
     }
 
-    return Positioned(
-      top: renderSettings is PositionedRenderSettings ? (renderSettings as PositionedRenderSettings).top : 0,
-      right: renderSettings is PositionedRenderSettings ? (renderSettings as PositionedRenderSettings).right : null,
-      bottom: renderSettings is PositionedRenderSettings ? (renderSettings as PositionedRenderSettings).bottom : null,
-      left: renderSettings is PositionedRenderSettings ? (renderSettings as PositionedRenderSettings).left : 0,
+    if (renderSettings is PositionedRenderSettings) {
+      return Positioned(
+        top: renderSettings is PositionedRenderSettings ? (renderSettings as PositionedRenderSettings).top : 0,
+        right: renderSettings is PositionedRenderSettings ? (renderSettings as PositionedRenderSettings).right : null,
+        bottom: renderSettings is PositionedRenderSettings ? (renderSettings as PositionedRenderSettings).bottom : null,
+        left: renderSettings is PositionedRenderSettings ? (renderSettings as PositionedRenderSettings).left : 0,
+        width: renderSettings!.width,
+        height: renderSettings!.height,
+        child: child,
+      );
+    }
+
+    return SizedBox(
       width: renderSettings!.width,
       height: renderSettings!.height,
       child: child,

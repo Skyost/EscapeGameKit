@@ -1,8 +1,7 @@
+import 'package:escape_game_kit/src/game/game.dart';
 import 'package:escape_game_kit/src/game/padlocks/padlock.dart';
 import 'package:escape_game_kit/src/game/render/positioned.dart';
 import 'package:escape_game_kit/src/game/room/interactables/action_result.dart';
-import 'package:escape_game_kit/src/game/game.dart';
-import 'package:escape_game_kit/src/game/render/render_settings.dart';
 import 'package:flutter/material.dart';
 
 typedef Action<T> = ActionResult<T> Function(EscapeGame escapeGame);
@@ -75,6 +74,6 @@ class LockedInteractable extends Interactable {
         object: padlock,
       );
     }
-    return const ActionResult.success();
+    return super.onTap(escapeGame);
   }
 }

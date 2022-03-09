@@ -12,7 +12,7 @@ dependencies:
   flutter:
     sdk: flutter
   spring: ^2.0.2
-  window_manager: ^0.1.5
+  window_manager: ^0.1.9
 
 dev_dependencies:
   flutter_test:
@@ -24,3 +24,4 @@ flutter:
   assets:
     - assets/
     - assets/backgrounds/
+    - assets/interactables/

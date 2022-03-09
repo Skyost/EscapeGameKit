@@ -83,19 +83,21 @@ class _PatternPadlockDialogState extends State<PatternPadlockDialog> {
               widget.padlock.unlockMessage!,
               textAlign: TextAlign.center,
             ),
-          GestureDetector(
-            child: CustomPaint(
-              painter: _LockScreenPainter(
-                color: Theme.of(context).primaryColorDark,
-                codes: codes,
-                offset: offset,
-                onSelect: _onSelect,
+          Center(
+            child: GestureDetector(
+              child: CustomPaint(
+                painter: _LockScreenPainter(
+                  color: Theme.of(context).primaryColorDark,
+                  codes: codes,
+                  offset: offset,
+                  onSelect: _onSelect,
+                ),
+                size: Size.square(MediaQuery.of(context).size.shortestSide / 2),
               ),
-              size: Size.square(MediaQuery.of(context).size.width),
+              onPanStart: _onPanStart,
+              onPanUpdate: _onPanUpdate,
+              onPanEnd: _onPanEnd,
             ),
-            onPanStart: _onPanStart,
-            onPanUpdate: _onPanUpdate,
-            onPanEnd: _onPanEnd,
           ),
         ],
         bottom: isFirstTry ? null : const EscapeGameAlertDialogNewTry(),
@@ -109,7 +111,6 @@ class _PatternPadlockDialogState extends State<PatternPadlockDialog> {
   void _onPanEnd(DragEndDetails event) {
     if (codes.isNotEmpty) {
       List<PatternCoordinate> coordinates = codes.map((index) => PatternCoordinate(x: index % widget.padlock.dimension, y: index ~/ widget.padlock.dimension)).toList();
-      coordinates.forEach((coordinate) => print([coordinate.x, coordinate.y]));
       bool unlockResult = widget.padlock.tryUnlock(coordinates);
       if (unlockResult) {
         Navigator.pop(context);
@@ -129,10 +130,12 @@ class _PatternPadlockDialogState extends State<PatternPadlockDialog> {
     }
   }
 
-  void _clearCodes() => setState(() {
-        codes = [];
-        offset = null;
-      });
+  void _clearCodes() {
+    setState(() {
+      codes = [];
+      offset = null;
+    });
+  }
 }
 
 class _LockScreenPainter extends CustomPainter {
@@ -160,7 +163,7 @@ class _LockScreenPainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    this.size = size;
+    this.size = Size.square(size.shortestSide);
 
     for (var i = 0; i < _total; i++) {
       var _offset = _getOffetByIndex(i);

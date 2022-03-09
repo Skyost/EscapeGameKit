@@ -1,6 +1,7 @@
 /// Create escape games with ease !
 library escape_game_kit;
 
+export 'src/game/dialog.dart';
 export 'src/game/game.dart';
 export 'src/game/inventory/inventory.dart';
 export 'src/game/inventory/object.dart';

@@ -1,17 +1,46 @@
 import 'package:escape_game_kit/escape_game_kit.dart';
 
+const EscapeGameObject key = EscapeGameObject(
+  id: 'key',
+  name: 'Key',
+);
+
 final Room _bedroom = Room(
   id: 'bedroom',
   interactables: [
     Interactable(
       id: 'invisible-1',
       renderSettings: const PositionedRenderSettings(
-        top: 50,
-        left: 50,
-        height: 100,
-        width: 100,
+        top: 130,
+        left: 280,
+        height: 80,
+        width: 60,
       ),
-      onTooltip: (escapeGame) => const ActionResult<String>.success(object: 'Test !'),
+      onTooltip: (escapeGame) => const ActionResult<String>.success(object: 'A big mirror.'),
+    ),
+    Interactable(
+      id: 'invisible-2',
+      renderSettings: const PositionedRenderSettings(
+        top: 290,
+        left: 250,
+        height: 30,
+        width: 70,
+      ),
+      onTooltip: (escapeGame) => const ActionResult<String>.success(object: "There's nothing in the first two draws."),
+    ),
+    PickableObject(
+      id: 'key',
+      object: key,
+      renderSettings: const PositionedRenderSettings(
+        top: 320,
+        left: 250,
+        height: 15,
+        width: 70,
+      ),
+      onPickedUp: (escapeGame) {
+        escapeGame.openDialog(const EscapeGameDialog(message: "You've found a key !"));
+        return const ActionResult.success();
+      }
     ),
     Door(
       id: 'final-door',

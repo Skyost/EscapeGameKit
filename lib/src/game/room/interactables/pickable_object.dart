@@ -1,26 +1,27 @@
-import 'package:escape_game_kit/src/game/render/positioned.dart';
-import 'package:escape_game_kit/src/game/room/interactables/action_result.dart';
 import 'package:escape_game_kit/src/game/game.dart';
-import 'package:escape_game_kit/src/game/room/interactables/interactable.dart';
 import 'package:escape_game_kit/src/game/inventory/object.dart';
 import 'package:escape_game_kit/src/game/padlocks/padlock.dart';
-import 'package:escape_game_kit/src/game/render/render_settings.dart';
+import 'package:escape_game_kit/src/game/render/positioned.dart';
+import 'package:escape_game_kit/src/game/room/interactables/action_result.dart';
+import 'package:escape_game_kit/src/game/room/interactables/interactable.dart';
 
 class PickableObject extends LockedInteractable {
   final EscapeGameObject object;
+  final Action? onPickedUp;
+  final bool removeAfterPickedUp;
 
   PickableObject({
     required this.object,
+    this.onPickedUp,
+    this.removeAfterPickedUp = true,
     Padlock? padlock,
     String? id,
     PositionedRenderSettings? renderSettings,
-    Action? onTap,
     Action<String>? onTooltip,
   }) : super(
           padlock: padlock,
           id: id ?? object.id,
           renderSettings: renderSettings,
-          onTap: onTap,
           onTooltip: onTooltip,
         );
 
@@ -29,7 +30,11 @@ class PickableObject extends LockedInteractable {
     ActionResult padlockTry = super.onTap(escapeGame);
     if (padlockTry.state == ActionResultState.success) {
       escapeGame.inventory.addObject(object);
-      return ActionResult<EscapeGameObject>.success(object: object);
+      ActionResult result = onPickedUp == null ? ActionResult<EscapeGameObject>.success(object: object) : onPickedUp!(escapeGame);
+      if (removeAfterPickedUp) {
+        escapeGame.currentRoom.removeInteractable(this);
+      }
+      return result;
     }
     return padlockTry;
   }

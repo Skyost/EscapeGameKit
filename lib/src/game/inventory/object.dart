@@ -8,6 +8,6 @@ class EscapeGameObject {
   const EscapeGameObject({
     required this.id,
     required this.name,
-    this.inventoryRenderSettings,
+    this.inventoryRenderSettings = const RenderSettings(height: 32),
   });
 }

@@ -122,6 +122,7 @@ class _EscapeGameWidgetState extends State<EscapeGameWidget> {
   }
 
   void refreshCurrentRoom() {
+    // TODO: Interactables are not getting removed.
     if (mounted && currentRoom != widget.escapeGame.currentRoom) {
       setState(() {
         roomTransition = widget.roomTransitionBuilder(widget.escapeGame, currentRoom, widget.escapeGame.currentRoom);
