@@ -1,6 +1,7 @@
 import 'package:escape_game_kit/src/game/game.dart';
 import 'package:escape_game_kit/src/game/inventory/object.dart';
 import 'package:escape_game_kit/src/utils/assets_extension.dart';
+import 'package:escape_game_kit/src/utils/auto_image.dart';
 import 'package:escape_game_kit/src/widgets/render_settings_stack.dart';
 import 'package:flutter/material.dart';
 
@@ -20,8 +21,8 @@ abstract class InventoryWidget extends StatefulWidget {
 
   static Widget defaultObjectWidgetBuilder(BuildContext context, EscapeGame escapeGame, EscapeGameObject object) => Tooltip(
         message: object.name,
-        child: Image.asset(
-          object.inventoryRenderSettings?.asset ?? object.defaultAssetPath,
+        child: AutoImage(
+          asset: object.inventoryRenderSettings?.asset ?? object.defaultAssetPath,
           width: object.inventoryRenderSettings?.width,
           height: object.inventoryRenderSettings?.height,
           errorBuilder: RenderSettingsStackWidget.getImageErrorWidgetBuilder(object.inventoryRenderSettings),

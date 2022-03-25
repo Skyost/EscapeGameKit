@@ -5,9 +5,13 @@ class EscapeGameObject {
   final String name;
   final RenderSettings? inventoryRenderSettings;
 
-  const EscapeGameObject({
+  EscapeGameObject({
     required this.id,
     required this.name,
-    this.inventoryRenderSettings = const RenderSettings(height: 32),
-  });
+    RenderSettings? inventoryRenderSettings,
+  }) : inventoryRenderSettings = inventoryRenderSettings ??
+            RenderSettings(
+              asset: 'assets/interactables/$id.png',
+              height: 32,
+            );
 }

@@ -1,7 +1,7 @@
-import 'package:escape_game_kit/escape_game_kit.dart';
 import 'package:escape_game_kit/src/game/game.dart';
 import 'package:escape_game_kit/src/game/room/room.dart';
 import 'package:escape_game_kit/src/utils/animation_settings.dart';
+import 'package:escape_game_kit/src/widgets/alert_dialog.dart';
 import 'package:escape_game_kit/src/widgets/inventory/button.dart';
 import 'package:escape_game_kit/src/widgets/render_settings_stack.dart';
 import 'package:escape_game_kit/src/widgets/room/room.dart';
@@ -86,6 +86,7 @@ class _EscapeGameWidgetState extends State<EscapeGameWidget> {
 
       if (widget.escapeGame.inventory.renderSettings != null) {
         child = Stack(
+          key: ValueKey('stack-room-${currentRoom!.id}'),
           children: [
             child,
             RenderSettingsStackWidget(
@@ -112,17 +113,18 @@ class _EscapeGameWidgetState extends State<EscapeGameWidget> {
     super.dispose();
   }
 
-  void refreshDialog() {
+  Future<void> refreshDialog() async {
     if (mounted && widget.escapeGame.isDialogOpened && !isDialogOpened) {
-      showDialog(
+      isDialogOpened = true;
+      await showDialog(
         context: context,
         builder: (context) => EscapeGameAlertDialog.fromEscapeGameDialog(escapeGameDialog: widget.escapeGame.openedDialog!),
       );
+      isDialogOpened = false;
     }
   }
 
   void refreshCurrentRoom() {
-    // TODO: Interactables are not getting removed.
     if (mounted && currentRoom != widget.escapeGame.currentRoom) {
       setState(() {
         roomTransition = widget.roomTransitionBuilder(widget.escapeGame, currentRoom, widget.escapeGame.currentRoom);

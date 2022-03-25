@@ -1,6 +1,9 @@
-import 'package:escape_game_kit/escape_game_kit.dart';
+import 'dart:math';
 
-const EscapeGameObject key = EscapeGameObject(
+import 'package:escape_game_kit/escape_game_kit.dart';
+import 'package:flutter/material.dart';
+
+final EscapeGameObject _key = EscapeGameObject(
   id: 'key',
   name: 'Key',
 );
@@ -10,7 +13,7 @@ final Room _bedroom = Room(
   interactables: [
     Interactable(
       id: 'invisible-1',
-      renderSettings: const PositionedRenderSettings(
+      renderSettings: const InteractableRenderSettings(
         top: 130,
         left: 280,
         height: 80,
@@ -20,7 +23,7 @@ final Room _bedroom = Room(
     ),
     Interactable(
       id: 'invisible-2',
-      renderSettings: const PositionedRenderSettings(
+      renderSettings: const InteractableRenderSettings(
         top: 290,
         left: 250,
         height: 30,
@@ -29,35 +32,102 @@ final Room _bedroom = Room(
       onTooltip: (escapeGame) => const ActionResult<String>.success(object: "There's nothing in the first two draws."),
     ),
     PickableObject(
-      id: 'key',
-      object: key,
-      renderSettings: const PositionedRenderSettings(
-        top: 320,
-        left: 250,
-        height: 15,
-        width: 70,
+        id: 'key',
+        object: _key,
+        renderSettings: const InteractableRenderSettings(
+          top: 320,
+          left: 250,
+          height: 15,
+          width: 70,
+        ),
+        onPickedUp: (escapeGame) {
+          escapeGame.openDialog(const EscapeGameDialog(
+            title: 'Item found',
+            imageRenderSettings: RenderSettings(
+              asset: 'assets/interactables/key.svg',
+              width: 100,
+              height: 100,
+            ),
+            message: "You've found a key !",
+          ));
+          return const ActionResult.success();
+        }),
+    Door(
+      id: 'desk-door',
+      renderSettings: InteractableRenderSettings(
+        asset: 'assets/interactables/arrow.svg',
+        top: 200,
+        left: 20,
+        height: 80,
+        width: 80,
+        rotationAngle: -pi / 2 - 0.2,
+        hoverAnimationSettings: const AnimationSettings(),
+        hoverTransformation: Matrix4.identity()..translate(10.0),
       ),
-      onPickedUp: (escapeGame) {
-        escapeGame.openDialog(const EscapeGameDialog(message: "You've found a key !"));
-        return const ActionResult.success();
-      }
+      roomId: 'desk',
+    ),
+    Door(
+      id: 'living-room-door',
+      renderSettings: const InteractableRenderSettings(
+        asset: 'assets/interactables/arrow.svg',
+        top: 200,
+        right: 20,
+        height: 80,
+        width: 80,
+        rotationAngle: pi / 2 + 0.2,
+      ),
+      roomId: 'living-room',
     ),
     Door(
       id: 'final-door',
-      renderSettings: const PositionedRenderSettings(
+      renderSettings: const InteractableRenderSettings(
         top: 225,
         left: 410,
         height: 60,
         width: 60,
       ),
       roomId: 'final',
-      padlock: PatternPadlock(
-        dimension: 3,
-        validPattern: [
-          PatternCoordinate(x: 0, y: 0),
-          PatternCoordinate(x: 1, y: 0),
-        ],
+      padlock: CredentialsPadlock(
+        username: 'Skyost',
+        password: 'EscapeGameKit',
+        caseSensitive: false,
       ),
+    ),
+  ],
+);
+
+final Room _desk = Room(
+  id: 'desk',
+  interactables: [
+    Door(
+      id: 'bedroom-door',
+      renderSettings: const InteractableRenderSettings(
+        asset: 'assets/interactables/arrow.svg',
+        top: 200,
+        right: 20,
+        height: 80,
+        width: 80,
+        rotationAngle: pi / 2 + 0.2,
+      ),
+      roomId: 'bedroom',
+    ),
+  ],
+);
+
+final Room _livingRoom = Room(
+  id: 'living-room',
+  interactables: [
+    Door(
+      id: 'bedroom-door',
+      renderSettings: const InteractableRenderSettings(
+        asset: 'assets/interactables/arrow.svg',
+        top: 100,
+        left: 20,
+        height: 80,
+        width: 80,
+        rotationAngle: -1,
+      ),
+      roomId: 'bedroom',
     ),
   ],
 );
@@ -66,5 +136,7 @@ final EscapeGame escapeGame = EscapeGame(
   firstRoomId: _bedroom.id,
   rooms: [
     _bedroom,
+    _desk,
+    _livingRoom,
   ],
 );

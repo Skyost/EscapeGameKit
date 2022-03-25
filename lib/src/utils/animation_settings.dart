@@ -1,29 +1,28 @@
 import 'package:flutter/material.dart';
 
 class AnimationSettings {
-  final AnimatedSwitcherTransitionBuilder transitionBuilder;
   final Duration duration;
   final Duration? reverseDuration;
-  final Curve switchInCurve;
-  final Curve switchOutCurve;
+  final Curve inCurve;
+  final Curve outCurve;
 
   const AnimationSettings({
-    this.transitionBuilder = AnimatedSwitcher.defaultTransitionBuilder,
-    this.duration = const Duration(milliseconds: 200),
+    this.duration = const Duration(milliseconds: 500),
     this.reverseDuration,
-    this.switchInCurve = Curves.linear,
-    this.switchOutCurve = Curves.linear,
+    this.inCurve = Curves.linear,
+    this.outCurve = Curves.linear,
   });
 
   Widget createAnimatedSwitch({
     required Widget child,
+    AnimatedSwitcherTransitionBuilder transitionBuilder = AnimatedSwitcher.defaultTransitionBuilder,
   }) =>
       AnimatedSwitcher(
         transitionBuilder: transitionBuilder,
         duration: duration,
         reverseDuration: reverseDuration,
-        switchInCurve: switchInCurve,
-        switchOutCurve: switchOutCurve,
+        switchInCurve: inCurve,
+        switchOutCurve: outCurve,
         child: child,
       );
 }

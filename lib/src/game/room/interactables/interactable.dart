@@ -1,14 +1,14 @@
 import 'package:escape_game_kit/src/game/game.dart';
 import 'package:escape_game_kit/src/game/padlocks/padlock.dart';
-import 'package:escape_game_kit/src/game/render/positioned.dart';
 import 'package:escape_game_kit/src/game/room/interactables/action_result.dart';
+import 'package:escape_game_kit/src/game/room/interactables/render_settings.dart';
 import 'package:flutter/material.dart';
 
 typedef Action<T> = ActionResult<T> Function(EscapeGame escapeGame);
 
 class Interactable with ChangeNotifier {
   final String id;
-  PositionedRenderSettings? _renderSettings;
+  InteractableRenderSettings? _renderSettings;
   final Action? _onTap;
   final Action<String>? _onTooltip;
 
@@ -16,7 +16,7 @@ class Interactable with ChangeNotifier {
 
   Interactable({
     required this.id,
-    PositionedRenderSettings? renderSettings,
+    InteractableRenderSettings? renderSettings,
     Action? onTap,
     Action<String>? onTooltip,
   })  : _renderSettings = renderSettings,
@@ -31,9 +31,9 @@ class Interactable with ChangeNotifier {
         )
       : _onTooltip!(escapeGame);
 
-  PositionedRenderSettings? get renderSettings => _renderSettings;
+  InteractableRenderSettings? get renderSettings => _renderSettings;
 
-  void changeRenderSettings(PositionedRenderSettings? renderSettings, {bool notify = true}) {
+  void changeRenderSettings(InteractableRenderSettings? renderSettings, {bool notify = true}) {
     _renderSettings = renderSettings;
     if (notify) {
       notifyListeners();
@@ -56,7 +56,7 @@ class LockedInteractable extends Interactable {
   LockedInteractable({
     required this.padlock,
     required String id,
-    PositionedRenderSettings? renderSettings,
+    InteractableRenderSettings? renderSettings,
     Action? onTap,
     Action<String>? onTooltip,
   }) : super(

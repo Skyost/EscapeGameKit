@@ -11,8 +11,8 @@ class CredentialsPadlockDialog extends StatefulWidget {
   const CredentialsPadlockDialog({
     Key? key,
     required this.padlock,
-    this.usernameText = 'Username :',
-    this.passwordText = 'Password :',
+    this.usernameText,
+    this.passwordText,
   }) : super(
           key: key,
         );
@@ -23,8 +23,8 @@ class CredentialsPadlockDialog extends StatefulWidget {
   static CredentialsPadlockDialog builder(
     BuildContext context,
     Padlock padlock, {
-    String? usernameText,
-    String? passwordText,
+    String? usernameText = 'Username',
+    String? passwordText = 'Password',
   }) =>
       CredentialsPadlockDialog(
         padlock: padlock as CredentialsPadlock,
@@ -50,7 +50,7 @@ class _CredentialPadlockDialogState extends State<CredentialsPadlockDialog> {
           TextField(
             controller: usernameController,
             decoration: widget.usernameText == null
-                ? null
+                ? const InputDecoration()
                 : InputDecoration(
                     icon: const Icon(Icons.person),
                     labelText: widget.usernameText,
@@ -59,7 +59,7 @@ class _CredentialPadlockDialogState extends State<CredentialsPadlockDialog> {
           TextField(
             controller: passwordController,
             decoration: widget.passwordText == null
-                ? null
+                ? const InputDecoration()
                 : InputDecoration(
                     icon: const Icon(Icons.password),
                     labelText: widget.passwordText,

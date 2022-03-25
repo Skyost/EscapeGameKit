@@ -1,10 +1,8 @@
 import 'package:escape_game_kit/src/game/game.dart';
 import 'package:escape_game_kit/src/game/padlocks/padlock.dart';
-import 'package:escape_game_kit/src/game/render/positioned.dart';
-import 'package:escape_game_kit/src/game/render/render_settings.dart';
 import 'package:escape_game_kit/src/game/room/interactables/action_result.dart';
 import 'package:escape_game_kit/src/game/room/interactables/interactable.dart';
-import 'package:escape_game_kit/src/game/room/room.dart';
+import 'package:escape_game_kit/src/game/room/interactables/render_settings.dart';
 
 class Door extends LockedInteractable {
   final String roomId;
@@ -13,7 +11,7 @@ class Door extends LockedInteractable {
     required this.roomId,
     Padlock? padlock,
     required String id,
-    PositionedRenderSettings? renderSettings,
+    InteractableRenderSettings? renderSettings,
     Action? onTap,
     Action<String>? onTooltip,
   }) : super(

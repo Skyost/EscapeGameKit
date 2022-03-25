@@ -13,11 +13,13 @@ class PositionedRenderSettings extends RenderSettings {
     this.left,
     double? width,
     double? height,
+    double? rotationAngle,
     String? asset,
     bool? isInvisible,
   }) : super(
           width: width,
           height: height,
+          rotationAngle: rotationAngle,
           asset: asset,
           isInvisible: isInvisible,
         );

@@ -24,6 +24,13 @@ class RenderSettingsStackWidget extends StatelessWidget {
     }
 
     Widget child = this.child;
+    if (renderSettings!.rotationAngle != null) {
+      child = Transform.rotate(
+        child: child,
+        angle: renderSettings!.rotationAngle!,
+      );
+    }
+
     if (renderSettings!.isInvisible) {
       child = Visibility(
         child: child,

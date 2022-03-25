@@ -4,6 +4,7 @@ import 'package:escape_game_kit/src/game/room/interactables/action_result.dart';
 import 'package:escape_game_kit/src/game/room/interactables/interactable.dart';
 import 'package:escape_game_kit/src/utils/animation_settings.dart';
 import 'package:escape_game_kit/src/utils/assets_extension.dart';
+import 'package:escape_game_kit/src/utils/auto_image.dart';
 import 'package:escape_game_kit/src/widgets/padlocks/dialogs.dart';
 import 'package:escape_game_kit/src/widgets/render_settings_stack.dart';
 import 'package:flutter/material.dart';
@@ -13,13 +14,13 @@ class InteractableWidget extends StatefulWidget {
   final Interactable interactable;
   final AnimationSettings? transitionAnimation;
 
-  const InteractableWidget({
+  InteractableWidget({
     Key? key,
     required this.escapeGame,
     required this.interactable,
     this.transitionAnimation = const AnimationSettings(),
   }) : super(
-          key: key,
+          key: key ?? ValueKey<String>('interactable-${interactable.id}'),
         );
 
   @override
@@ -41,6 +42,7 @@ class _InteractableWidgetState extends State<InteractableWidget> {
   double tooltipOpacity = 0;
   OverlayEntry? tooltipOverlayEntry;
   Offset? tooltipPosition;
+  bool isHovered = false;
 
   @override
   void initState() {
@@ -61,18 +63,37 @@ class _InteractableWidgetState extends State<InteractableWidget> {
     String? tooltip = widget.interactable.onTooltip(widget.escapeGame).object;
     result = MouseRegion(
       cursor: SystemMouseCursors.click,
-      onEnter: tooltip == null ? null : showTooltip,
-      onHover: tooltip == null ? null : updateTooltipPosition,
-      onExit: tooltip == null ? null : hideTooltip,
+      onEnter: (event) {
+        if (tooltip != null) {
+          showTooltip(event);
+        }
+        setState(() => isHovered = true);
+      },
+      onHover: (event) {
+        if (tooltip != null) {
+          updateTooltipPosition(event);
+        }
+      },
+      onExit: (event) {
+        if (tooltip != null) {
+          hideTooltip(event);
+        }
+        setState(() => isHovered = false);
+      },
       child: Listener(
         onPointerUp: (event) => widget.onInteractableTapped(context),
         behavior: HitTestBehavior.translucent,
-        child: Image.asset(
-          widget.interactable.renderSettings?.asset ?? widget.interactable.defaultAssetPath,
-          width: widget.interactable.renderSettings?.width,
-          height: widget.interactable.renderSettings?.height,
-          errorBuilder: RenderSettingsStackWidget.getImageErrorWidgetBuilder(widget.interactable.renderSettings),
-        ),
+        child: AnimatedContainer(
+          curve: (isHovered ? widget.interactable.renderSettings?.hoverAnimationSettings?.outCurve : widget.interactable.renderSettings?.hoverAnimationSettings?.inCurve) ?? Curves.linear,
+          duration: (isHovered ? widget.interactable.renderSettings?.hoverAnimationSettings?.reverseDuration : widget.interactable.renderSettings?.hoverAnimationSettings?.duration) ?? const Duration(milliseconds: 500),
+          transform: isHovered ? widget.interactable.renderSettings?.hoverTransformation : null,
+          child: AutoImage(
+            asset: widget.interactable.renderSettings?.asset ?? widget.interactable.defaultAssetPath,
+            width: widget.interactable.renderSettings?.width,
+            height: widget.interactable.renderSettings?.height,
+            errorBuilder: RenderSettingsStackWidget.getImageErrorWidgetBuilder(widget.interactable.renderSettings),
+          ),
+        )
       ),
     );
 
