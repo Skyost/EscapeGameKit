@@ -1,10 +1,8 @@
 import 'package:escape_game_kit/src/game/render/positioned.dart';
-import 'package:escape_game_kit/src/utils/animation_settings.dart';
-import 'package:flutter/material.dart';
 
 class InteractableRenderSettings extends PositionedRenderSettings {
-  final AnimationSettings? hoverAnimationSettings;
-  final Matrix4? hoverTransformation;
+  final InteractableAnimation? hoverAnimation;
+  final InteractableAnimation? enterAnimation;
 
   const InteractableRenderSettings({
     double? top,
@@ -16,8 +14,8 @@ class InteractableRenderSettings extends PositionedRenderSettings {
     double? rotationAngle,
     String? asset,
     bool? isInvisible,
-    this.hoverAnimationSettings,
-    this.hoverTransformation,
+    this.hoverAnimation,
+    this.enterAnimation,
   }) : super(
           top: top,
           right: right,
@@ -29,4 +27,69 @@ class InteractableRenderSettings extends PositionedRenderSettings {
           asset: asset,
           isInvisible: isInvisible,
         );
+}
+
+class InteractableAnimation {
+  final InteractableAnimationType type;
+  final Duration duration;
+  final Duration delay;
+  final bool manualTrigger;
+  final double from;
+  final bool infinite;
+
+  const InteractableAnimation({
+    required this.type,
+    this.duration = const Duration(seconds: 1),
+    this.delay = Duration.zero,
+    this.manualTrigger = false,
+    this.from = 0,
+    bool? infinite,
+  }) : infinite = type == InteractableAnimationType.bounce || type == InteractableAnimationType.flash || type == InteractableAnimationType.pulse || type == InteractableAnimationType.swing || type == InteractableAnimationType.spin || type == InteractableAnimationType.spinPerfect || type == InteractableAnimationType.dance || type == InteractableAnimationType.roulette;
+}
+
+enum InteractableAnimationType {
+  fadeIn,
+  fadeInDown,
+  fadeInDownBig,
+  fadeInUp,
+  fadeInUpBig,
+  fadeInLeft,
+  fadeInLeftBig,
+  fadeInRight,
+  fadeInRightBig,
+  fadeOut,
+  fadeOutDown,
+  fadeOutDownBig,
+  fadeOutUp,
+  fadeOutUpBig,
+  fadeOutLeft,
+  fadeOutLeftBig,
+  fadeOutRight,
+  fadeOutRightBig,
+  bounceInDown,
+  bounceInUp,
+  bounceInLeft,
+  bounceInRight,
+  elasticIn,
+  elasticInDown,
+  elasticInUp,
+  elasticInLeft,
+  elasticInRight,
+  slideInDown,
+  slideInUp,
+  slideInLeft,
+  slideInRight,
+  flipInX,
+  flipInY,
+  zoomIn,
+  zoomOut,
+  jelloIn,
+  bounce,
+  flash,
+  pulse,
+  swing,
+  spin,
+  spinPerfect,
+  dance,
+  roulette,
 }

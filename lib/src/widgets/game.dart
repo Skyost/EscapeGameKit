@@ -1,16 +1,16 @@
 import 'package:escape_game_kit/src/game/game.dart';
 import 'package:escape_game_kit/src/game/room/room.dart';
-import 'package:escape_game_kit/src/utils/animation_settings.dart';
 import 'package:escape_game_kit/src/widgets/alert_dialog.dart';
 import 'package:escape_game_kit/src/widgets/inventory/button.dart';
 import 'package:escape_game_kit/src/widgets/render_settings_stack.dart';
 import 'package:escape_game_kit/src/widgets/room/room.dart';
+import 'package:escape_game_kit/src/widgets/room_transition.dart';
 import 'package:flutter/material.dart';
 
 typedef GameWidgetBuilder = Widget Function(BuildContext context, EscapeGame escapeGame);
 typedef RoomWidgetBuilder = Widget Function(BuildContext context, EscapeGame escapeGame, Room room);
 typedef TryExitCallback = Future<bool> Function(EscapeGame escapeGame);
-typedef RoomTransitionBuilder = AnimationSettings Function(EscapeGame escapeGame, Room? previousRoom, Room newRoom);
+typedef RoomTransitionBuilder = RoomTransition Function(EscapeGame escapeGame, Room? previousRoom, Room newRoom);
 
 class EscapeGameWidget extends StatefulWidget {
   final EscapeGame escapeGame;
@@ -46,11 +46,11 @@ class EscapeGameWidget extends StatefulWidget {
         escapeGame: escapeGame,
       );
 
-  static AnimationSettings defaultRoomTransitionBuilder(EscapeGame escapeGame, Room? previousRoom, Room newRoom) => const AnimationSettings();
+  static RoomTransition defaultRoomTransitionBuilder(EscapeGame escapeGame, Room? previousRoom, Room newRoom) => const RoomTransition();
 }
 
 class _EscapeGameWidgetState extends State<EscapeGameWidget> {
-  AnimationSettings roomTransition = const AnimationSettings();
+  RoomTransition roomTransition = const RoomTransition();
   bool isDialogOpened = false;
   Room? currentRoom;
 
@@ -125,7 +125,7 @@ class _EscapeGameWidgetState extends State<EscapeGameWidget> {
   }
 
   void refreshCurrentRoom() {
-    if (mounted && currentRoom != widget.escapeGame.currentRoom) {
+    if (mounted) {
       setState(() {
         roomTransition = widget.roomTransitionBuilder(widget.escapeGame, currentRoom, widget.escapeGame.currentRoom);
         currentRoom = widget.escapeGame.currentRoom;

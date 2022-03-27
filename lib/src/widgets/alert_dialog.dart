@@ -1,4 +1,6 @@
+import 'package:escape_game_kit/escape_game_kit.dart';
 import 'package:escape_game_kit/src/game/dialog.dart';
+import 'package:escape_game_kit/src/utils/auto_image.dart';
 import 'package:flutter/material.dart';
 
 class EscapeGameAlertDialog extends StatelessWidget {
@@ -38,10 +40,27 @@ class EscapeGameAlertDialog extends StatelessWidget {
   EscapeGameAlertDialog.fromEscapeGameDialog({
     Key? key,
     required EscapeGameDialog escapeGameDialog,
-  }) : this.oneChild(
+  }) : this(
           key: key,
           title: escapeGameDialog.title,
-          child: Text(escapeGameDialog.message),
+          children: [
+            if (escapeGameDialog.imageRenderSettings?.asset != null)
+              Padding(
+                padding: const EdgeInsets.only(bottom: 10),
+                child: RenderSettingsStackWidget(
+                  child: AutoImage(
+                    asset: escapeGameDialog.imageRenderSettings!.asset!,
+                    width: escapeGameDialog.imageRenderSettings!.width,
+                    height: escapeGameDialog.imageRenderSettings!.height,
+                  ),
+                  renderSettings: escapeGameDialog.imageRenderSettings,
+                ),
+              ),
+            Text(
+              escapeGameDialog.message,
+              textAlign: TextAlign.center,
+            ),
+          ],
         );
 
   @override

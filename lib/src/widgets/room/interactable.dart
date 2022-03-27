@@ -2,23 +2,21 @@ import 'package:escape_game_kit/src/game/game.dart';
 import 'package:escape_game_kit/src/game/padlocks/padlock.dart';
 import 'package:escape_game_kit/src/game/room/interactables/action_result.dart';
 import 'package:escape_game_kit/src/game/room/interactables/interactable.dart';
-import 'package:escape_game_kit/src/utils/animation_settings.dart';
 import 'package:escape_game_kit/src/utils/assets_extension.dart';
 import 'package:escape_game_kit/src/utils/auto_image.dart';
 import 'package:escape_game_kit/src/widgets/padlocks/dialogs.dart';
 import 'package:escape_game_kit/src/widgets/render_settings_stack.dart';
+import 'package:escape_game_kit/src/widgets/room/interactable_animation.dart';
 import 'package:flutter/material.dart';
 
 class InteractableWidget extends StatefulWidget {
   final EscapeGame escapeGame;
   final Interactable interactable;
-  final AnimationSettings? transitionAnimation;
 
   InteractableWidget({
     Key? key,
     required this.escapeGame,
     required this.interactable,
-    this.transitionAnimation = const AnimationSettings(),
   }) : super(
           key: key ?? ValueKey<String>('interactable-${interactable.id}'),
         );
@@ -42,7 +40,7 @@ class _InteractableWidgetState extends State<InteractableWidget> {
   double tooltipOpacity = 0;
   OverlayEntry? tooltipOverlayEntry;
   Offset? tooltipPosition;
-  bool isHovered = false;
+  AnimationController? hoverAnimationController;
 
   @override
   void initState() {
@@ -60,6 +58,13 @@ class _InteractableWidgetState extends State<InteractableWidget> {
       result = const SizedBox.shrink();
     }
 
+    Widget image = AutoImage(
+      asset: widget.interactable.renderSettings?.asset ?? widget.interactable.defaultAssetPath,
+      width: widget.interactable.renderSettings?.width,
+      height: widget.interactable.renderSettings?.height,
+      errorBuilder: RenderSettingsStackWidget.getImageErrorWidgetBuilder(widget.interactable.renderSettings),
+    );
+
     String? tooltip = widget.interactable.onTooltip(widget.escapeGame).object;
     result = MouseRegion(
       cursor: SystemMouseCursors.click,
@@ -67,7 +72,7 @@ class _InteractableWidgetState extends State<InteractableWidget> {
         if (tooltip != null) {
           showTooltip(event);
         }
-        setState(() => isHovered = true);
+        hoverAnimationController?.forward(from: widget.interactable.renderSettings?.hoverAnimation?.from);
       },
       onHover: (event) {
         if (tooltip != null) {
@@ -78,28 +83,22 @@ class _InteractableWidgetState extends State<InteractableWidget> {
         if (tooltip != null) {
           hideTooltip(event);
         }
-        setState(() => isHovered = false);
+        hoverAnimationController?.reset();
       },
       child: Listener(
         onPointerUp: (event) => widget.onInteractableTapped(context),
         behavior: HitTestBehavior.translucent,
-        child: AnimatedContainer(
-          curve: (isHovered ? widget.interactable.renderSettings?.hoverAnimationSettings?.outCurve : widget.interactable.renderSettings?.hoverAnimationSettings?.inCurve) ?? Curves.linear,
-          duration: (isHovered ? widget.interactable.renderSettings?.hoverAnimationSettings?.reverseDuration : widget.interactable.renderSettings?.hoverAnimationSettings?.duration) ?? const Duration(milliseconds: 500),
-          transform: isHovered ? widget.interactable.renderSettings?.hoverTransformation : null,
-          child: AutoImage(
-            asset: widget.interactable.renderSettings?.asset ?? widget.interactable.defaultAssetPath,
-            width: widget.interactable.renderSettings?.width,
-            height: widget.interactable.renderSettings?.height,
-            errorBuilder: RenderSettingsStackWidget.getImageErrorWidgetBuilder(widget.interactable.renderSettings),
+        child: InteractableAnimationWidget(
+          animation: widget.interactable.renderSettings?.enterAnimation,
+          child: InteractableAnimationWidget(
+            animation: widget.interactable.renderSettings?.hoverAnimation,
+            child: image,
+            controller: (controller) => hoverAnimationController = controller,
+            animate: false,
           ),
-        )
+        ),
       ),
     );
-
-    if (widget.transitionAnimation != null) {
-      result = widget.transitionAnimation!.createAnimatedSwitch(child: result);
-    }
 
     return result;
   }

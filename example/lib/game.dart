@@ -1,7 +1,6 @@
 import 'dart:math';
 
 import 'package:escape_game_kit/escape_game_kit.dart';
-import 'package:flutter/material.dart';
 
 final EscapeGameObject _key = EscapeGameObject(
   id: 'key',
@@ -61,20 +60,20 @@ final Room _bedroom = Room(
         height: 80,
         width: 80,
         rotationAngle: -pi / 2 - 0.2,
-        hoverAnimationSettings: const AnimationSettings(),
-        hoverTransformation: Matrix4.identity()..translate(10.0),
+        hoverAnimation: InteractableAnimation(type: InteractableAnimationType.pulse),
       ),
       roomId: 'desk',
     ),
     Door(
       id: 'living-room-door',
-      renderSettings: const InteractableRenderSettings(
+      renderSettings: InteractableRenderSettings(
         asset: 'assets/interactables/arrow.svg',
         top: 200,
         right: 20,
         height: 80,
         width: 80,
         rotationAngle: pi / 2 + 0.2,
+        hoverAnimation: InteractableAnimation(type: InteractableAnimationType.pulse),
       ),
       roomId: 'living-room',
     ),
@@ -101,13 +100,14 @@ final Room _desk = Room(
   interactables: [
     Door(
       id: 'bedroom-door',
-      renderSettings: const InteractableRenderSettings(
+      renderSettings: InteractableRenderSettings(
         asset: 'assets/interactables/arrow.svg',
         top: 200,
         right: 20,
         height: 80,
         width: 80,
         rotationAngle: pi / 2 + 0.2,
+        hoverAnimation: InteractableAnimation(type: InteractableAnimationType.pulse),
       ),
       roomId: 'bedroom',
     ),
@@ -119,13 +119,14 @@ final Room _livingRoom = Room(
   interactables: [
     Door(
       id: 'bedroom-door',
-      renderSettings: const InteractableRenderSettings(
+      renderSettings: InteractableRenderSettings(
         asset: 'assets/interactables/arrow.svg',
         top: 100,
         left: 20,
         height: 80,
         width: 80,
         rotationAngle: -1,
+        hoverAnimation: InteractableAnimation(type: InteractableAnimationType.pulse),
       ),
       roomId: 'bedroom',
     ),

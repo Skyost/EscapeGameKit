@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
-class AnimationSettings {
+class RoomTransition {
   final Duration duration;
   final Duration? reverseDuration;
   final Curve inCurve;
   final Curve outCurve;
 
-  const AnimationSettings({
+  const RoomTransition({
     this.duration = const Duration(milliseconds: 500),
     this.reverseDuration,
     this.inCurve = Curves.linear,
