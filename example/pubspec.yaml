@@ -11,8 +11,10 @@ dependencies:
     path: ../
   flutter:
     sdk: flutter
-  spring: ^2.0.2
-  window_manager: ^0.1.9
+  just_audio: ^0.9.20
+  just_audio_libwinmedia: ^0.0.4
+  qr_flutter: ^4.0.0
+  window_manager: ^0.2.0
 
 dev_dependencies:
   flutter_test:
@@ -24,4 +26,5 @@ flutter:
   assets:
     - assets/
     - assets/backgrounds/
+    - assets/glitch/
     - assets/interactables/

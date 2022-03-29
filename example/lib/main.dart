@@ -1,16 +1,18 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:escape_game_kit/escape_game_kit.dart';
 import 'package:escape_game_kit_example/game.dart';
+import 'package:escape_game_kit_example/padlocks/painting_padlock.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:window_manager/window_manager.dart';
+
+final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   if (defaultTargetPlatform == TargetPlatform.windows || defaultTargetPlatform == TargetPlatform.linux || defaultTargetPlatform == TargetPlatform.macOS) {
     adjustWindowSize();
   }
-  // escapeGame.start();
   runApp(_EscapeGameKitExample());
 }
 
@@ -31,8 +33,10 @@ Future<void> adjustWindowSize() async {
 class _EscapeGameKitExample extends StatelessWidget {
   @override
   Widget build(BuildContext context) => MaterialApp(
+        navigatorKey: navigatorKey,
         title: 'EscapeGameKit Example',
         theme: ThemeData(primarySwatch: Colors.indigo),
+        locale: const Locale('fr'),
         home: EscapeGameWidget(
           beforeGameStartBuilder: (context, escapeGame) => _TitleScreen(escapeGame: escapeGame),
           escapeGame: escapeGame,
@@ -78,7 +82,11 @@ class _TitleScreen extends StatelessWidget {
             child: FadeIn(
               delay: const Duration(seconds: 3),
               child: ElevatedButton.icon(
-                onPressed: escapeGame.start,
+                onPressed: () {
+                  PadlockDialogs.registerBuilderFor(PaintingPadlock, PaintingPadlockDialog.builder);
+                  escapeGame.start();
+                  escapeGame.openDialog(const EscapeGameDialog(message: 'Vous venez juste de rentrer des cours. Peut-être devriez-vous regarder votre messagerie ?'));
+                },
                 icon: const Icon(Icons.play_arrow),
                 label: const Text('JOUER'),
                 style: ButtonStyle(

@@ -121,6 +121,7 @@ class _EscapeGameWidgetState extends State<EscapeGameWidget> {
         builder: (context) => EscapeGameAlertDialog.fromEscapeGameDialog(escapeGameDialog: widget.escapeGame.openedDialog!),
       );
       isDialogOpened = false;
+      widget.escapeGame.closeDialog();
     }
   }
 

@@ -1,13 +1,15 @@
-import 'package:escape_game_kit/escape_game_kit.dart';
 import 'package:escape_game_kit/src/game/dialog.dart';
 import 'package:escape_game_kit/src/utils/auto_image.dart';
+import 'package:escape_game_kit/src/widgets/render_settings_stack.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_widget_from_html_core/flutter_widget_from_html_core.dart';
 
 class EscapeGameAlertDialog extends StatelessWidget {
   static const _contentPadding = EdgeInsets.fromLTRB(24, 20, 24, 24);
 
   final String? title;
   final String? empty;
+  final EdgeInsets contentPadding;
   final List<Widget> children;
   final List<Widget>? actions;
   final Widget? bottom;
@@ -16,6 +18,7 @@ class EscapeGameAlertDialog extends StatelessWidget {
     Key? key,
     this.title,
     this.empty,
+    this.contentPadding = _contentPadding,
     required this.children,
     this.actions,
     this.bottom,
@@ -26,12 +29,14 @@ class EscapeGameAlertDialog extends StatelessWidget {
   EscapeGameAlertDialog.oneChild({
     Key? key,
     String? title,
+    EdgeInsets contentPadding = _contentPadding,
     required Widget child,
     List<Widget>? actions,
     Widget? bottom,
   }) : this(
           key: key,
           title: title,
+          contentPadding: contentPadding,
           children: [child],
           actions: actions,
           bottom: bottom,
@@ -56,10 +61,10 @@ class EscapeGameAlertDialog extends StatelessWidget {
                   renderSettings: escapeGameDialog.imageRenderSettings,
                 ),
               ),
-            Text(
-              escapeGameDialog.message,
-              textAlign: TextAlign.center,
-            ),
+            HtmlWidget('<div align="center">${escapeGameDialog.message}</div>'),
+          ],
+          actions: [
+            const EscapeGameAlertDialogCloseButton(cancel: false),
           ],
         );
 
@@ -67,7 +72,7 @@ class EscapeGameAlertDialog extends StatelessWidget {
   Widget build(BuildContext context) => AlertDialog(
         titlePadding: EdgeInsets.zero,
         shape: const RoundedRectangleBorder(),
-        contentPadding: children.isEmpty ? _contentPadding : EdgeInsets.zero,
+        contentPadding: children.isEmpty ? contentPadding : EdgeInsets.zero,
         title: title == null
             ? null
             : Container(
@@ -111,7 +116,7 @@ class EscapeGameAlertDialog extends StatelessWidget {
 
     return ListView(
       shrinkWrap: true,
-      padding: _contentPadding,
+      padding: contentPadding,
       children: children,
     );
   }

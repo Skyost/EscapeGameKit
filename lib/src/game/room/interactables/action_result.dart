@@ -13,6 +13,20 @@ class ActionResult<T> {
           state: ActionResultState.success,
           object: object,
         );
+
+  const ActionResult.needAction({
+    T? object,
+  }) : this(
+          state: ActionResultState.needAction,
+          object: object,
+        );
+
+  const ActionResult.failed({
+    T? object,
+  }) : this(
+          state: ActionResultState.failed,
+          object: object,
+        );
 }
 
 enum ActionResultState {

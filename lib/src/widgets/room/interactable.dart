@@ -105,7 +105,9 @@ class _InteractableWidgetState extends State<InteractableWidget> {
 
   @override
   void dispose() {
-    tooltipOverlayEntry?.remove();
+    if (tooltipOpacity != 0) {
+      tooltipOverlayEntry?.remove();
+    }
     widget.interactable.removeListener(refreshState);
     super.dispose();
   }
@@ -140,7 +142,7 @@ class _InteractableWidgetState extends State<InteractableWidget> {
     Overlay.of(context)?.insert(tooltipOverlayEntry!);
     WidgetsBinding.instance?.addPostFrameCallback((_) {
       tooltipOpacity = 1;
-      tooltipOverlayEntry!.markNeedsBuild();
+      tooltipOverlayEntry?.markNeedsBuild();
     });
   }
 
