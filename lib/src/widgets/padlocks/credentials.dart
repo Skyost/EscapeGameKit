@@ -3,17 +3,17 @@ import 'package:escape_game_kit/src/game/padlocks/padlock.dart';
 import 'package:escape_game_kit/src/widgets/alert_dialog.dart';
 import 'package:flutter/material.dart';
 
-class CredentialsPadlockDialog extends StatefulWidget {
-  final CredentialsPadlock padlock;
+class CredentialsPadlockDialog extends PadlockAlertDialog<CredentialsPadlock> {
   final String? usernameText;
   final String? passwordText;
 
   const CredentialsPadlockDialog({
     Key? key,
-    required this.padlock,
+    required CredentialsPadlock padlock,
     this.usernameText,
     this.passwordText,
   }) : super(
+          padlock: padlock,
           key: key,
         );
 
@@ -33,54 +33,35 @@ class CredentialsPadlockDialog extends StatefulWidget {
       );
 }
 
-class _CredentialPadlockDialogState extends State<CredentialsPadlockDialog> {
+class _CredentialPadlockDialogState extends PadlockAlertDialogState<CredentialsPadlockDialog> {
   TextEditingController usernameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
-  bool isFirstTry = true;
 
   @override
-  Widget build(BuildContext context) => EscapeGameAlertDialog(
-        title: widget.padlock.title,
-        children: [
-          if (widget.padlock.unlockMessage != null)
-            Text(
-              widget.padlock.unlockMessage!,
-              textAlign: TextAlign.center,
-            ),
-          TextField(
-            controller: usernameController,
-            decoration: widget.usernameText == null
-                ? const InputDecoration()
-                : InputDecoration(
-                    icon: const Icon(Icons.person),
-                    labelText: widget.usernameText,
-                  ),
-          ),
-          TextField(
-            controller: passwordController,
-            decoration: widget.passwordText == null
-                ? const InputDecoration()
-                : InputDecoration(
-                    icon: const Icon(Icons.password),
-                    labelText: widget.passwordText,
-                  ),
-          ),
-        ],
-        bottom: isFirstTry ? null : const EscapeGameAlertDialogNewTry(),
-        actions: [
-          EscapeGameAlertDialogOkButton(
-            onPressed: () {
-              bool unlockResult = widget.padlock.tryUnlock([usernameController.text, passwordController.text]);
-              if (unlockResult) {
-                Navigator.pop(context);
-              } else {
-                setState(() => isFirstTry = false);
-              }
-            },
-          ),
-          const EscapeGameAlertDialogCloseButton(),
-        ],
-      );
+  List<Widget> buildBody(BuildContext context) => [
+        TextField(
+          controller: usernameController,
+          decoration: widget.usernameText == null
+              ? const InputDecoration()
+              : InputDecoration(
+                  icon: const Icon(Icons.person),
+                  labelText: widget.usernameText,
+                ),
+        ),
+        TextField(
+          controller: passwordController,
+          decoration: widget.passwordText == null
+              ? const InputDecoration()
+              : InputDecoration(
+                  icon: const Icon(Icons.password),
+                  labelText: widget.passwordText,
+                ),
+          obscureText: true,
+        ),
+      ];
+
+  @override
+  dynamic getCode() => [usernameController.text, passwordController.text];
 
   @override
   void dispose() {

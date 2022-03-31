@@ -4,10 +4,7 @@ import 'package:escape_game_kit/src/widgets/alert_dialog.dart';
 import 'package:flutter/material.dart';
 
 /// Thanks [https://github.com/baothg/pattern_lock_screen_flutter/blob/master/lib/main.dart](`pattern_lock_screen_flutter`).
-class PatternPadlockDialog extends StatefulWidget {
-  /// The pattern padlock.
-  final PatternPadlock padlock;
-
+class PatternPadlockDialog extends PadlockAlertDialog<PatternPadlock> {
   /// Padding of points area relative to distance between points.
   final double relativePadding;
 
@@ -31,7 +28,7 @@ class PatternPadlockDialog extends StatefulWidget {
 
   const PatternPadlockDialog({
     Key? key,
-    required this.padlock,
+    required PatternPadlock padlock,
     required this.relativePadding,
     this.selectedColor,
     required this.notSelectedColor,
@@ -41,6 +38,7 @@ class PatternPadlockDialog extends StatefulWidget {
     required this.fillPoints,
   }) : super(
           key: key,
+          padlock: padlock,
         );
 
   @override
@@ -69,10 +67,9 @@ class PatternPadlockDialog extends StatefulWidget {
       );
 }
 
-class _PatternPadlockDialogState extends State<PatternPadlockDialog> {
+class _PatternPadlockDialogState extends PadlockAlertDialogState<PatternPadlockDialog> {
   Offset? offset;
   List<int> codes = [];
-  bool isFirstTry = true;
 
   @override
   Widget build(BuildContext context) => EscapeGameAlertDialog(
@@ -83,26 +80,36 @@ class _PatternPadlockDialogState extends State<PatternPadlockDialog> {
               widget.padlock.unlockMessage!,
               textAlign: TextAlign.center,
             ),
-          Center(
-            child: GestureDetector(
-              child: CustomPaint(
-                painter: _LockScreenPainter(
-                  color: Theme.of(context).primaryColorDark,
-                  codes: codes,
-                  offset: offset,
-                  onSelect: _onSelect,
-                ),
-                size: Size.square(MediaQuery.of(context).size.shortestSide / 2),
-              ),
-              onPanStart: _onPanStart,
-              onPanUpdate: _onPanUpdate,
-              onPanEnd: _onPanEnd,
-            ),
-          ),
         ],
-        bottom: isFirstTry ? null : const EscapeGameAlertDialogNewTry(),
+        bottom: isFirstTry ? null : EscapeGameAlertDialogPadlockNewTry(padlock: widget.padlock),
         actions: const [EscapeGameAlertDialogCloseButton()],
       );
+
+  @override
+  List<Widget> buildBody(BuildContext context) => [
+    Center(
+      child: GestureDetector(
+        child: CustomPaint(
+          painter: _LockScreenPainter(
+            color: Theme.of(context).primaryColorDark,
+            codes: codes,
+            offset: offset,
+            onSelect: _onSelect,
+          ),
+          size: Size.square(MediaQuery.of(context).size.shortestSide / 2),
+        ),
+        onPanStart: _onPanStart,
+        onPanUpdate: _onPanUpdate,
+        onPanEnd: _onPanEnd,
+      ),
+    ),
+  ];
+
+  @override
+  dynamic getCode() => codes.map((index) => PatternCoordinate(x: index % widget.padlock.dimension, y: index ~/ widget.padlock.dimension)).toList();
+
+  @override
+  List<Widget> buildActions(BuildContext context) => const [EscapeGameAlertDialogCloseButton()];
 
   void _onPanStart(DragStartDetails event) => _clearCodes();
 
@@ -110,13 +117,7 @@ class _PatternPadlockDialogState extends State<PatternPadlockDialog> {
 
   void _onPanEnd(DragEndDetails event) {
     if (codes.isNotEmpty) {
-      List<PatternCoordinate> coordinates = codes.map((index) => PatternCoordinate(x: index % widget.padlock.dimension, y: index ~/ widget.padlock.dimension)).toList();
-      bool unlockResult = widget.padlock.tryUnlock(coordinates);
-      if (unlockResult) {
-        Navigator.pop(context);
-      } else {
-        setState(() => isFirstTry = false);
-      }
+      tryUnlock();
     }
     setState(() {
       codes = [];

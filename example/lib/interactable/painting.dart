@@ -23,7 +23,17 @@ class PaintingInteractable extends Interactable {
         return ActionResult.needAction(object: paintingPadlock);
       }
       escapeGame.openDialog(const EscapeGameDialog(message: "Nous sommes bloqués en 1980 !? Mais comment sortir d'ici ?<br>Tiens, il y a un autre message dans le coffre...<br><br>« 1! = 1 ; 2! = 2 ; 3! = 6 ; 4! = 24 ; 5! = <em>?</em> »"));
-      escapeGame.currentRoom.removeInteractable(this);
+      escapeGame.currentRoom.removeInteractable(this, notify: false);
+      escapeGame.currentRoom.addInteractable(Interactable(
+        id: id,
+        renderSettings: renderSettings,
+        onTooltip: (escapeGame) {
+          if (!paintingPadlock.state.isLocked) {
+            return const ActionResult.success(object: InteractableTooltip(text: 'Vous avez trouvé un indice derrière ce tableau.'));
+          }
+          return const ActionResult.failed();
+        }
+      ));
     } else {
       escapeGame.openDialog(const EscapeGameDialog(message: 'Le coffre derrière ce tableau est protégé par un cadenas fermé à clé...'));
     }

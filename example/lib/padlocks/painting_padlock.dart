@@ -9,20 +9,20 @@ class PaintingPadlock extends ObjectEqualPadlock<String> {
       : super(
           title: 'Cadenas',
           unlockMessage: "Mince, il y a un deuxième cadenas avec une sorte de symbôle ! Qu'est-ce que cela peut être ?",
+          failedToUnlockMessage: "Ce code ne fonctionne pas...",
         );
 
   @override
   bool isObjectValid(String object) => object == '0891';
 }
 
-class PaintingPadlockDialog extends StatefulWidget {
-  final PaintingPadlock padlock;
-
+class PaintingPadlockDialog extends PadlockAlertDialog<PaintingPadlock> {
   const PaintingPadlockDialog({
     Key? key,
-    required this.padlock,
+    required PaintingPadlock padlock,
   }) : super(
           key: key,
+    padlock: padlock,
         );
 
   @override
@@ -33,51 +33,31 @@ class PaintingPadlockDialog extends StatefulWidget {
       );
 }
 
-class _PaintingPadlockDialogState extends State<PaintingPadlockDialog> {
+class _PaintingPadlockDialogState extends PadlockAlertDialogState<PaintingPadlockDialog> {
   TextEditingController controller = TextEditingController();
-  bool isFirstTry = true;
 
   @override
-  Widget build(BuildContext context) => EscapeGameAlertDialog(
-        title: widget.padlock.title,
-        children: [
-          if (widget.padlock.unlockMessage != null)
-            Text(
-              widget.padlock.unlockMessage!,
-              textAlign: TextAlign.center,
-            ),
-          Align(
-            alignment: Alignment.center,
-            child: QrImage(
-              data: 'https://url.skyost.eu/APi8Ab',
-              size: 200,
-            ),
-          ),
-          TextField(
-            controller: controller,
-            textAlign: TextAlign.center,
-            style: const TextStyle(fontSize: 20),
-            decoration: const InputDecoration(
-              labelText: 'Entrer le code ici',
-              icon: Icon(Icons.key),
-            ),
-          )
-        ],
-        bottom: isFirstTry ? null : const EscapeGameAlertDialogNewTry(text: "Ce n'est pas le bon code..."),
-        actions: [
-          EscapeGameAlertDialogOkButton(
-            onPressed: () {
-              bool unlockResult = widget.padlock.tryUnlock(controller.text);
-              if (unlockResult) {
-                Navigator.pop(context);
-              } else {
-                setState(() => isFirstTry = false);
-              }
-            },
-          ),
-          const EscapeGameAlertDialogCloseButton(),
-        ],
-      );
+  List<Widget> buildBody(BuildContext context) => [
+    Align(
+      alignment: Alignment.center,
+      child: QrImage(
+        data: 'https://url.skyost.eu/APi8Ab',
+        size: 200,
+      ),
+    ),
+    TextField(
+      controller: controller,
+      textAlign: TextAlign.center,
+      style: const TextStyle(fontSize: 20),
+      decoration: const InputDecoration(
+        labelText: 'Entrer le code ici',
+        icon: Icon(Icons.key),
+      ),
+    ),
+  ];
+
+  @override
+  dynamic getCode() => controller.text;
 
   @override
   void dispose() {

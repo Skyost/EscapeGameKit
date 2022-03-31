@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 class EscapeGame with CountdownListener, ChangeNotifier {
   final Inventory inventory;
   Set<Room> rooms;
+  Set<String> visitedRooms;
   String _currentRoom;
   Countdown? countdown;
   bool _isStarted = false;
@@ -22,8 +23,9 @@ class EscapeGame with CountdownListener, ChangeNotifier {
     this.countdown,
   })  : rooms = HashSet.from(rooms ?? <Room>{}),
         inventory = inventory ?? Inventory(),
-        _currentRoom = firstRoomId {
-    currentRoom.addListener(notifyListeners);
+        _currentRoom = firstRoomId,
+        visitedRooms = {} {
+    goToRoom(firstRoomId);
     this.inventory.addListener(notifyListeners);
   }
 
@@ -32,10 +34,15 @@ class EscapeGame with CountdownListener, ChangeNotifier {
   void goToRoom(String roomId, {bool notify = true}) {
     currentRoom.removeListener(notifyListeners);
     _currentRoom = roomId;
-    currentRoom.addListener(notifyListeners);
+    Room current = currentRoom;
+    current.addListener(notifyListeners);
     if (notify) {
       notifyListeners();
     }
+    if (current.firstVisitDialog != null && !visitedRooms.contains(roomId)) {
+      openDialog(current.firstVisitDialog!, notify: notify);
+    }
+    visitedRooms.add(roomId);
   }
 
   EscapeGameDialog? get openedDialog => _dialog;
@@ -75,7 +82,6 @@ class EscapeGame with CountdownListener, ChangeNotifier {
       notifyListeners();
     }
   }
-
 
   @override
   void dispose() {

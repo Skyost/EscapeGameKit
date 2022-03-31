@@ -1,6 +1,7 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:escape_game_kit/escape_game_kit.dart';
 import 'package:escape_game_kit_example/game.dart';
+import 'package:escape_game_kit_example/padlocks/computer_padlock.dart';
 import 'package:escape_game_kit_example/padlocks/painting_padlock.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -14,6 +15,7 @@ void main() {
   if (defaultTargetPlatform == TargetPlatform.windows || defaultTargetPlatform == TargetPlatform.linux || defaultTargetPlatform == TargetPlatform.macOS) {
     adjustWindowSize();
   }
+  registerPadlocks();
   escapeGame.start(); // TODO: remove this one.
   runApp(_EscapeGameKitExample());
 }
@@ -34,6 +36,7 @@ Future<void> adjustWindowSize() async {
 
 void registerPadlocks() {
   PadlockDialogs.registerBuilderFor(PaintingPadlock, PaintingPadlockDialog.builder);
+  PadlockDialogs.registerBuilderFor(ComputerPadlock, ComputerPadlockDialog.builder);
 }
 
 class _EscapeGameKitExample extends StatelessWidget {
@@ -83,9 +86,25 @@ class _TitleScreen extends StatelessWidget {
             child: FadeIn(
               delay: const Duration(seconds: 2),
               duration: const Duration(seconds: 1),
-              child: Image.asset(
-                'assets/logo.png',
-                scale: 1.5,
+              child: GestureDetector(
+                onTap: () {
+                  showDialog(
+                    context: context,
+                    builder: (context) => AboutDialog(
+                      applicationName: 'ERROR 1980',
+                      applicationVersion: 'v1.0.0',
+                      applicationIcon: Image.asset(
+                        'assets/icon.png',
+                        height: 60,
+                      ),
+                      applicationLegalese: "Copyright © 2022 Hugo Delaunay. Tous droits réservés.\nL'icône provient de FreePik, les décors ont été créés par upklyak.",
+                    ),
+                  );
+                },
+                child: Image.asset(
+                  'assets/logo.png',
+                  scale: 1.5,
+                ),
               ),
             ),
           ),

@@ -10,11 +10,13 @@ class PatternPadlock extends ListEqualPadlock<PatternCoordinate> {
     PadlockState? state,
     String? title = kDefaultPadlockTitle,
     String? unlockMessage = kDefaultPadlockUnlockMessage,
+    String? failedToUnlockMessage = kDefaultFailedToUnlockMessage,
   }) : super(
           validList: validPattern,
           state: state,
           title: title,
           unlockMessage: unlockMessage,
+          failedToUnlockMessage: failedToUnlockMessage,
         );
 }
 

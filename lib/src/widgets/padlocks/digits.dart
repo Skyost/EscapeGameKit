@@ -3,17 +3,17 @@ import 'package:escape_game_kit/src/game/padlocks/padlock.dart';
 import 'package:escape_game_kit/src/widgets/alert_dialog.dart';
 import 'package:flutter/material.dart';
 
-class DigitsPadlockDialog extends StatefulWidget {
-  final DigitsPadlock padlock;
+class DigitsPadlockDialog extends PadlockAlertDialog<DigitsPadlock> {
   final bool shouldSeparateTextFields;
 
   DigitsPadlockDialog({
     Key? key,
-    required this.padlock,
+    required DigitsPadlock padlock,
     bool? shouldSeparateTextFields,
   })  : shouldSeparateTextFields = shouldSeparateTextFields ?? (padlock.digits.isNotEmpty && padlock.digits.length <= 4),
         super(
           key: key,
+          padlock: padlock,
         );
 
   @override
@@ -27,9 +27,8 @@ class DigitsPadlockDialog extends StatefulWidget {
       DigitsPadlockDialog(padlock: padlock as DigitsPadlock);
 }
 
-class _DigitsPadlockDialogState extends State<DigitsPadlockDialog> {
+class _DigitsPadlockDialogState extends PadlockAlertDialogState<DigitsPadlockDialog> {
   List<TextEditingController> controllers = [];
-  bool isFirstTry = true;
 
   @override
   void initState() {
@@ -41,52 +40,33 @@ class _DigitsPadlockDialogState extends State<DigitsPadlockDialog> {
   }
 
   @override
-  Widget build(BuildContext context) => EscapeGameAlertDialog(
-        title: widget.padlock.title,
+  List<Widget> buildBody(BuildContext context) => [
+    if (controllers.length > 1)
+      Wrap(
+        alignment: WrapAlignment.center,
+        spacing: 10,
         children: [
-          if (widget.padlock.unlockMessage != null)
-            Text(
-              widget.padlock.unlockMessage!,
-              textAlign: TextAlign.center,
+          for (TextEditingController controller in controllers)
+            SizedBox(
+              width: 20,
+              child: TextField(
+                controller: controller,
+                textAlign: TextAlign.center,
+                style: const TextStyle(fontSize: 20),
+              ),
             ),
-          if (controllers.length > 1)
-            Wrap(
-              alignment: WrapAlignment.center,
-              spacing: 10,
-              children: [
-                for (TextEditingController controller in controllers)
-                  SizedBox(
-                    width: 20,
-                    child: TextField(
-                      controller: controller,
-                      textAlign: TextAlign.center,
-                      style: const TextStyle(fontSize: 20),
-                    ),
-                  ),
-              ],
-            )
-          else
-            TextField(
-              controller: controllers.first,
-              textAlign: TextAlign.center,
-              style: const TextStyle(fontSize: 20),
-            )
         ],
-        bottom: isFirstTry ? null : const EscapeGameAlertDialogNewTry(),
-        actions: [
-          EscapeGameAlertDialogOkButton(
-            onPressed: () {
-              bool unlockResult = widget.padlock.tryUnlock(controllers.map((controller) => controller.text).join());
-              if (unlockResult) {
-                Navigator.pop(context);
-              } else {
-                setState(() => isFirstTry = false);
-              }
-            },
-          ),
-          const EscapeGameAlertDialogCloseButton(),
-        ],
-      );
+      )
+    else
+      TextField(
+        controller: controllers.first,
+        textAlign: TextAlign.center,
+        style: const TextStyle(fontSize: 20),
+      )
+  ];
+
+  @override
+  dynamic getCode() => controllers.map((controller) => controller.text).join();
 
   @override
   void dispose() {

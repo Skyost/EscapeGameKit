@@ -9,10 +9,12 @@ class DigitsPadlock extends ObjectEqualPadlock<String> {
     PadlockState? state,
     String? title = kDefaultPadlockTitle,
     String? unlockMessage = kDefaultPadlockUnlockMessage,
+    String? failedToUnlockMessage = kDefaultFailedToUnlockMessage,
   }) : super(
           validObject: digits,
           state: state,
           title: title,
           unlockMessage: unlockMessage,
+          failedToUnlockMessage: failedToUnlockMessage,
         );
 }

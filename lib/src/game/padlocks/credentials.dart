@@ -14,11 +14,13 @@ class CredentialsPadlock extends ListEqualPadlock<String> {
     PadlockState? state,
     String? title = kDefaultPadlockTitle,
     String? unlockMessage = kDefaultPadlockUnlockMessage,
+    String? failedToUnlockMessage = kDefaultFailedToUnlockMessage,
   }) : super(
           validList: caseSensitive ? [username, password] : [username.toLowerCase(), password.toLowerCase()],
           state: state,
           title: title,
           unlockMessage: unlockMessage,
+          failedToUnlockMessage: failedToUnlockMessage,
         );
 
   @override

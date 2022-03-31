@@ -2,9 +2,11 @@ import 'dart:math';
 
 import 'package:escape_game_kit/escape_game_kit.dart';
 import 'package:escape_game_kit_example/objects/painting_key.dart';
+import 'package:escape_game_kit_example/padlocks/computer_padlock.dart';
 
 final Room bedroom = Room(
   id: 'bedroom',
+  firstVisitDialog: const EscapeGameDialog(message: "Mince, que s'est-il passé ?<br>Et surtout, où est-on !?"),
   interactables: [
     Interactable(
       id: 'mirror',
@@ -48,6 +50,26 @@ final Room bedroom = Room(
         return const ActionResult.success();
       },
     ),
+    Interactable(
+      id: 'wardrobe',
+      renderSettings: const InteractableRenderSettings(
+        top: 143,
+        left: 100,
+        height: 217,
+        width: 100,
+      ),
+      onTooltip: (escapeGame) => const ActionResult.success(object: InteractableTooltip(text: 'Ce n\'est qu\'une armoire.')),
+    ),
+    Interactable(
+      id: 'window',
+      renderSettings: const InteractableRenderSettings(
+        top: 134,
+        left: 424,
+        height: 213,
+        width: 122,
+      ),
+      onTooltip: (escapeGame) => const ActionResult.success(object: InteractableTooltip(text: 'Il fait encore nuit dehors.')),
+    ),
     Door(
       id: 'desk-door',
       renderSettings: InteractableRenderSettings(
@@ -73,7 +95,12 @@ final Room bedroom = Room(
         rotationAngle: pi / 2 + 0.2,
         hoverAnimation: InteractableAnimation(type: InteractableAnimationType.pulse),
       ),
-      onTooltip: (escapeGame) => const ActionResult.success(object: InteractableTooltip(text: 'Vers le salon')),
+      onTooltip: (escapeGame) => const ActionResult.success(
+        object: InteractableTooltip(
+          text: 'Vers le salon',
+          xShift: -20,
+        ),
+      ),
       roomId: 'living-room',
     ),
     Door(
@@ -85,10 +112,18 @@ final Room bedroom = Room(
         width: 60,
       ),
       roomId: 'final',
-      padlock: CredentialsPadlock(
-        username: 'Skyost',
-        password: 'EscapeGameKit',
-        caseSensitive: false,
+      padlock: PadlockSequence(
+        padlocks: [
+          CredentialsPadlock(
+            username: 'shtam',
+            password: 'jadorelesmaths',
+            caseSensitive: false,
+            title: 'Connexion',
+            unlockMessage: 'Mince, il faut se connecter !',
+            failedToUnlockMessage: 'Impossible de se connecter... Il doit y avoir une erreur quelque part.'
+          ),
+          computerPadlock,
+        ],
       ),
     ),
   ],

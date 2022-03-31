@@ -37,7 +37,6 @@ class _GlitchMessageWidgetState extends State<GlitchMessageWidget> {
           play: (player) async {
             setState(() => hasAudioStarted = true);
             player.play();
-            widget.escapeGame.goToRoom('bedroom');
             await Future.delayed(const Duration(seconds: 4));
             showDialog(
               context: context,
@@ -45,6 +44,7 @@ class _GlitchMessageWidgetState extends State<GlitchMessageWidget> {
               builder: (context) => AlertDialog(
                 backgroundColor: Colors.black,
                 contentPadding: EdgeInsets.zero,
+                shape: const RoundedRectangleBorder(),
                 content: Image.asset(
                   'assets/glitch/image.webp',
                   width: MediaQuery.of(context).size.width,
@@ -55,7 +55,7 @@ class _GlitchMessageWidgetState extends State<GlitchMessageWidget> {
             Navigator.pop(context);
             Navigator.pop(context);
             Navigator.pop(context);
-            widget.escapeGame.openDialog(const EscapeGameDialog(message: "Mince, que s'est-il passé ?<br>Et surtout, où est-on !?"));
+            widget.escapeGame.goToRoom('bedroom');
           },
           seek: (player, duration) {},
         ),

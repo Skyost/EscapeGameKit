@@ -6,7 +6,6 @@ import 'package:escape_game_kit_example/interactable/painting.dart';
 final Room desk = Room(
   id: 'desk',
   interactables: [
-    painting,
     Door(
       id: 'bedroom-door',
       renderSettings: InteractableRenderSettings(
@@ -18,8 +17,23 @@ final Room desk = Room(
         rotationAngle: pi / 2 + 0.2,
         hoverAnimation: InteractableAnimation(type: InteractableAnimationType.pulse),
       ),
-      onTooltip: (escapeGame) => const ActionResult.success(object: InteractableTooltip(text: 'Vers la chambre')),
+      onTooltip: (escapeGame) => const ActionResult.success(
+        object: InteractableTooltip(
+          text: 'Vers la chambre',
+          xShift: -20,
+        ),
+      ),
       roomId: 'bedroom',
+    ),
+    painting,
+    Interactable(
+      id: 'wardrobe',
+      renderSettings: const InteractableRenderSettings(
+        top: 48,
+        left: 106,
+        height: 238,
+        width: 157,
+      ),
     ),
   ],
 );

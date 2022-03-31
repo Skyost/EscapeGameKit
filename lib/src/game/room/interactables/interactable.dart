@@ -3,11 +3,13 @@ import 'package:escape_game_kit/src/game/padlocks/padlock.dart';
 import 'package:escape_game_kit/src/game/room/interactables/action_result.dart';
 import 'package:escape_game_kit/src/game/room/interactables/render_settings.dart';
 import 'package:escape_game_kit/src/game/room/interactables/tooltip.dart';
+import 'package:escape_game_kit/src/utils/id_equatable.dart';
 import 'package:flutter/material.dart';
 
 typedef Action<T> = ActionResult<T> Function(EscapeGame escapeGame);
 
-class Interactable with ChangeNotifier {
+class Interactable with IdEquatable<String>, ChangeNotifier {
+  @override
   final String id;
   InteractableRenderSettings? _renderSettings;
   final Action? _onTap;

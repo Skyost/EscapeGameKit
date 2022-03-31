@@ -1,18 +1,23 @@
 import 'dart:collection';
 
+import 'package:escape_game_kit/src/game/dialog.dart';
 import 'package:escape_game_kit/src/game/render/render_settings.dart';
 import 'package:escape_game_kit/src/game/room/interactables/interactable.dart';
+import 'package:escape_game_kit/src/utils/id_equatable.dart';
 import 'package:flutter/material.dart';
 
-class Room with ChangeNotifier {
+class Room with IdEquatable<String>, ChangeNotifier {
+  @override
   final String id;
   final RenderSettings? renderSettings;
   final HashSet<Interactable> _interactables;
+  final EscapeGameDialog? firstVisitDialog;
 
   Room({
     required this.id,
     this.renderSettings,
     Iterable<Interactable>? interactables,
+    this.firstVisitDialog,
   }) : _interactables = HashSet.from(interactables ?? <Interactable>{});
 
   HashSet<Interactable> get interactables => HashSet.of(_interactables);

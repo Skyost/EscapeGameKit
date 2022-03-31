@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 
 final Room bedroomPresent = Room(
   id: 'bedroom-present',
+  firstVisitDialog: const EscapeGameDialog(message: 'Ah, vous venez enfin de rentrer des cours !'),
   interactables: [
     Interactable(
       id: 'left-computer',

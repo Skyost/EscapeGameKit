@@ -1,5 +1,4 @@
 import 'package:escape_game_kit/src/game/padlocks/padlock.dart';
-import 'package:flutter/material.dart';
 
 class PadlockSequence extends Padlock {
   final List<Padlock> padlocks;
@@ -8,12 +7,19 @@ class PadlockSequence extends Padlock {
     required this.padlocks,
   });
 
-  @override
-  bool tryUnlock(code) {
+  Padlock? get firstLocked {
     for (Padlock padlock in padlocks) {
       if (padlock.state.isLocked) {
-        return false;
+        return padlock;
       }
+    }
+    return null;
+  }
+
+  @override
+  bool tryUnlock(code) {
+    if (firstLocked != null) {
+      return false;
     }
     state.unlock();
     return true;

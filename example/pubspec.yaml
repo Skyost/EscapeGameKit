@@ -25,8 +25,13 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+  fonts:
+    - family: SourceCodePro
+      fonts:
+        - asset: assets/fonts/SourceCodePro-Regular.ttf
   assets:
     - assets/
     - assets/backgrounds/
+    - assets/fonts/
     - assets/glitch/
     - assets/interactables/
