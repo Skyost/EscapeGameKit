@@ -14,7 +14,7 @@ final Room bedroom = Room(
         height: 80,
         width: 60,
       ),
-      onTooltip: (escapeGame) => const ActionResult<String>.success(object: 'Un grand miroir.'),
+      onTooltip: (escapeGame) => const ActionResult.success(object: InteractableTooltip(text: 'Un grand miroir.')),
     ),
     Interactable(
       id: 'invisible-2',
@@ -24,7 +24,7 @@ final Room bedroom = Room(
         height: 30,
         width: 70,
       ),
-      onTooltip: (escapeGame) => const ActionResult<String>.success(object: "Il n'y a rien dans les deux premiers tiroirs."),
+      onTooltip: (escapeGame) => const ActionResult.success(object: InteractableTooltip(text: "Il n'y a rien dans les deux premiers tiroirs.")),
     ),
     PickableObject(
         id: 'key',
@@ -58,7 +58,7 @@ final Room bedroom = Room(
         rotationAngle: -pi / 2 - 0.2,
         hoverAnimation: InteractableAnimation(type: InteractableAnimationType.pulse),
       ),
-      onTooltip: (escapeGame) => const ActionResult<String>.success(object: 'Vers le bureau'),
+      onTooltip: (escapeGame) => const ActionResult.success(object: InteractableTooltip(text: 'Vers le bureau')),
       roomId: 'desk',
     ),
     Door(
@@ -72,7 +72,7 @@ final Room bedroom = Room(
         rotationAngle: pi / 2 + 0.2,
         hoverAnimation: InteractableAnimation(type: InteractableAnimationType.pulse),
       ),
-      onTooltip: (escapeGame) => const ActionResult<String>.success(object: 'Vers le salon'),
+      onTooltip: (escapeGame) => const ActionResult.success(object: InteractableTooltip(text: 'Vers le salon')),
       roomId: 'living-room',
     ),
     Door(
