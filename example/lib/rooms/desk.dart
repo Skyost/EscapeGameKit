@@ -18,7 +18,7 @@ final Room desk = Room(
         rotationAngle: pi / 2 + 0.2,
         hoverAnimation: InteractableAnimation(type: InteractableAnimationType.pulse),
       ),
-      onTooltip: (escapeGame) => const ActionResult<String>.success(object: 'Vers la chambre'),
+      onTooltip: (escapeGame) => const ActionResult.success(object: InteractableTooltip(text: 'Vers la chambre')),
       roomId: 'bedroom',
     ),
   ],

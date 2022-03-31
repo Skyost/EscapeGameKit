@@ -18,6 +18,7 @@ export 'src/game/room/interactables/door.dart';
 export 'src/game/room/interactables/interactable.dart';
 export 'src/game/room/interactables/pickable_object.dart';
 export 'src/game/room/interactables/render_settings.dart';
+export 'src/game/room/interactables/tooltip.dart';
 export 'src/game/room/room.dart';
 // export 'src/utils/assets_extension.dart';
 export 'src/utils/countdown.dart';

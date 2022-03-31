@@ -4,6 +4,7 @@ import 'package:escape_game_kit/src/game/padlocks/padlock.dart';
 import 'package:escape_game_kit/src/game/room/interactables/action_result.dart';
 import 'package:escape_game_kit/src/game/room/interactables/interactable.dart';
 import 'package:escape_game_kit/src/game/room/interactables/render_settings.dart';
+import 'package:escape_game_kit/src/game/room/interactables/tooltip.dart';
 
 class PickableObject extends LockedInteractable {
   final EscapeGameObject object;
@@ -17,7 +18,7 @@ class PickableObject extends LockedInteractable {
     Padlock? padlock,
     String? id,
     InteractableRenderSettings? renderSettings,
-    Action<String>? onTooltip,
+    Action<InteractableTooltip>? onTooltip,
   }) : super(
           padlock: padlock,
           id: id ?? object.id,

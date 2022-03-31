@@ -2,6 +2,7 @@ import 'package:escape_game_kit/src/game/game.dart';
 import 'package:escape_game_kit/src/game/padlocks/padlock.dart';
 import 'package:escape_game_kit/src/game/room/interactables/action_result.dart';
 import 'package:escape_game_kit/src/game/room/interactables/render_settings.dart';
+import 'package:escape_game_kit/src/game/room/interactables/tooltip.dart';
 import 'package:flutter/material.dart';
 
 typedef Action<T> = ActionResult<T> Function(EscapeGame escapeGame);
@@ -10,7 +11,7 @@ class Interactable with ChangeNotifier {
   final String id;
   InteractableRenderSettings? _renderSettings;
   final Action? _onTap;
-  final Action<String>? _onTooltip;
+  final Action<InteractableTooltip>? _onTooltip;
 
   bool _isDestroyed = false;
 
@@ -18,14 +19,14 @@ class Interactable with ChangeNotifier {
     required this.id,
     InteractableRenderSettings? renderSettings,
     Action? onTap,
-    Action<String>? onTooltip,
+    Action<InteractableTooltip>? onTooltip,
   })  : _renderSettings = renderSettings,
         _onTap = onTap,
         _onTooltip = onTooltip;
 
   ActionResult onTap(EscapeGame escapeGame) => _onTap == null ? const ActionResult.success() : _onTap!(escapeGame);
 
-  ActionResult<String> onTooltip(EscapeGame escapeGame) => _onTooltip == null
+  ActionResult<InteractableTooltip> onTooltip(EscapeGame escapeGame) => _onTooltip == null
       ? const ActionResult.success(
           object: null,
         )
@@ -58,7 +59,7 @@ class LockedInteractable extends Interactable {
     required String id,
     InteractableRenderSettings? renderSettings,
     Action? onTap,
-    Action<String>? onTooltip,
+    Action<InteractableTooltip>? onTooltip,
   }) : super(
           id: id,
           renderSettings: renderSettings,

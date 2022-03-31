@@ -1,7 +1,9 @@
+import 'package:escape_game_kit/escape_game_kit.dart';
 import 'package:escape_game_kit/src/game/game.dart';
 import 'package:escape_game_kit/src/game/padlocks/padlock.dart';
 import 'package:escape_game_kit/src/game/room/interactables/action_result.dart';
 import 'package:escape_game_kit/src/game/room/interactables/interactable.dart';
+import 'package:escape_game_kit/src/game/room/interactables/tooltip.dart';
 import 'package:escape_game_kit/src/utils/assets_extension.dart';
 import 'package:escape_game_kit/src/utils/auto_image.dart';
 import 'package:escape_game_kit/src/widgets/padlocks/dialogs.dart';
@@ -39,7 +41,7 @@ class InteractableWidget extends StatefulWidget {
 class _InteractableWidgetState extends State<InteractableWidget> {
   double tooltipOpacity = 0;
   OverlayEntry? tooltipOverlayEntry;
-  Offset? tooltipPosition;
+  Offset? mousePosition;
   AnimationController? hoverAnimationController;
 
   @override
@@ -65,12 +67,12 @@ class _InteractableWidgetState extends State<InteractableWidget> {
       errorBuilder: RenderSettingsStackWidget.getImageErrorWidgetBuilder(widget.interactable.renderSettings),
     );
 
-    String? tooltip = widget.interactable.onTooltip(widget.escapeGame).object;
+    InteractableTooltip? tooltip = widget.interactable.onTooltip(widget.escapeGame).object;
     result = MouseRegion(
       cursor: SystemMouseCursors.click,
       onEnter: (event) {
         if (tooltip != null) {
-          showTooltip(event);
+          showTooltip(event, tooltip);
         }
         hoverAnimationController?.forward(from: widget.interactable.renderSettings?.hoverAnimation?.from);
       },
@@ -112,12 +114,12 @@ class _InteractableWidgetState extends State<InteractableWidget> {
     super.dispose();
   }
 
-  void showTooltip(PointerEvent event) {
+  void showTooltip(PointerEvent event, InteractableTooltip tooltip) {
     updateTooltipPosition(event);
     tooltipOverlayEntry = OverlayEntry(
       builder: (context) => Positioned(
-        top: tooltipPosition!.dy + 1,
-        left: tooltipPosition!.dx + 1,
+        top: tooltip.calculateTopPosition(mousePosition!),
+        left: tooltip.calculateLeftPosition(mousePosition!),
         child: AnimatedOpacity(
           opacity: tooltipOpacity,
           duration: const Duration(milliseconds: 200),
@@ -130,7 +132,7 @@ class _InteractableWidgetState extends State<InteractableWidget> {
               ),
               padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
               child: Text(
-                widget.interactable.onTooltip(widget.escapeGame).object!,
+                tooltip.text,
                 style: Theme.of(context).textTheme.bodyText2!.copyWith(color: Colors.white),
               ),
             ),
@@ -147,9 +149,9 @@ class _InteractableWidgetState extends State<InteractableWidget> {
   }
 
   void updateTooltipPosition(PointerEvent event) {
-    Offset? previousPosition = tooltipPosition;
-    tooltipPosition = Offset(event.position.dx, event.position.dy);
-    if (previousPosition != tooltipPosition) {
+    Offset? previousPosition = mousePosition;
+    mousePosition = event.position;
+    if (previousPosition != mousePosition) {
       tooltipOverlayEntry?.markNeedsBuild();
     }
   }

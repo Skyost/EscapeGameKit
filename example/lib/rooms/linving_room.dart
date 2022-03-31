@@ -14,7 +14,7 @@ final Room livingRoom = Room(
         rotationAngle: -1,
         hoverAnimation: InteractableAnimation(type: InteractableAnimationType.pulse),
       ),
-      onTooltip: (escapeGame) => const ActionResult<String>.success(object: 'Vers la chambre'),
+      onTooltip: (escapeGame) => const ActionResult.success(object: InteractableTooltip(text: 'Vers la chambre')),
       roomId: 'bedroom',
     ),
   ],

@@ -3,7 +3,9 @@ import 'package:escape_game_kit/src/game/room/interactables/interactable.dart';
 import 'package:escape_game_kit/src/game/room/room.dart';
 import 'package:escape_game_kit/src/widgets/render_settings_stack.dart';
 import 'package:escape_game_kit/src/widgets/room/background.dart';
+import 'package:escape_game_kit/src/widgets/room/create_interactable_dialog.dart';
 import 'package:escape_game_kit/src/widgets/room/interactable.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 typedef BackgroundWidgetBuilder = Widget Function(BuildContext context, EscapeGame escapeGame, Room room);
@@ -39,6 +41,11 @@ class RoomWidget extends StatefulWidget {
 }
 
 class _RoomWidgetState extends State<RoomWidget> {
+  Offset? firstCorner;
+  Offset? secondCorner;
+  Rect? debugRect;
+  Size? widgetSize;
+
   @override
   void initState() {
     super.initState();
@@ -57,24 +64,66 @@ class _RoomWidgetState extends State<RoomWidget> {
 
   @override
   Widget build(BuildContext context) => Stack(
-    children: [
-      RenderSettingsStackWidget(
-        renderSettings: widget.room.renderSettings,
-        child: widget.backgroundWidgetBuilder(context, widget.escapeGame, widget.room),
-      ),
-      for (Interactable interactable in widget.room.interactables)
-        RenderSettingsStackWidget(
-          renderSettings: interactable.renderSettings,
-          child: widget.interactableWidgetBuilder(context, widget.escapeGame, widget.room, interactable),
-        )
-    ],
-  );
+        children: [
+          RenderSettingsStackWidget(
+            renderSettings: widget.room.renderSettings,
+            child: widget.backgroundWidgetBuilder(context, widget.escapeGame, widget.room),
+          ),
+          if (translucentRectangle != null)
+            Positioned.fromRect(
+              rect: translucentRectangle!,
+              child: Tooltip(
+                message: 'Top: ${translucentRectangle!.top.round()} ; left: ${translucentRectangle!.left.round()}.\nWidth: ${translucentRectangle!.width.round()} ; height : ${translucentRectangle!.height.round()}.',
+                child: GestureDetector(
+                  onTap: () {
+                    showDialog(
+                      context: context,
+                      builder: (context) => CreateInteractableDialog(translucentRectangle: translucentRectangle!),
+                    );
+                  },
+                  child: Container(color: Colors.teal.withOpacity(0.5)),
+                ),
+              ),
+            ),
+          if (kDebugMode)
+            Positioned.fill(
+              child: Listener(
+                behavior: HitTestBehavior.translucent,
+                onPointerDown: (details) {
+                  if (translucentRectangle == null || !translucentRectangle!.contains(details.position)) {
+                    setState(() {
+                      firstCorner = details.position;
+                      secondCorner = null;
+                    });
+                  }
+                },
+                onPointerMove: (details) {
+                  if (firstCorner != null) {
+                    setState(() => secondCorner = details.position);
+                  }
+                },
+                onPointerUp: (details) {
+                  if (translucentRectangle == null || !translucentRectangle!.contains(details.position)) {
+                    setState(() => secondCorner = details.position);
+                  }
+                },
+              ),
+            ),
+          for (Interactable interactable in widget.room.interactables)
+            RenderSettingsStackWidget(
+              renderSettings: interactable.renderSettings,
+              child: widget.interactableWidgetBuilder(context, widget.escapeGame, widget.room, interactable),
+            )
+        ],
+      );
 
   @override
   void dispose() {
     widget.escapeGame.removeListener(refreshState);
     super.dispose();
   }
+
+  Rect? get translucentRectangle => firstCorner == null || secondCorner == null ? null : Rect.fromPoints(firstCorner!, secondCorner!);
 
   void refreshState() {
     setState(() {});

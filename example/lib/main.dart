@@ -14,6 +14,7 @@ void main() {
   if (defaultTargetPlatform == TargetPlatform.windows || defaultTargetPlatform == TargetPlatform.linux || defaultTargetPlatform == TargetPlatform.macOS) {
     adjustWindowSize();
   }
+  escapeGame.start(); // TODO: remove this one.
   runApp(_EscapeGameKitExample());
 }
 
@@ -29,6 +30,10 @@ Future<void> adjustWindowSize() async {
     await windowManager.center();
     await windowManager.show();
   });
+}
+
+void registerPadlocks() {
+  PadlockDialogs.registerBuilderFor(PaintingPadlock, PaintingPadlockDialog.builder);
 }
 
 class _EscapeGameKitExample extends StatelessWidget {
@@ -89,11 +94,7 @@ class _TitleScreen extends StatelessWidget {
             child: FadeIn(
               delay: const Duration(seconds: 3),
               child: ElevatedButton.icon(
-                onPressed: () {
-                  PadlockDialogs.registerBuilderFor(PaintingPadlock, PaintingPadlockDialog.builder);
-                  escapeGame.start();
-                  escapeGame.openDialog(const EscapeGameDialog(message: 'Vous venez juste de rentrer des cours. Peut-être devriez-vous regarder votre messagerie ?'));
-                },
+                onPressed: escapeGame.start,
                 icon: const Icon(Icons.play_arrow),
                 label: const Text('JOUER'),
                 style: ButtonStyle(
