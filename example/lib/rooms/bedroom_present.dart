@@ -7,7 +7,7 @@ final Room bedroomPresent = Room(
   id: 'bedroom-present',
   interactables: [
     Interactable(
-      id: 'invisible-1',
+      id: 'left-computer',
       renderSettings: const InteractableRenderSettings(
         bottom: 90,
         left: 40,
@@ -24,7 +24,7 @@ final Room bedroomPresent = Room(
       },
     ),
     Interactable(
-      id: 'invisible-2',
+      id: 'neon-1',
       renderSettings: const InteractableRenderSettings(
         top: 70,
         left: 30,
@@ -34,7 +34,7 @@ final Room bedroomPresent = Room(
       onTooltip: (escapeGame) => const ActionResult.success(object: InteractableTooltip(text: "C'est un grand néon.")),
     ),
     Interactable(
-      id: 'invisible-3',
+      id: 'desk-computer-screens',
       renderSettings: const InteractableRenderSettings(
         left: 130,
         bottom: 110,
@@ -44,7 +44,7 @@ final Room bedroomPresent = Room(
       onTooltip: (escapeGame) => const ActionResult.success(object: InteractableTooltip(text: "Des écrans d'ordinateur sont disposés sur le bureau.")),
     ),
     Interactable(
-      id: 'invisible-4',
+      id: 'top-computer-screen',
       renderSettings: const InteractableRenderSettings(
         left: 130,
         bottom: 180,
@@ -54,7 +54,7 @@ final Room bedroomPresent = Room(
       onTooltip: (escapeGame) => const ActionResult.success(object: InteractableTooltip(text: "Un écran d'ordinateur affichant une courbe statistique.")),
     ),
     Interactable(
-      id: 'invisible-5',
+      id: 'papers',
       renderSettings: const InteractableRenderSettings(
         left: 270,
         bottom: 160,
@@ -67,7 +67,7 @@ final Room bedroomPresent = Room(
       },
     ),
     Interactable(
-      id: 'invisible-6',
+      id: 'window',
       renderSettings: const InteractableRenderSettings(
         left: 410,
         top: 135,
@@ -77,7 +77,7 @@ final Room bedroomPresent = Room(
       onTooltip: (escapeGame) => const ActionResult.success(object: InteractableTooltip(text: 'Il fait presque nuit dehors.')),
     ),
     Interactable(
-      id: 'invisible-7',
+      id: 'shoes-box',
       renderSettings: const InteractableRenderSettings(
         left: 662,
         top: 175,
@@ -87,7 +87,7 @@ final Room bedroomPresent = Room(
       onTooltip: (escapeGame) => const ActionResult.success(object: InteractableTooltip(text: 'Une boîte à chaussures.')),
     ),
     Interactable(
-      id: 'invisible-8',
+      id: 'neon-2',
       renderSettings: const InteractableRenderSettings(
         top: 114,
         left: 771,
@@ -97,7 +97,7 @@ final Room bedroomPresent = Room(
       onTooltip: (escapeGame) => const ActionResult.success(object: InteractableTooltip(text: 'Un grand néon.')),
     ),
     Interactable(
-      id: 'invisible-9',
+      id: 'poster',
       renderSettings: const InteractableRenderSettings(
         top: 111,
         left: 798,
@@ -110,6 +110,146 @@ final Room bedroomPresent = Room(
           xShift: -120,
         ),
       ),
+    ),
+    Interactable(
+      id: 'lights',
+      renderSettings: const InteractableRenderSettings(
+        top: 20,
+        left: 342,
+        height: 25,
+        width: 294,
+      ),
+      onTooltip: (escapeGame) => const ActionResult.success(object: InteractableTooltip(text: 'Il serait temps de changer ces ampoules.')),
+    ),
+    Interactable(
+      id: 'laptop',
+      renderSettings: const InteractableRenderSettings(
+        top: 258,
+        left: 262,
+        height: 24,
+        width: 47,
+      ),
+      onTooltip: (escapeGame) => const ActionResult.success(object: InteractableTooltip(text: 'Un petit ordinateur portable.')),
+    ),
+    Interactable(
+      id: 'pc-computer',
+      renderSettings: const InteractableRenderSettings(
+        top: 236,
+        left: 302,
+        height: 48,
+        width: 84,
+      ),
+      onTooltip: (escapeGame) => const ActionResult.success(object: InteractableTooltip(text: 'C\'est un ordinateur fixe.')),
+    ),
+    Interactable(
+      id: 'draws',
+      renderSettings: const InteractableRenderSettings(
+        top: 303,
+        left: 38,
+        height: 62,
+        width: 65,
+      ),
+      onTooltip: (escapeGame) => const ActionResult.success(object: InteractableTooltip(text: 'Rien dans ces tiroirs.')),
+    ),
+    Interactable(
+      id: 'hi-fi',
+      renderSettings: const InteractableRenderSettings(
+        top: 239,
+        left: 877,
+        height: 81,
+        width: 53,
+      ),
+      onTooltip: (escapeGame) => const ActionResult.success(
+        object: InteractableTooltip(
+          text: 'Une chaîne HiFi qui à l\'air vraiment moderne !',
+          xShift: -240,
+        ),
+      ),
+    ),
+    Interactable(
+      id: 'outlet',
+      renderSettings: const InteractableRenderSettings(
+        top: 354,
+        left: 270,
+        height: 16,
+        width: 48,
+      ),
+      onTooltip: (escapeGame) => const ActionResult.success(object: InteractableTooltip(text: 'Attention, c\'est dangereux.')),
+    ),
+    Interactable(
+      id: 'gaming-computer',
+      renderSettings: const InteractableRenderSettings(
+        top: 301,
+        left: 162,
+        height: 57,
+        width: 54,
+      ),
+      onTooltip: (escapeGame) => const ActionResult.success(object: InteractableTooltip(text: 'Une tour gaming !')),
+    ),
+    Interactable(
+      id: 'mug',
+      renderSettings: const InteractableRenderSettings(
+        top: 286,
+        left: 606,
+        height: 24,
+        width: 24,
+      ),
+      onTooltip: (escapeGame) => const ActionResult.success(object: InteractableTooltip(text: 'Le tasse n\'a pas été lavée...')),
+    ),
+    Interactable(
+      id: 'bass',
+      renderSettings: const InteractableRenderSettings(
+        top: 122,
+        left: 629,
+        height: 26,
+        width: 76,
+      ),
+      onTooltip: (escapeGame) => const ActionResult.success(object: InteractableTooltip(text: 'Des basses !')),
+    ),
+    Interactable(
+      id: 'nightstand',
+      renderSettings: const InteractableRenderSettings(
+        top: 306,
+        left: 596,
+        height: 49,
+        width: 51,
+      ),
+      onTooltip: (escapeGame) => const ActionResult.success(object: InteractableTooltip(text: 'Une table de nuit.')),
+    ),
+    Interactable(
+      id: 'bed',
+      renderSettings: const InteractableRenderSettings(
+        top: 278,
+        left: 646,
+        height: 82,
+        width: 225,
+      ),
+      onTooltip: (escapeGame) => const ActionResult.success(object: InteractableTooltip(text: 'Il n\'est pas encore l\'heure de dormir !')),
+    ),
+    Interactable(
+      id: 'books',
+      renderSettings: const InteractableRenderSettings(
+        top: 196,
+        left: 892,
+        height: 20,
+        width: 38,
+      ),
+      onTooltip: (escapeGame) => const ActionResult.success(
+        object: InteractableTooltip(
+          text: 'Ce ne sont pas des livres de maths !',
+          xShift: -240,
+        ),
+      ),
+    ),
+    Interactable(
+      id: 'desktop-computer',
+      renderSettings: const InteractableRenderSettings(
+        top: 210,
+        left: 102,
+        height: 73,
+        width: 27,
+      ),
+      onTooltip: (escapeGame) => const ActionResult.success(object: InteractableTooltip(text: 'Un ordinateur de bureau.')),
     ),
   ],
 );

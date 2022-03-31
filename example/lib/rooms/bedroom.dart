@@ -7,7 +7,7 @@ final Room bedroom = Room(
   id: 'bedroom',
   interactables: [
     Interactable(
-      id: 'invisible-1',
+      id: 'mirror',
       renderSettings: const InteractableRenderSettings(
         top: 130,
         left: 280,
@@ -17,7 +17,7 @@ final Room bedroom = Room(
       onTooltip: (escapeGame) => const ActionResult.success(object: InteractableTooltip(text: 'Un grand miroir.')),
     ),
     Interactable(
-      id: 'invisible-2',
+      id: 'top-draws',
       renderSettings: const InteractableRenderSettings(
         top: 290,
         left: 250,
@@ -27,26 +27,27 @@ final Room bedroom = Room(
       onTooltip: (escapeGame) => const ActionResult.success(object: InteractableTooltip(text: "Il n'y a rien dans les deux premiers tiroirs.")),
     ),
     PickableObject(
-        id: 'key',
-        object: paintingKey,
-        renderSettings: const InteractableRenderSettings(
-          top: 320,
-          left: 250,
-          height: 15,
-          width: 70,
-        ),
-        onPickedUp: (escapeGame) {
-          escapeGame.openDialog(const EscapeGameDialog(
-            title: 'Object trouvé !',
-            imageRenderSettings: RenderSettings(
-              asset: 'assets/interactables/key.svg',
-              width: 100,
-              height: 100,
-            ),
-            message: 'Vous avez trouvé une clé !',
-          ));
-          return const ActionResult.success();
-        }),
+      id: 'key',
+      object: paintingKey,
+      renderSettings: const InteractableRenderSettings(
+        top: 320,
+        left: 250,
+        height: 15,
+        width: 70,
+      ),
+      onPickedUp: (escapeGame) {
+        escapeGame.openDialog(const EscapeGameDialog(
+          title: 'Object trouvé !',
+          imageRenderSettings: RenderSettings(
+            asset: 'assets/interactables/key.svg',
+            width: 100,
+            height: 100,
+          ),
+          message: 'Vous avez trouvé une clé !',
+        ));
+        return const ActionResult.success();
+      },
+    ),
     Door(
       id: 'desk-door',
       renderSettings: InteractableRenderSettings(

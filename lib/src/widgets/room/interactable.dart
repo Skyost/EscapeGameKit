@@ -1,4 +1,3 @@
-import 'package:escape_game_kit/escape_game_kit.dart';
 import 'package:escape_game_kit/src/game/game.dart';
 import 'package:escape_game_kit/src/game/padlocks/padlock.dart';
 import 'package:escape_game_kit/src/game/room/interactables/action_result.dart';

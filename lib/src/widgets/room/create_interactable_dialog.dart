@@ -1,4 +1,4 @@
-import 'package:escape_game_kit/escape_game_kit.dart';
+import 'package:escape_game_kit/src/widgets/alert_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -64,7 +64,12 @@ class _CreateInteractableDialogState extends State<CreateInteractableDialog> {
         ],
         actions: [
           TextButton(
-            onPressed: () => Clipboard.setData(ClipboardData(text: codeController.text)),
+            onPressed: () {
+              Clipboard.setData(ClipboardData(text: codeController.text));
+              ScaffoldMessenger.maybeOf(context)?.showSnackBar(const SnackBar(
+                content: Text('Done !'),
+              ));
+            },
             child: const Text('COPY TO CLIPBOARD'),
           ),
           const EscapeGameAlertDialogCloseButton(cancel: false),

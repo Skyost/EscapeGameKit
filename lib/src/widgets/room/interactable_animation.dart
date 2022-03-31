@@ -1,5 +1,5 @@
 import 'package:animate_do/animate_do.dart';
-import 'package:escape_game_kit/escape_game_kit.dart';
+import 'package:escape_game_kit/src/game/room/interactables/render_settings.dart';
 import 'package:flutter/material.dart';
 
 class InteractableAnimationWidget extends StatelessWidget {

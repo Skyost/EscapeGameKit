@@ -12,5 +12,6 @@ class InteractableTooltip {
   });
 
   double calculateTopPosition(Offset mousePosition) => mousePosition.dy + yShift;
+
   double calculateLeftPosition(Offset mousePosition) => mousePosition.dx + xShift;
 }
