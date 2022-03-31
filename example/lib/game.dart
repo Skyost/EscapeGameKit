@@ -5,7 +5,7 @@ import 'package:escape_game_kit_example/rooms/desk.dart';
 import 'package:escape_game_kit_example/rooms/linving_room.dart';
 
 final EscapeGame escapeGame = EscapeGame(
-  firstRoomId: bedroom.id,
+  firstRoomId: bedroomPresent.id,
   rooms: [
     bedroomPresent,
     bedroom,

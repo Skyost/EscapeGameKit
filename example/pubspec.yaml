@@ -11,6 +11,8 @@ dependencies:
     path: ../
   flutter:
     sdk: flutter
+  flutter_localizations:
+    sdk: flutter
   just_audio: ^0.9.20
   just_audio_libwinmedia: ^0.0.4
   qr_flutter: ^4.0.0

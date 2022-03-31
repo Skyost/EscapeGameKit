@@ -4,6 +4,7 @@ import 'package:escape_game_kit_example/game.dart';
 import 'package:escape_game_kit_example/padlocks/painting_padlock.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:window_manager/window_manager.dart';
 
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
@@ -37,6 +38,12 @@ class _EscapeGameKitExample extends StatelessWidget {
         title: 'EscapeGameKit Example',
         theme: ThemeData(primarySwatch: Colors.indigo),
         locale: const Locale('fr'),
+        localizationsDelegates: const [
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+          GlobalCupertinoLocalizations.delegate,
+        ],
+        supportedLocales: const [Locale('fr')],
         home: EscapeGameWidget(
           beforeGameStartBuilder: (context, escapeGame) => _TitleScreen(escapeGame: escapeGame),
           escapeGame: escapeGame,

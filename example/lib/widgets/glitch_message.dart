@@ -1,0 +1,76 @@
+import 'package:escape_game_kit/escape_game_kit.dart';
+import 'package:escape_game_kit_example/widgets/audio.dart';
+import 'package:escape_game_kit_example/widgets/message.dart';
+import 'package:flutter/material.dart';
+
+class GlitchMessageWidget extends StatefulWidget {
+  final EscapeGame escapeGame;
+
+  const GlitchMessageWidget({
+    Key? key,
+    required this.escapeGame,
+  }) : super(
+          key: key,
+        );
+
+  @override
+  State<StatefulWidget> createState() => _GlitchMessageWidgetState();
+
+
+}
+
+class _GlitchMessageWidgetState extends State<GlitchMessageWidget> {
+  bool hasAudioStarted = false;
+
+  @override
+  Widget build(BuildContext context) => MessageWidget(
+    author: 'DELAUNAY Hugo',
+    title: 'Fichier audio',
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        const Text('Bonjour à tous.\n\nVoici le fichier audio dont vous avez besoin pour l\'évaluation de demain.\n\n'),
+        AudioPlayer(
+          'assets/glitch/noise.mp3',
+          pause: (player) {},
+          play: (player) async {
+            setState(() => hasAudioStarted = true);
+            player.play();
+            widget.escapeGame.goToRoom('bedroom');
+            await Future.delayed(const Duration(seconds: 4));
+            showDialog(
+              context: context,
+              barrierDismissible: false,
+              builder: (context) => AlertDialog(
+                backgroundColor: Colors.black,
+                contentPadding: EdgeInsets.zero,
+                content: Image.asset(
+                  'assets/glitch/image.webp',
+                  width: MediaQuery.of(context).size.width,
+                ),
+              ),
+            );
+            await Future.delayed(const Duration(seconds: 8));
+            Navigator.pop(context);
+            Navigator.pop(context);
+            Navigator.pop(context);
+            widget.escapeGame.openDialog(const EscapeGameDialog(message: "Mince, que s'est-il passé ?<br>Et surtout, où est-on !?"));
+          },
+          seek: (player, duration) {},
+        ),
+        const Text('\n\nBonne journée.\nH. Delaunay'),
+      ],
+    ),
+    date: DateTime.now(),
+    unread: true,
+    closeButton: TextButton(
+      onPressed: () {
+        if (!hasAudioStarted) {
+          Navigator.pop(context);
+        }
+      },
+      child: Text(MaterialLocalizations.of(context).closeButtonLabel.toUpperCase()),
+    ),
+  );
+}
