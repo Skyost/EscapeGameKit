@@ -8,7 +8,7 @@ import 'package:escape_game_kit/src/game/room/interactables/tooltip.dart';
 
 class Clue extends LockedInteractable {
   String? keyId;
-  EscapeGameDialog? lockedDialog;
+  EscapeGameDialog? noKeyDialog;
   EscapeGameDialog? clueDialog;
   InteractableTooltip? foundTooltip;
 
@@ -18,7 +18,7 @@ class Clue extends LockedInteractable {
     Action<InteractableTooltip>? onTooltip,
     Padlock? padlock,
     this.keyId,
-    this.lockedDialog,
+    this.noKeyDialog,
     this.clueDialog,
     this.foundTooltip,
   }) : super(
@@ -46,8 +46,8 @@ class Clue extends LockedInteractable {
           onTooltip: (escapeGame) => ActionResult.success(object: foundTooltip!),
         ));
       }
-    } else if (lockedDialog != null) {
-      escapeGame.openDialog(lockedDialog!);
+    } else if (noKeyDialog != null) {
+      escapeGame.openDialog(noKeyDialog!);
     }
     return const ActionResult.success();
   }

@@ -126,6 +126,8 @@ class _RoomWidgetState extends State<RoomWidget> {
   Rect? get translucentRectangle => firstCorner == null || secondCorner == null ? null : Rect.fromPoints(firstCorner!, secondCorner!);
 
   void refreshState() {
-    setState(() {});
+    if (mounted) {
+      setState(() {});
+    }
   }
 }

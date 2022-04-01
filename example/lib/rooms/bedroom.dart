@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:escape_game_kit/escape_game_kit.dart';
+import 'package:escape_game_kit_example/objects/lamp_key.dart';
 import 'package:escape_game_kit_example/objects/painting_key.dart';
 import 'package:escape_game_kit_example/padlocks/computer_padlock.dart';
 
@@ -69,6 +70,19 @@ final Room bedroom = Room(
         width: 122,
       ),
       onTooltip: (escapeGame) => const ActionResult.success(object: InteractableTooltip(text: 'Il fait encore nuit dehors.')),
+    ),
+    Clue(
+      id: 'bed-chest',
+      renderSettings: const InteractableRenderSettings(
+        top: 279,
+        left: 636,
+        height: 78,
+        width: 288,
+      ),
+      keyId: lampKey.id,
+      clueDialog: const EscapeGameDialog(message: 'TODO'), // TODO
+      noKeyDialog: const EscapeGameDialog(message: 'Il semble y avoir un coffre sous ce lit, mais il est verouillé par une clé...'),
+      foundTooltip: const InteractableTooltip(text: 'Vous avez trouvé un indice sous ce lit.'),
     ),
     Door(
       id: 'desk-door',
