@@ -22,6 +22,15 @@ class Room with IdEquatable<String>, ChangeNotifier {
 
   HashSet<Interactable> get interactables => HashSet.of(_interactables);
 
+  Interactable? getInteractableFromId(String id) {
+    for (Interactable interactable in _interactables) {
+      if (interactable.id == id) {
+        return interactable;
+      }
+    }
+    return null;
+  }
+
   void addInteractable(Interactable interactable, {bool notify = true}) {
     if (_interactables.add(interactable)) {
       interactable.addListener(notifyListeners);
@@ -37,6 +46,13 @@ class Room with IdEquatable<String>, ChangeNotifier {
       if (notify) {
         notifyListeners();
       }
+    }
+  }
+
+  void removeInteractableFromId(String id, {bool notify = true}) {
+    Interactable? interactable = getInteractableFromId(id);
+    if (interactable != null) {
+      removeInteractable(interactable, notify: notify);
     }
   }
 

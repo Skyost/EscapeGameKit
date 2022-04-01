@@ -35,6 +35,15 @@ Future<void> adjustWindowSize() async {
 }
 
 void registerPadlocks() {
+  PadlockDialogs.registerBuilderFor(
+    CredentialsPadlock,
+    (context, padlock) => CredentialsPadlockDialog.builder(
+      context,
+      padlock,
+      usernameText: "Nom d'utilisateur",
+      passwordText: 'Mot de passe',
+    ),
+  );
   PadlockDialogs.registerBuilderFor(PaintingPadlock, PaintingPadlockDialog.builder);
   PadlockDialogs.registerBuilderFor(ComputerPadlock, ComputerPadlockDialog.builder);
 }
@@ -97,7 +106,7 @@ class _TitleScreen extends StatelessWidget {
                         'assets/icon.png',
                         height: 60,
                       ),
-                      applicationLegalese: "Copyright © 2022 Hugo Delaunay. Tous droits réservés.\nL'icône provient de FreePik, les décors ont été créés par upklyak.",
+                      applicationLegalese: "Copyright © 2022 Hugo Delaunay. Tous droits réservés.\nL'icône provient de FreePik, les décors ainsi que les objets ont été créés par upklyak.",
                     ),
                   );
                 },

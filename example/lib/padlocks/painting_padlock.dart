@@ -2,8 +2,6 @@ import 'package:escape_game_kit/escape_game_kit.dart';
 import 'package:flutter/material.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
-final PaintingPadlock paintingPadlock = PaintingPadlock();
-
 class PaintingPadlock extends ObjectEqualPadlock<String> {
   PaintingPadlock()
       : super(

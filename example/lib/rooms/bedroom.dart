@@ -26,10 +26,10 @@ final Room bedroom = Room(
         height: 30,
         width: 70,
       ),
-      onTooltip: (escapeGame) => const ActionResult.success(object: InteractableTooltip(text: "Il n'y a rien dans les deux premiers tiroirs.")),
+      onTooltip: (escapeGame) => const ActionResult.success(object: InteractableTooltip(text: "Il n'y a rien dans les deux tiroirs du dessus.")),
     ),
     PickableObject(
-      id: 'key',
+      id: 'painting-key',
       object: paintingKey,
       renderSettings: const InteractableRenderSettings(
         top: 320,
@@ -41,7 +41,7 @@ final Room bedroom = Room(
         escapeGame.openDialog(const EscapeGameDialog(
           title: 'Object trouvé !',
           imageRenderSettings: RenderSettings(
-            asset: 'assets/interactables/key.svg',
+            asset: 'assets/interactables/painting-key.svg',
             width: 100,
             height: 100,
           ),
@@ -122,7 +122,7 @@ final Room bedroom = Room(
             unlockMessage: 'Mince, il faut se connecter !',
             failedToUnlockMessage: 'Impossible de se connecter... Il doit y avoir une erreur quelque part.'
           ),
-          computerPadlock,
+          ComputerPadlock(),
         ],
       ),
     ),

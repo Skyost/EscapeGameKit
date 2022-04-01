@@ -33,4 +33,15 @@ class Inventory with ChangeNotifier {
       notifyListeners();
     }
   }
+
+  void hasObject(EscapeGameObject object) => hasObjectId(object.id);
+
+  bool hasObjectId(String id) {
+    for (EscapeGameObject object in _objects) {
+      if (object.id == id) {
+        return true;
+      }
+    }
+    return false;
+  }
 }

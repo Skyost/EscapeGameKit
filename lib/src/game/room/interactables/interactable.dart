@@ -57,7 +57,7 @@ class LockedInteractable extends Interactable {
   final Padlock? padlock;
 
   LockedInteractable({
-    required this.padlock,
+    this.padlock,
     required String id,
     InteractableRenderSettings? renderSettings,
     Action? onTap,

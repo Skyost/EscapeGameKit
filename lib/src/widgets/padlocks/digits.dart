@@ -1,6 +1,7 @@
 import 'package:escape_game_kit/src/game/padlocks/digits.dart';
 import 'package:escape_game_kit/src/game/padlocks/padlock.dart';
 import 'package:escape_game_kit/src/widgets/alert_dialog.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class DigitsPadlockDialog extends PadlockAlertDialog<DigitsPadlock> {
@@ -41,29 +42,33 @@ class _DigitsPadlockDialogState extends PadlockAlertDialogState<DigitsPadlockDia
 
   @override
   List<Widget> buildBody(BuildContext context) => [
-    if (controllers.length > 1)
-      Wrap(
-        alignment: WrapAlignment.center,
-        spacing: 10,
-        children: [
-          for (TextEditingController controller in controllers)
-            SizedBox(
-              width: 20,
-              child: TextField(
-                controller: controller,
-                textAlign: TextAlign.center,
-                style: const TextStyle(fontSize: 20),
-              ),
-            ),
-        ],
-      )
-    else
-      TextField(
-        controller: controllers.first,
-        textAlign: TextAlign.center,
-        style: const TextStyle(fontSize: 20),
-      )
-  ];
+        if (controllers.length > 1)
+          Wrap(
+            alignment: WrapAlignment.center,
+            spacing: 10,
+            children: [
+              for (TextEditingController controller in controllers)
+                SizedBox(
+                  width: 20,
+                  child: TextField(
+                    controller: controller,
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(fontSize: 20),
+                    maxLength: 1,
+                    decoration: const InputDecoration(counterText: ''),
+                  ),
+                ),
+            ],
+          )
+        else
+          TextField(
+            controller: controllers.first,
+            textAlign: TextAlign.center,
+            style: const TextStyle(fontSize: 20),
+            maxLength: 1,
+            decoration: const InputDecoration(counterText: ''),
+          )
+      ];
 
   @override
   dynamic getCode() => controllers.map((controller) => controller.text).join();

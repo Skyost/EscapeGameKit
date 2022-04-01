@@ -1,8 +1,6 @@
 import 'package:escape_game_kit/escape_game_kit.dart';
 import 'package:flutter/material.dart';
 
-final ComputerPadlock computerPadlock = ComputerPadlock();
-
 class ComputerPadlock extends ObjectEqualPadlock<String> {
   ComputerPadlock()
       : super(
