@@ -7,7 +7,7 @@ class PaintingPadlock extends ObjectEqualPadlock<String> {
   PaintingPadlock()
       : super(
           title: 'Cadenas',
-          unlockMessage: "Mince, il y a un deuxième cadenas avec une sorte de symbôle ! Qu'est-ce que cela peut être ?",
+          unlockMessage: "Vous avez déverrouillez ce coffre à l'aide de la clé en forme de bouche... Mais il y a un deuxième cadenas avec une sorte de symbôle ! Qu'est-ce que cela peut être ?",
           failedToUnlockMessage: "Ce code ne fonctionne pas...",
         );
 
@@ -62,7 +62,6 @@ class _PaintingPadlockDialogState extends PadlockAlertDialogState<PaintingPadloc
         ),
         TextField(
           controller: controller,
-          textAlign: TextAlign.center,
           style: const TextStyle(fontSize: 20),
           decoration: const InputDecoration(
             labelText: 'Entrer le code ici',

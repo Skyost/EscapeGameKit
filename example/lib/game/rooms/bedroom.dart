@@ -12,7 +12,7 @@ class BedroomRoom extends Room {
     EscapeGameObject paintingKey = const PaintingKey(),
   }) : super(
           id: roomId,
-          firstVisitDialog: const EscapeGameDialog(message: "Mince, que s'est-il passé ?<br>Et surtout, où est-on !?"),
+          firstVisitDialog: const EscapeGameDialog(message: "<em>Mince, que s'est-il passé ?<br>Et surtout, où est-on !?</em>"),
           interactables: [
             Door(
               id: 'desk-door',
@@ -48,14 +48,14 @@ class BedroomRoom extends Room {
               roomId: 'living-room',
             ),
             Door(
-              id: 'final-door',
+              id: 'computer',
               renderSettings: const InteractableRenderSettings(
                 top: 225,
                 left: 410,
                 height: 60,
                 width: 60,
               ),
-              roomId: 'final',
+              roomId: 'bedroom-final',
               padlock: PadlockSequence(
                 padlocks: [
                   CredentialsPadlock(
@@ -106,7 +106,7 @@ class BedroomRoom extends Room {
                     width: 100,
                     height: 100,
                   ),
-                  message: 'Vous avez trouvé une clé !',
+                  message: '<em>Vous avez trouvé une clé en forme de bouche !</em>',
                 ));
                 return const ActionResult.success();
               },
@@ -141,7 +141,7 @@ class BedroomRoom extends Room {
                 width: 288,
               ),
               keyId: BedKey.objectId,
-              clueDialog: const EscapeGameDialog(message: '<em>Des lapins et des poules courent dans le jardin. On ne sait pas combien il y en a, mais on compte 20 pattes et 6 têtes.</em><br><br>Le deuxième chiffre du mot de passe est le nombre de lapins.'),
+              clueDialog: const EscapeGameDialog(message: "<em>Vous avez déverrouillez ce coffre à l'aide de la clé en forme de huit... Et il contient un message !</em><br><br>Des lapins et des poules courent dans le jardin. On ne sait pas combien il y en a, mais on compte 20 pattes et 6 têtes.<br><br><strong>Le deuxième chiffre du mot de passe de l'ordinateur est le nombre de lapins.</strong>"),
               noKeyDialog: const EscapeGameDialog(message: 'Il semble y avoir un coffre sous ce lit, mais il est verouillé par une clé...'),
             ),
             Clue.dialog(
@@ -152,7 +152,17 @@ class BedroomRoom extends Room {
                 height: 44,
                 width: 38,
               ),
-              clueDialog: const EscapeGameDialog(message: "Tiens, il y a un indice derrière cette lampe !<br><br><em>Je n'arrêtais jamais de perdre le code du cadenas du coffre caché dans le pot de fleur en bas... Mais maintenant plus de soucis !<br>Pour le déverrouiller, il suffit d'entrer le nombre de combinaisons de codes à 3 chiffres possibles !</em>"),
+              clueDialog: const EscapeGameDialog(message: "<em>Tiens, il y a un indice derrière cette lampe !</em><br><br>Je n'arrêtais jamais d'oublier le code du cadenas du coffre caché dans le pot de fleur du salon... Mais maintenant plus de soucis !<br>Pour le déverrouiller, il suffit d'entrer le nombre de combinaisons de codes à 3 chiffres possibles !"),
+            ),
+            Interactable(
+              id: 'candles',
+              renderSettings: const InteractableRenderSettings(
+                top: 218,
+                left: 247,
+                height: 55,
+                width: 31,
+              ),
+              onHover: (escapeGame) => const ActionResult.success(object: InteractableTooltip(text: 'Des bougies éclairent la pièce.')),
             ),
           ],
         );

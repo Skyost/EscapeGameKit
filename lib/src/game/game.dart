@@ -26,7 +26,6 @@ class EscapeGame with CountdownListener, ChangeNotifier {
         inventory = inventory ?? Inventory(),
         _currentRoom = firstRoomId ?? rooms.first.id,
         visitedRooms = {} {
-    goToRoom(_currentRoom);
     this.inventory.addListener(notifyListeners);
   }
 
@@ -69,6 +68,7 @@ class EscapeGame with CountdownListener, ChangeNotifier {
   void start({bool notify = true}) {
     countdown?.start();
     _isStarted = true;
+    goToRoom(_currentRoom);
     if (notify) {
       notifyListeners();
     }

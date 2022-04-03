@@ -1,8 +1,10 @@
-import 'package:animate_do/animate_do.dart';
 import 'package:escape_game_kit/escape_game_kit.dart';
 import 'package:escape_game_kit_example/game/game.dart';
+import 'package:escape_game_kit_example/game/padlocks/caesar_padlock.dart';
 import 'package:escape_game_kit_example/game/padlocks/computer_padlock.dart';
 import 'package:escape_game_kit_example/game/padlocks/painting_padlock.dart';
+import 'package:escape_game_kit_example/widgets/play_button.dart';
+import 'package:escape_game_kit_example/widgets/title_screen.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -45,6 +47,7 @@ void registerPadlocks() {
     ),
   );
   PadlockDialogs.registerBuilderFor(PaintingPadlock, PaintingPadlockDialog.builder);
+  PadlockDialogs.registerBuilderFor(CaesarPadlock, CaesarPadlockDialog.builder);
   PadlockDialogs.registerBuilderFor(ComputerPadlock, ComputerPadlockDialog.builder);
 }
 
@@ -59,7 +62,10 @@ class _EscapeGameKitExample extends StatelessWidget {
   Widget build(BuildContext context) => MaterialApp(
         navigatorKey: navigatorKey,
         title: 'EscapeGameKit Example',
-        theme: ThemeData(primarySwatch: Colors.indigo),
+        theme: ThemeData(
+          primarySwatch: Colors.indigo,
+          scrollbarTheme: const ScrollbarThemeData(isAlwaysShown: true),
+        ),
         locale: const Locale('fr'),
         localizationsDelegates: const [
           GlobalMaterialLocalizations.delegate,
@@ -68,78 +74,36 @@ class _EscapeGameKitExample extends StatelessWidget {
         ],
         supportedLocales: const [Locale('fr')],
         home: EscapeGameWidget(
-          beforeGameStartBuilder: (context, escapeGame) => _TitleScreen(escapeGame: escapeGame),
+          beforeGameStartBuilder: (context, escapeGame) => TitleScreen(
+            child: PlayButton(
+              escapeGame: escapeGame,
+            ),
+          ),
+          afterGameFinishedBuilder: (context, escapeGame) => TitleScreen(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: const [
+                Text(
+                  'FÉLICITATIONS !',
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 20,
+                    color: Colors.white,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+                Text(
+                  'Bravo, vous avez réussi à revenir en 2022 !',
+                  style: TextStyle(
+                    color: Colors.white,
+                  ),
+                  textAlign: TextAlign.center,
+                )
+              ],
+            ),
+          ),
           escapeGame: escapeGame,
-          autostart: kDebugMode,
+          autostart: kDebugMode, // TODO: Remove this one.
         ),
-      );
-}
-
-class _TitleScreen extends StatelessWidget {
-  final EscapeGame escapeGame;
-
-  const _TitleScreen({
-    Key? key,
-    required this.escapeGame,
-  }) : super(
-          key: key,
-        );
-
-  @override
-  Widget build(BuildContext context) => Stack(
-        alignment: Alignment.center,
-        children: [
-          Flash(
-            duration: const Duration(seconds: 1),
-            child: Image.asset(
-              'assets/backgrounds/title.png',
-              fit: BoxFit.fitWidth,
-              width: MediaQuery.of(context).size.width,
-            ),
-          ),
-          Positioned(
-            top: 60,
-            child: FadeIn(
-              delay: const Duration(seconds: 2),
-              duration: const Duration(seconds: 1),
-              child: GestureDetector(
-                onTap: () {
-                  showDialog(
-                    context: context,
-                    builder: (context) => AboutDialog(
-                      applicationName: 'ERROR 1980',
-                      applicationVersion: 'v1.0.0',
-                      applicationIcon: Image.asset(
-                        'assets/icon.png',
-                        height: 60,
-                      ),
-                      applicationLegalese: "Copyright © 2022 Hugo Delaunay. Tous droits réservés.\nL'icône provient de FreePik, les décors ainsi que les objets ont été créés par upklyak.",
-                    ),
-                  );
-                },
-                child: Image.asset(
-                  'assets/logo.png',
-                  scale: 1.5,
-                ),
-              ),
-            ),
-          ),
-          Positioned(
-            bottom: 60,
-            child: FadeIn(
-              delay: const Duration(seconds: 3),
-              child: ElevatedButton.icon(
-                onPressed: escapeGame.start,
-                icon: const Icon(Icons.play_arrow),
-                label: const Text('JOUER'),
-                style: ButtonStyle(
-                  shape: MaterialStateProperty.all(const RoundedRectangleBorder()),
-                  foregroundColor: MaterialStateProperty.all(Colors.white),
-                  padding: MaterialStateProperty.all(const EdgeInsets.symmetric(horizontal: 40, vertical: 20)),
-                ),
-              ),
-            ),
-          ),
-        ],
       );
 }

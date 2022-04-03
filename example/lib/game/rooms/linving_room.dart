@@ -1,6 +1,7 @@
 import 'package:escape_game_kit/escape_game_kit.dart';
 import 'package:escape_game_kit_example/game/objects/bed_key.dart';
 import 'package:escape_game_kit_example/game/objects/bookshelf_key.dart';
+import 'package:escape_game_kit_example/game/padlocks/caesar_padlock.dart';
 
 class LinvingRoomRoom extends Room {
   static const String roomId = 'living-room';
@@ -47,7 +48,7 @@ class LinvingRoomRoom extends Room {
                     width: 100,
                     height: 100,
                   ),
-                  message: 'Vous avez trouvé une clé !',
+                  message: '<em>Vous avez trouvé une clé en forme de huit !</em>',
                 ));
                 return const ActionResult.success();
               },
@@ -75,7 +76,7 @@ class LinvingRoomRoom extends Room {
                     width: 100,
                     height: 100,
                   ),
-                  message: 'Vous avez trouvé une clé !',
+                  message: '<em>Vous avez trouvé une clé en forme de trèfle !</em>',
                 ));
                 return const ActionResult.success();
               },
@@ -164,7 +165,8 @@ class LinvingRoomRoom extends Room {
                 height: 31,
                 width: 44,
               ),
-              clueDialog: const EscapeGameDialog(message: "<em>Dans un étang non loin d'ici, j'ai remarqué que le nombre de nénuphars doublait chaque nuit... Au début il y en a 1, puis 2 le lendemain, puis 4 le surlendemain, etc. si bien que l'étang est recouvert de nénuphars en 7 jours seulement !</em><br><br>Le troisième et dernier chiffre de mon mot de passe est le nombre de jour qu'il faut pour que l'étang soit recouvert si au début il y a non pas 1, mais 2 nénuphars."),
+              padlock: CaesarPadlock(),
+              clueDialog: const EscapeGameDialog(message: "Dans un étang non loin d'ici, j'ai remarqué que le nombre de nénuphars doublait chaque nuit... Au début il y en a 1, puis 2 le lendemain, puis 4 le surlendemain, etc. si bien que l'étang est recouvert de nénuphars en 7 jours seulement !<br><br><strong>Le troisième et dernier chiffre du mot de passe de l'ordinatuer est le nombre de jours qu'il faut pour que l'étang soit recouvert si au début il y a non pas 1, mais 2 nénuphars.</strong>"),
             ),
             Interactable(
               id: 'pilow-2',
@@ -190,6 +192,46 @@ class LinvingRoomRoom extends Room {
                   xShift: -160,
                 ),
               ),
+            ),
+            Interactable(
+              id: 'table',
+              renderSettings: const InteractableRenderSettings(
+                top: 309,
+                left: 344,
+                height: 59,
+                width: 138,
+              ),
+              onHover: (escapeGame) => const ActionResult.success(object: InteractableTooltip(text: 'Une table, mais il n\'y a rien dessus.')),
+            ),
+            Interactable(
+              id: 'lamp-1',
+              renderSettings: const InteractableRenderSettings(
+                top: 252,
+                left: 597,
+                height: 47,
+                width: 30,
+              ),
+              onHover: (escapeGame) => const ActionResult.success(object: InteractableTooltip(text: 'Une petite lampe de chevet.')),
+            ),
+            Interactable(
+              id: 'lamp-2',
+              renderSettings: const InteractableRenderSettings(
+                top: 206,
+                left: 698,
+                height: 148,
+                width: 38,
+              ),
+              onHover: (escapeGame) => const ActionResult.success(object: InteractableTooltip(text: 'C\'est une grande lampe, mais elle est éteinte.')),
+            ),
+            Clue.dialog(
+              id: 'sofa',
+              renderSettings: const InteractableRenderSettings(
+                top: 341,
+                left: 175,
+                height: 22,
+                width: 190,
+              ),
+              clueDialog: const EscapeGameDialog(message: "J'oublie toujours mon nom d'utilisateur... Mais je sais que c'est le nom de ma matière préférée à l'envers !")
             ),
           ],
         );

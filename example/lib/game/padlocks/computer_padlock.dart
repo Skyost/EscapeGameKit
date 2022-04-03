@@ -1,5 +1,6 @@
 import 'package:escape_game_kit/escape_game_kit.dart';
 import 'package:flutter/material.dart';
+import 'package:just_audio/just_audio.dart' as audio;
 
 class ComputerPadlock extends ObjectEqualPadlock<String> {
   ComputerPadlock()
@@ -31,11 +32,18 @@ class ComputerPadlockDialog extends StatefulWidget {
 
 class _ComputerPadlockkDialogState extends State<ComputerPadlockDialog> {
   static const kInvalidCommand = 'Invalid command. ';
-  static const kSuccess = 'Success ! ';
+  static const kSuccess = 'Restarting system... ';
 
   List<String> previouslyEnteredCommands = ['Starting MS-DOS...\n'];
   TextEditingController commandController = TextEditingController();
   ScrollController scrollController = ScrollController();
+  audio.AudioPlayer audioPlayer = audio.AudioPlayer();
+
+  @override
+  void initState() {
+    super.initState();
+    audioPlayer.setAsset('assets/glitch/noise.mp3');
+  }
 
   @override
   Widget build(BuildContext context) => EscapeGameAlertDialog(
@@ -79,11 +87,9 @@ class _ComputerPadlockkDialogState extends State<ComputerPadlockDialog> {
               value = value.trim();
               String response;
               if (widget.padlock.tryUnlock(value)) {
-                // TODO
                 response = kSuccess;
-                Future.delayed(const Duration(seconds: 1)).then((_) => Navigator.pop(context));
-              }
-              else {
+                onSuccess();
+              } else {
                 response = kInvalidCommand;
               }
               setState(() {
@@ -101,6 +107,7 @@ class _ComputerPadlockkDialogState extends State<ComputerPadlockDialog> {
 
   @override
   void dispose() {
+    audioPlayer.dispose();
     commandController.dispose();
     scrollController.dispose();
     super.dispose();
@@ -110,9 +117,34 @@ class _ComputerPadlockkDialogState extends State<ComputerPadlockDialog> {
     if (text == kSuccess) {
       return Colors.green;
     }
-    if( text == kInvalidCommand) {
+    if (text == kInvalidCommand) {
       return Colors.red;
     }
     return Colors.white;
+  }
+
+  Future<void> onSuccess() async {
+    audioPlayer.play();
+    await Future.delayed(const Duration(seconds: 1));
+    if (mounted) {
+      showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (context) => AlertDialog(
+          backgroundColor: Colors.black,
+          contentPadding: EdgeInsets.zero,
+          shape: const RoundedRectangleBorder(),
+          content: Image.asset(
+            'assets/glitch/image.webp',
+            width: MediaQuery.of(context).size.width,
+          ),
+        ),
+      );
+    }
+    await Future.delayed(const Duration(seconds: 4));
+    if (mounted) {
+      Navigator.pop(context);
+      Navigator.pop(context);
+    }
   }
 }

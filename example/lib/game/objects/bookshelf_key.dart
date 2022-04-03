@@ -6,7 +6,7 @@ class BookshelfKey extends EscapeGameObject {
   const BookshelfKey()
       : super(
           id: objectId,
-          name: 'Clé en forme de huit',
+          name: 'Clé en forme de trèfle',
           inventoryRenderSettings: const RenderSettings(
             asset: 'assets/interactables/bookshelf-key.svg',
             height: 40,

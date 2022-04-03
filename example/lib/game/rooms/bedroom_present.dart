@@ -1,4 +1,5 @@
 import 'package:escape_game_kit/escape_game_kit.dart';
+import 'package:escape_game_kit_example/game/game.dart';
 import 'package:escape_game_kit_example/main.dart';
 import 'package:escape_game_kit_example/widgets/messages_dialog.dart';
 import 'package:flutter/material.dart';
@@ -9,7 +10,7 @@ class BedroomPresentRoom extends Room {
   BedroomPresentRoom()
       : super(
           id: roomId,
-          firstVisitDialog: const EscapeGameDialog(message: 'Ah, vous venez enfin de rentrer des cours !'),
+          firstVisitDialog: const EscapeGameDialog(message: '<em>Ah, fini !<br>Votre journée est terminée et vous venez enfin de rentrer des cours !</em>'),
           interactables: [
             Interactable(
               id: 'left-computer',
@@ -23,7 +24,7 @@ class BedroomPresentRoom extends Room {
                 showDialog(
                   barrierColor: Colors.black,
                   context: navigatorKey.currentContext!,
-                  builder: (context) => MessagesDialog(escapeGame: escapeGame),
+                  builder: (context) => MessagesDialog(escapeGame: escapeGame as Error1980EscapeGame),
                 );
                 return const ActionResult.success();
               },
@@ -67,7 +68,7 @@ class BedroomPresentRoom extends Room {
                 width: 60,
               ),
               onTap: (escapeGame) {
-                escapeGame.openDialog(const EscapeGameDialog(message: "<strong><em>Liste de choses à faire</em></strong><br>~~~<br><br>NE PAS OUBLIER DE CONSULTER LA MESSAGERIE EN RENTRANT DES COURS !"));
+                escapeGame.openDialog(const EscapeGameDialog(message: "<strong>Liste de choses à faire</strong><br>~~~<br><br>UNE ÉVALUATION EST PRÉVUE DEMAIN, IL NE PAS OUBLIER DE CONSULTER LA MESSAGERIE EN RENTRANT DES COURS !"));
                 return const ActionResult.success();
               },
             ),
@@ -99,7 +100,7 @@ class BedroomPresentRoom extends Room {
                 height: 125,
                 width: 7,
               ),
-              onHover: (escapeGame) => const ActionResult.success(object: InteractableTooltip(text: 'Un grand néon.')),
+              onHover: (escapeGame) => const ActionResult.success(object: InteractableTooltip(text: 'Un autre grand néon.')),
             ),
             Interactable(
               id: 'poster',
