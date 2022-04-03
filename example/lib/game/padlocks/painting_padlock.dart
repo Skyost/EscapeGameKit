@@ -1,6 +1,7 @@
 import 'package:escape_game_kit/escape_game_kit.dart';
 import 'package:flutter/material.dart';
 import 'package:qr_flutter/qr_flutter.dart';
+import 'package:url_launcher/url_launcher.dart' as launcher;
 
 class PaintingPadlock extends ObjectEqualPadlock<String> {
   PaintingPadlock()
@@ -15,19 +16,28 @@ class PaintingPadlock extends ObjectEqualPadlock<String> {
 }
 
 class PaintingPadlockDialog extends PadlockAlertDialog<PaintingPadlock> {
+  final String url;
+
   const PaintingPadlockDialog({
     Key? key,
     required PaintingPadlock padlock,
+    required this.url,
   }) : super(
           key: key,
-    padlock: padlock,
+          padlock: padlock,
         );
 
   @override
   State<StatefulWidget> createState() => _PaintingPadlockDialogState();
 
-  static PaintingPadlockDialog builder(BuildContext context, Padlock padlock) => PaintingPadlockDialog(
+  static PaintingPadlockDialog builder(
+    BuildContext context,
+    Padlock padlock, {
+    String url = 'https://url.skyost.eu/APi8Ab',
+  }) =>
+      PaintingPadlockDialog(
         padlock: padlock as PaintingPadlock,
+        url: url,
       );
 }
 
@@ -36,23 +46,30 @@ class _PaintingPadlockDialogState extends PadlockAlertDialogState<PaintingPadloc
 
   @override
   List<Widget> buildBody(BuildContext context) => [
-    Align(
-      alignment: Alignment.center,
-      child: QrImage(
-        data: 'https://url.skyost.eu/APi8Ab',
-        size: 200,
-      ),
-    ),
-    TextField(
-      controller: controller,
-      textAlign: TextAlign.center,
-      style: const TextStyle(fontSize: 20),
-      decoration: const InputDecoration(
-        labelText: 'Entrer le code ici',
-        icon: Icon(Icons.key),
-      ),
-    ),
-  ];
+        Align(
+          alignment: Alignment.center,
+          child: GestureDetector(
+            onTap: () async {
+              if (await launcher.canLaunch(widget.url)) {
+                launcher.launch(widget.url);
+              }
+            },
+            child: QrImage(
+              data: widget.url,
+              size: 200,
+            ),
+          ),
+        ),
+        TextField(
+          controller: controller,
+          textAlign: TextAlign.center,
+          style: const TextStyle(fontSize: 20),
+          decoration: const InputDecoration(
+            labelText: 'Entrer le code ici',
+            icon: Icon(Icons.key),
+          ),
+        ),
+      ];
 
   @override
   dynamic getCode() => controller.text;

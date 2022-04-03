@@ -3,11 +3,9 @@ import 'dart:collection';
 import 'package:escape_game_kit/src/game/dialog.dart';
 import 'package:escape_game_kit/src/game/render/render_settings.dart';
 import 'package:escape_game_kit/src/game/room/interactables/interactable.dart';
-import 'package:escape_game_kit/src/utils/id_equatable.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 
-class Room with IdEquatable<String>, ChangeNotifier {
-  @override
+class Room with ChangeNotifier {
   final String id;
   final RenderSettings? renderSettings;
   final HashSet<Interactable> _interactables;
@@ -63,4 +61,15 @@ class Room with IdEquatable<String>, ChangeNotifier {
     }
     super.dispose();
   }
+
+  @override
+  bool operator ==(Object other) {
+    if (other is! Room) {
+      return super == other;
+    }
+    return identical(this, other) || (id == other.id && renderSettings == other.renderSettings && setEquals(_interactables, other._interactables) && firstVisitDialog == other.firstVisitDialog);
+  }
+
+  @override
+  int get hashCode => id.hashCode + renderSettings.hashCode + _interactables.hashCode + firstVisitDialog.hashCode;
 }

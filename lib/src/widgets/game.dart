@@ -14,6 +14,7 @@ typedef RoomTransitionBuilder = RoomTransition Function(EscapeGame escapeGame, R
 
 class EscapeGameWidget extends StatefulWidget {
   final EscapeGame escapeGame;
+  final bool autostart;
   final GameWidgetBuilder? beforeGameStartBuilder;
   final RoomWidgetBuilder roomWidgetBuilder;
   final GameWidgetBuilder inventoryWidgetBuilder;
@@ -24,6 +25,7 @@ class EscapeGameWidget extends StatefulWidget {
   const EscapeGameWidget({
     Key? key,
     required this.escapeGame,
+    this.autostart = false,
     this.beforeGameStartBuilder,
     this.roomWidgetBuilder = defaultRoomWidgetBuilder,
     this.inventoryWidgetBuilder = defaultInventoryWidgetBuilder,
@@ -58,6 +60,9 @@ class _EscapeGameWidgetState extends State<EscapeGameWidget> {
   void initState() {
     super.initState();
     WidgetsBinding.instance?.addPostFrameCallback((_) {
+      if (widget.autostart && !widget.escapeGame.isStarted) {
+        widget.escapeGame.start();
+      }
       refreshCurrentRoom();
       refreshDialog();
       widget.escapeGame.addListener(refreshCurrentRoom);
@@ -69,8 +74,10 @@ class _EscapeGameWidgetState extends State<EscapeGameWidget> {
   void didUpdateWidget(covariant EscapeGameWidget oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (oldWidget.escapeGame != widget.escapeGame || oldWidget.escapeGame.currentRoom != widget.escapeGame.currentRoom || oldWidget.escapeGame.openedDialog != widget.escapeGame.openedDialog) {
-      refreshCurrentRoom();
-      refreshDialog();
+      WidgetsBinding.instance?.addPostFrameCallback((_) {
+        refreshCurrentRoom();
+        refreshDialog();
+      });
     }
   }
 

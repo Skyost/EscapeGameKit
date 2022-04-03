@@ -66,7 +66,7 @@ class _InteractableWidgetState extends State<InteractableWidget> {
       errorBuilder: RenderSettingsStackWidget.getImageErrorWidgetBuilder(widget.interactable.renderSettings),
     );
 
-    InteractableTooltip? tooltip = widget.interactable.onTooltip(widget.escapeGame).object;
+    InteractableTooltip? tooltip = widget.interactable.onHover(widget.escapeGame).object;
     result = MouseRegion(
       cursor: SystemMouseCursors.click,
       onEnter: (event) {
@@ -108,6 +108,7 @@ class _InteractableWidgetState extends State<InteractableWidget> {
   void dispose() {
     if (tooltipOpacity != 0) {
       tooltipOverlayEntry?.remove();
+      tooltipOverlayEntry = null;
     }
     widget.interactable.removeListener(refreshState);
     super.dispose();

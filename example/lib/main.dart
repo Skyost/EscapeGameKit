@@ -1,8 +1,8 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:escape_game_kit/escape_game_kit.dart';
-import 'package:escape_game_kit_example/game.dart';
-import 'package:escape_game_kit_example/padlocks/computer_padlock.dart';
-import 'package:escape_game_kit_example/padlocks/painting_padlock.dart';
+import 'package:escape_game_kit_example/game/game.dart';
+import 'package:escape_game_kit_example/game/padlocks/computer_padlock.dart';
+import 'package:escape_game_kit_example/game/padlocks/painting_padlock.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -16,8 +16,8 @@ void main() {
     adjustWindowSize();
   }
   registerPadlocks();
-  escapeGame.start(); // TODO: remove this one.
-  runApp(_EscapeGameKitExample());
+  Error1980EscapeGame escapeGame = Error1980EscapeGame();
+  runApp(_EscapeGameKitExample(escapeGame: escapeGame));
 }
 
 Future<void> adjustWindowSize() async {
@@ -49,6 +49,12 @@ void registerPadlocks() {
 }
 
 class _EscapeGameKitExample extends StatelessWidget {
+  final EscapeGame escapeGame;
+
+  const _EscapeGameKitExample({
+    required this.escapeGame,
+  });
+
   @override
   Widget build(BuildContext context) => MaterialApp(
         navigatorKey: navigatorKey,
@@ -64,6 +70,7 @@ class _EscapeGameKitExample extends StatelessWidget {
         home: EscapeGameWidget(
           beforeGameStartBuilder: (context, escapeGame) => _TitleScreen(escapeGame: escapeGame),
           escapeGame: escapeGame,
+          autostart: kDebugMode,
         ),
       );
 }

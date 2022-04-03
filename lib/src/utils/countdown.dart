@@ -102,6 +102,17 @@ class Countdown {
       }
     }
   }
+
+  @override
+  bool operator ==(Object other) {
+    if (other is! Countdown) {
+      return super == other;
+    }
+    return identical(this, other) || (duration == other.duration && secondsToSubtract == other.secondsToSubtract && _currentSecondsToSubtract == other._currentSecondsToSubtract && _currentDuration == other._currentDuration && _timer == other._timer);
+  }
+
+  @override
+  int get hashCode => duration.hashCode + secondsToSubtract.hashCode + _currentSecondsToSubtract.hashCode + _currentDuration.hashCode + _timer.hashCode;
 }
 
 /// Represents a countdown listener that can react to various countdown events.

@@ -1,6 +1,6 @@
 import 'package:escape_game_kit/src/game/inventory/object.dart';
 import 'package:escape_game_kit/src/game/render/positioned.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 
 class Inventory with ChangeNotifier {
   final PositionedRenderSettings? renderSettings;
@@ -44,4 +44,15 @@ class Inventory with ChangeNotifier {
     }
     return false;
   }
+
+  @override
+  bool operator ==(Object other) {
+    if (other is! Inventory) {
+      return super == other;
+    }
+    return identical(this, other) || (renderSettings == other.renderSettings && listEquals(_objects, other._objects) && title == other.title && emptyMessage == other.emptyMessage);
+  }
+
+  @override
+  int get hashCode => renderSettings.hashCode + _objects.hashCode + title.hashCode + emptyMessage.hashCode;
 }

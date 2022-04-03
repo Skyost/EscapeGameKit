@@ -16,7 +16,8 @@ dependencies:
   just_audio: ^0.9.20
   just_audio_libwinmedia: ^0.0.4
   qr_flutter: ^4.0.0
-  window_manager: ^0.2.0
+  url_launcher: ^6.0.20
+  window_manager: ^0.2.1
 
 dev_dependencies:
   flutter_test:

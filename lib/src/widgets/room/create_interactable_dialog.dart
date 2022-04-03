@@ -96,7 +96,7 @@ class _CreateInteractableDialogState extends State<CreateInteractableDialog> {
 ),''';
   }
 
-  String get tooltipCode => tooltipController.text.isEmpty ? '' : "\n  onTooltip: (escapeGame) => const ActionResult.success(object: InteractableTooltip(text: ${buildDartString(tooltipController)})),";
+  String get tooltipCode => tooltipController.text.isEmpty ? '' : "\n  onHover: (escapeGame) => const ActionResult.success(object: InteractableTooltip(text: ${buildDartString(tooltipController)})),";
 
   String buildDartString(TextEditingController controller) => "'${controller.text.replaceAll("'", "\\'")}'";
 }

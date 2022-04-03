@@ -27,6 +27,27 @@ class InteractableRenderSettings extends PositionedRenderSettings {
           asset: asset,
           isInvisible: isInvisible,
         );
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (other is PositionedRenderSettings) {
+      if (super != other) {
+        return false;
+      }
+
+      if (other is! InteractableRenderSettings) {
+        return hoverAnimation == null && enterAnimation == null;
+      }
+      return hoverAnimation == other.hoverAnimation && enterAnimation == other.enterAnimation;
+    }
+    return super == other;
+  }
+
+  @override
+  int get hashCode => super.hashCode + hoverAnimation.hashCode + enterAnimation.hashCode;
 }
 
 class InteractableAnimation {
@@ -45,6 +66,17 @@ class InteractableAnimation {
     this.from = 0,
     bool? infinite,
   }) : infinite = infinite ?? (type == InteractableAnimationType.bounce || type == InteractableAnimationType.flash || type == InteractableAnimationType.pulse || type == InteractableAnimationType.swing || type == InteractableAnimationType.spin || type == InteractableAnimationType.spinPerfect || type == InteractableAnimationType.dance || type == InteractableAnimationType.roulette);
+
+  @override
+  bool operator ==(Object other) {
+    if (other is! InteractableAnimation) {
+      return super == other;
+    }
+    return identical(this, other) || (type == other.type && duration == other.duration && delay == other.delay && manualTrigger == other.manualTrigger && from == other.from && infinite == other.infinite);
+  }
+
+  @override
+  int get hashCode => type.hashCode + duration.hashCode + delay.hashCode + manualTrigger.hashCode + from.hashCode + infinite.hashCode;
 }
 
 enum InteractableAnimationType {

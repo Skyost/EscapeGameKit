@@ -14,13 +14,13 @@ class Door extends LockedInteractable {
     required String id,
     InteractableRenderSettings? renderSettings,
     Action? onTap,
-    Action<InteractableTooltip>? onTooltip,
+    Action<InteractableTooltip>? onHover,
   }) : super(
           padlock: padlock,
           id: id,
           renderSettings: renderSettings,
           onTap: onTap,
-          onTooltip: onTooltip,
+          onHover: onHover,
         );
 
   @override

@@ -13,7 +13,7 @@ class Interactable with IdEquatable<String>, ChangeNotifier {
   final String id;
   InteractableRenderSettings? _renderSettings;
   final Action? _onTap;
-  final Action<InteractableTooltip>? _onTooltip;
+  final Action<InteractableTooltip>? _onHover;
 
   bool _isDestroyed = false;
 
@@ -21,18 +21,18 @@ class Interactable with IdEquatable<String>, ChangeNotifier {
     required this.id,
     InteractableRenderSettings? renderSettings,
     Action? onTap,
-    Action<InteractableTooltip>? onTooltip,
+    Action<InteractableTooltip>? onHover,
   })  : _renderSettings = renderSettings,
         _onTap = onTap,
-        _onTooltip = onTooltip;
+        _onHover = onHover;
 
   ActionResult onTap(EscapeGame escapeGame) => _onTap == null ? const ActionResult.success() : _onTap!(escapeGame);
 
-  ActionResult<InteractableTooltip> onTooltip(EscapeGame escapeGame) => _onTooltip == null
+  ActionResult<InteractableTooltip> onHover(EscapeGame escapeGame) => _onHover == null
       ? const ActionResult.success(
           object: null,
         )
-      : _onTooltip!(escapeGame);
+      : _onHover!(escapeGame);
 
   InteractableRenderSettings? get renderSettings => _renderSettings;
 
@@ -61,12 +61,12 @@ class LockedInteractable extends Interactable {
     required String id,
     InteractableRenderSettings? renderSettings,
     Action? onTap,
-    Action<InteractableTooltip>? onTooltip,
+    Action<InteractableTooltip>? onHover,
   }) : super(
           id: id,
           renderSettings: renderSettings,
           onTap: onTap,
-          onTooltip: onTooltip,
+          onHover: onHover,
         );
 
   @override

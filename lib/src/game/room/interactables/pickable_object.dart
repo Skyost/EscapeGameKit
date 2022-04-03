@@ -10,20 +10,22 @@ class PickableObject extends LockedInteractable {
   final EscapeGameObject object;
   final Action? onPickedUp;
   final bool removeAfterPickedUp;
+  final InteractableTooltip? removedTooltip;
 
   PickableObject({
     required this.object,
     this.onPickedUp,
     this.removeAfterPickedUp = true,
+    this.removedTooltip,
     Padlock? padlock,
     String? id,
     InteractableRenderSettings? renderSettings,
-    Action<InteractableTooltip>? onTooltip,
+    Action<InteractableTooltip>? onHover,
   }) : super(
           padlock: padlock,
           id: id ?? object.id,
           renderSettings: renderSettings,
-          onTooltip: onTooltip,
+          onHover: onHover,
         );
 
   @override
@@ -34,6 +36,13 @@ class PickableObject extends LockedInteractable {
       ActionResult result = onPickedUp == null ? ActionResult<EscapeGameObject>.success(object: object) : onPickedUp!(escapeGame);
       if (removeAfterPickedUp) {
         escapeGame.currentRoom.removeInteractable(this);
+        if (removedTooltip != null) {
+          escapeGame.currentRoom.addInteractable(Interactable(
+            id: '$id-removed',
+            renderSettings: renderSettings,
+            onHover: (escapeGame) => ActionResult.success(object: removedTooltip!),
+          ));
+        }
       }
       return result;
     }

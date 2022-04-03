@@ -8,47 +8,82 @@ import 'package:escape_game_kit/src/game/room/interactables/tooltip.dart';
 
 class Clue extends LockedInteractable {
   String? keyId;
-  EscapeGameDialog? noKeyDialog;
-  EscapeGameDialog? clueDialog;
+  Action? onCantUnlock;
+  Action? onFound;
   InteractableTooltip? foundTooltip;
 
   Clue({
     required String id,
     InteractableRenderSettings? renderSettings,
-    Action<InteractableTooltip>? onTooltip,
+    Action<InteractableTooltip>? onHover,
     Padlock? padlock,
     this.keyId,
-    this.noKeyDialog,
-    this.clueDialog,
+    this.onCantUnlock,
+    this.onFound,
     this.foundTooltip,
   }) : super(
           id: id,
           padlock: padlock,
           renderSettings: renderSettings,
-          onTooltip: onTooltip,
+          onHover: onHover,
+        );
+
+  Clue.dialog({
+    required String id,
+    InteractableRenderSettings? renderSettings,
+    Action<InteractableTooltip>? onHover,
+    Padlock? padlock,
+    String? keyId,
+    EscapeGameDialog? noKeyDialog,
+    EscapeGameDialog? clueDialog,
+    InteractableTooltip? foundTooltip,
+  }) : this(
+          id: id,
+          renderSettings: renderSettings,
+          onHover: onHover,
+          padlock: padlock,
+          keyId: keyId,
+          onCantUnlock: (escapeGame) {
+            if (noKeyDialog != null) {
+              escapeGame.openDialog(noKeyDialog);
+            }
+            return const ActionResult.failed();
+          },
+          onFound: (escapeGame) {
+            if (clueDialog != null) {
+              escapeGame.openDialog(clueDialog);
+            }
+            return const ActionResult.success();
+          },
+          foundTooltip: foundTooltip,
         );
 
   @override
   ActionResult onTap(EscapeGame escapeGame) {
-    if (keyId == null || escapeGame.inventory.hasObjectId(keyId!)) {
-      ActionResult padlockResult = super.onTap(escapeGame);
-      if (padlockResult.state != ActionResultState.success) {
-        return padlockResult;
+    if (keyId != null && !escapeGame.inventory.hasObjectId(keyId!)) {
+      ActionResult unlockResult = onCantUnlock == null ? const ActionResult.failed() : onCantUnlock!(escapeGame);
+      if (unlockResult.state != ActionResultState.success) {
+        return unlockResult;
       }
-      if (clueDialog != null) {
-        escapeGame.openDialog(clueDialog!);
-      }
-      if (foundTooltip != null) {
-        escapeGame.currentRoom.removeInteractable(this, notify: false);
-        escapeGame.currentRoom.addInteractable(Interactable(
-          id: id,
-          renderSettings: renderSettings,
-          onTooltip: (escapeGame) => ActionResult.success(object: foundTooltip!),
-        ));
-      }
-    } else if (noKeyDialog != null) {
-      escapeGame.openDialog(noKeyDialog!);
     }
+
+    ActionResult padlockResult = super.onTap(escapeGame);
+    if (padlockResult.state != ActionResultState.success) {
+      return padlockResult;
+    }
+    ActionResult foundResult = onFound == null ? const ActionResult.success() : onFound!(escapeGame);
+    if (foundResult.state != ActionResultState.success) {
+      return foundResult;
+    }
+    if (foundTooltip != null) {
+      escapeGame.currentRoom.removeInteractable(this, notify: false);
+      escapeGame.currentRoom.addInteractable(Interactable(
+        id: '$id-found',
+        renderSettings: renderSettings,
+        onHover: (escapeGame) => ActionResult.success(object: foundTooltip!),
+      ));
+    }
+
     return const ActionResult.success();
   }
 }

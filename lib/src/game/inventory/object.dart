@@ -7,13 +7,9 @@ class EscapeGameObject with IdEquatable<String> {
   final String name;
   final RenderSettings? inventoryRenderSettings;
 
-  EscapeGameObject({
+  const EscapeGameObject({
     required this.id,
     required this.name,
-    RenderSettings? inventoryRenderSettings,
-  }) : inventoryRenderSettings = inventoryRenderSettings ??
-            RenderSettings(
-              asset: 'assets/interactables/$id.png',
-              height: 32,
-            );
+    this.inventoryRenderSettings,
+  });
 }

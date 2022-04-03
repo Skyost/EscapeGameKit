@@ -4,7 +4,7 @@ import 'package:escape_game_kit/src/game/dialog.dart';
 import 'package:escape_game_kit/src/game/inventory/inventory.dart';
 import 'package:escape_game_kit/src/game/room/room.dart';
 import 'package:escape_game_kit/src/utils/countdown.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 
 class EscapeGame with CountdownListener, ChangeNotifier {
   final Inventory inventory;
@@ -19,13 +19,14 @@ class EscapeGame with CountdownListener, ChangeNotifier {
   EscapeGame({
     Inventory? inventory,
     Iterable<Room>? rooms,
-    required String firstRoomId,
+    String? firstRoomId,
     this.countdown,
-  })  : rooms = HashSet.from(rooms ?? <Room>{}),
+  })  : assert(rooms != null && rooms.isNotEmpty),
+        rooms = HashSet.from(rooms!),
         inventory = inventory ?? Inventory(),
-        _currentRoom = firstRoomId,
+        _currentRoom = firstRoomId ?? rooms.first.id,
         visitedRooms = {} {
-    goToRoom(firstRoomId);
+    goToRoom(_currentRoom);
     this.inventory.addListener(notifyListeners);
   }
 
@@ -89,4 +90,15 @@ class EscapeGame with CountdownListener, ChangeNotifier {
     currentRoom.dispose();
     super.dispose();
   }
+
+  @override
+  bool operator ==(Object other) {
+    if (other is! EscapeGame) {
+      return super == other;
+    }
+    return identical(this, other) || (inventory == other.inventory && setEquals(rooms, other.rooms) && setEquals(visitedRooms, other.visitedRooms) && _currentRoom == other._currentRoom && countdown == other.countdown && _isStarted == other._isStarted && _isFinished == other._isFinished && _dialog == other._dialog);
+  }
+
+  @override
+  int get hashCode => inventory.hashCode + rooms.hashCode + visitedRooms.hashCode + _currentRoom.hashCode + countdown.hashCode + _isStarted.hashCode + _isFinished.hashCode + _dialog.hashCode;
 }
