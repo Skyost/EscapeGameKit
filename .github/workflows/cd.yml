@@ -1,0 +1,30 @@
+name: Continuous Delivery
+
+on:
+  push:
+    branches:
+      - main
+      - master
+
+jobs:
+  cd:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest]
+        node: [14]
+    steps:
+    - name: Checkout 🛎
+      uses: actions/checkout@master
+    - name: Setup Flutter env 🏗
+      uses: subosito/flutter-action@v2
+      with:
+        channel: 'stable'
+    - name: Build ⚙️
+      run: flutter build web --web-renderer canvaskit
+      working-directory: ./example
+    - name: Deploy 🚀
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./example/build/web
