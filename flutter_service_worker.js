@@ -28,8 +28,8 @@ const RESOURCES = {
 "assets/packages/window_manager/images/ic_chrome_unmaximize.png": "4a90c1909cb74e8f0d35794e2f61d8bf",
 "assets/fonts/MaterialIcons-Regular.otf": "7e7a6cccddf6d7b20012a548461d5d81",
 "manifest.json": "13af899f550d1e4388dc93ae36c43053",
-"index.html": "7b6aa1641275f2d88c48bdf6cfcad054",
-"/": "7b6aa1641275f2d88c48bdf6cfcad054",
+"index.html": "6583e4ad9293ed5a7b3d4cb4025ec3f0",
+"/": "6583e4ad9293ed5a7b3d4cb4025ec3f0",
 "icons/icons.json": "3877111e7542901178e58b30f8e9f53c",
 "icons/android/android-launchericon-48-48.png": "e3a89118628a2a7350faea5108b846f3",
 "icons/android/android-launchericon-512-512.png": "62fec5c1279812d76cfa1bf40999c61f",
@@ -148,7 +148,7 @@ const RESOURCES = {
 "canvaskit/canvaskit.wasm": "4b83d89d9fecbea8ca46f2f760c5a9ba",
 "canvaskit/profiling/canvaskit.js": "ae2949af4efc61d28a4a80fffa1db900",
 "canvaskit/profiling/canvaskit.wasm": "95e736ab31147d1b2c7b25f11d4c32cd",
-"main.dart.js": "73288e58a4c2f799bf93b9855b199f48",
+"main.dart.js": "4674c338513fda9c42a8eedea71c20ee",
 "version.json": "0fde7eb6022326bfe8262a51a6cc35f6"
 };
 
