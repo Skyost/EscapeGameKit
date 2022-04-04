@@ -63,7 +63,7 @@ class _GlitchMessageWidgetState extends State<GlitchMessageWidget> {
               )
             else
               const Text(
-                '\n\nAudio removed on server.',
+                '\n\nAudio removed from remote server.',
                 style: TextStyle(fontStyle: FontStyle.italic),
               ),
             const Text('\n\nBonne journée.\nH. Delaunay'),
