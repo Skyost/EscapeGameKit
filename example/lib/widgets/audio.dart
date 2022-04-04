@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_widget_from_html_core/flutter_widget_from_html_core.dart';
-import 'package:just_audio/just_audio.dart' as lib;
+import 'package:just_audio/just_audio.dart' as audio;
 
 /// An audio player.
 /// Thanks [https://github.com/daohoangson/flutter_widget_from_html/blob/master/packages/fwfh_just_audio/lib/src/audio_player/audio_player.dart](fwfh_just_audio) !
@@ -33,17 +33,17 @@ class AudioPlayer extends StatefulWidget {
   /// The pause button callback.
   ///
   /// Defaults : `(player) => player.pause()`.
-  final Function(lib.AudioPlayer)? pause;
+  final Function(audio.AudioPlayer)? pause;
 
   /// The pause button callback.
   ///
   /// Defaults : `(player) => player.play()`.
-  final Function(lib.AudioPlayer)? play;
+  final Function(audio.AudioPlayer)? play;
 
   /// The pause button callback.
   ///
   /// Defaults : `(player, duration) => player.seek(duration)`.
-  final Function(lib.AudioPlayer, Duration)? seek;
+  final Function(audio.AudioPlayer, Duration)? seek;
 
   /// Creates a player.
   const AudioPlayer(
@@ -63,20 +63,20 @@ class AudioPlayer extends StatefulWidget {
 }
 
 class _AudioPlayerState extends State<AudioPlayer> {
-  late final lib.AudioPlayer _player;
+  late final audio.AudioPlayer _player;
   late final StreamSubscription _processingStateStreamSub;
 
   @override
   void initState() {
     super.initState();
 
-    _player = lib.AudioPlayer();
+    _player = audio.AudioPlayer();
     _processingStateStreamSub = _player.processingStateStream.listen((processingState) {
       if (!mounted) {
         return;
       }
 
-      if (processingState == lib.ProcessingState.completed) {
+      if (processingState == audio.ProcessingState.completed) {
         _player.pause();
         _player.seek(Duration.zero);
       }
@@ -84,7 +84,7 @@ class _AudioPlayerState extends State<AudioPlayer> {
 
     _player
       ..setAsset(widget.asset, preload: widget.preload)
-      ..setLoopMode(widget.loop ? lib.LoopMode.one : lib.LoopMode.off);
+      ..setLoopMode(widget.loop ? audio.LoopMode.one : audio.LoopMode.off);
 
     if (widget.autoplay) {
       _player.play();

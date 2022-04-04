@@ -44,6 +44,7 @@ class _MessageWidgetState extends State<MessageWidget> {
             context: context,
             barrierDismissible: false,
             builder: (context) => EscapeGameAlertDialog.oneChild(
+              title: widget.messageInfo.title,
               child: widget.child,
               actions: [
                 widget.closeButton ??

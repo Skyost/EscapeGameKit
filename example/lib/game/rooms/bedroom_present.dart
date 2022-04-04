@@ -68,7 +68,10 @@ class BedroomPresentRoom extends Room {
                 width: 60,
               ),
               onTap: (escapeGame) {
-                escapeGame.openDialog(const EscapeGameDialog(message: "<strong>Liste de choses à faire</strong><br>~~~<br><br>UNE ÉVALUATION EST PRÉVUE DEMAIN, IL NE PAS OUBLIER DE CONSULTER LA MESSAGERIE EN RENTRANT DES COURS !"));
+                escapeGame.openDialog(const EscapeGameDialog(
+                  title: 'Liste de choses à faire',
+                  message: "Une évaluation est prévue demain, il ne faut <strong>surtout</strong> pas oublier de consulter la messagerie en rentrant des cours !!",
+                ));
                 return const ActionResult.success();
               },
             ),

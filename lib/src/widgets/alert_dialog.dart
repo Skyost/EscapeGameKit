@@ -212,7 +212,7 @@ abstract class PadlockAlertDialogState<T extends PadlockAlertDialog> extends Sta
             ),
           ...buildBody(context),
         ],
-        bottom: isFirstTry ? null : EscapeGameAlertDialogPadlockNewTry(padlock: widget.padlock),
+        bottom: buildBottom(context),
         actions: buildActions(context),
       );
 
@@ -222,6 +222,8 @@ abstract class PadlockAlertDialogState<T extends PadlockAlertDialog> extends Sta
         EscapeGameAlertDialogOkButton(onPressed: tryUnlock),
         const EscapeGameAlertDialogCloseButton(),
       ];
+
+  Widget? buildBottom(BuildContext context) => isFirstTry ? null : EscapeGameAlertDialogPadlockNewTry(padlock: widget.padlock);
 
   dynamic getCode();
 

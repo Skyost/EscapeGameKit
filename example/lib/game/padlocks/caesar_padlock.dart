@@ -1,4 +1,5 @@
 import 'package:escape_game_kit/escape_game_kit.dart';
+import 'package:escape_game_kit_example/widgets/padlock_input.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -93,13 +94,9 @@ class _CaesarPadlockDialogState extends PadlockAlertDialogState<CaesarPadlockDia
             ),
           ],
         ),
-        TextField(
+        PadlockInputWidget(
           controller: controller,
-          style: const TextStyle(fontSize: 20),
-          decoration: const InputDecoration(
-            labelText: 'Entrer le code ici',
-            icon: Icon(Icons.key),
-          ),
+          tryUnlock: tryUnlock,
         ),
       ];
 

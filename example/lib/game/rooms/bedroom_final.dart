@@ -26,7 +26,7 @@ class BedroomFinalRoom extends Room {
                 showDialog(
                   barrierColor: Colors.black,
                   context: navigatorKey.currentContext!,
-                  builder: (context) => MessagesDialog(escapeGame: escapeGame as Error1980EscapeGame),
+                  builder: (context) => MessagesDialog(escapeGame: escapeGame),
                 );
                 return const ActionResult.success();
               },

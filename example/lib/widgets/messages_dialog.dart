@@ -27,6 +27,7 @@ class MessagesDialog extends StatelessWidget {
               closeButton: TextButton(
                 onPressed: () {
                   Navigator.pop(context);
+                  Navigator.pop(context);
                   escapeGame.finish();
                 },
                 child: Text(MaterialLocalizations.of(context).closeButtonLabel.toUpperCase()),

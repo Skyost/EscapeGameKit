@@ -2,8 +2,7 @@ import 'dart:math';
 
 import 'package:escape_game_kit/escape_game_kit.dart';
 import 'package:escape_game_kit_example/game/objects/bookshelf_key.dart';
-import 'package:escape_game_kit_example/game/objects/painting_key.dart';
-import 'package:escape_game_kit_example/game/padlocks/painting_padlock.dart';
+import 'package:escape_game_kit_example/game/padlocks/qr_padlock.dart';
 
 class DeskRoom extends Room {
   static const String roomId = 'desk';
@@ -39,10 +38,11 @@ class DeskRoom extends Room {
                 height: 80,
                 width: 100,
               ),
-              keyId: PaintingKey.objectId,
-              padlock: PaintingPadlock(),
-              clueDialog: const EscapeGameDialog(message: "<em>Nous sommes bloqués en 1980 !? Mais comment sortir d'ici ?<br>Tiens, il y a un autre message dans le coffre...</em><br><br><strong>1! = 1 ; 2! = 2 ; 3! = 6 ; 4! = 24 ; 5! = <em>?</em></strong>"),
-              noKeyDialog: const EscapeGameDialog(message: '<em>Le coffre derrière ce tableau est protégé par un cadenas fermé à clé, et vous ne possédez pas cette clé...</em>'),
+              padlock: QrPadlock(),
+              clueDialog: const EscapeGameDialog(
+                title: 'Indice sur un cadenas',
+                message: "<em>Nous sommes bloqués en 1980 !? Mais comment sortir d'ici ?<br>Tiens, il y a un autre message dans le coffre...</em><br><br><strong>1! = 1 ; 2! = 2 ; 3! = 6 ; 4! = 24 ; 5! = <em>?</em></strong>",
+              ),
             ),
             Clue.dialog(
               id: 'bookshelf',
@@ -53,8 +53,14 @@ class DeskRoom extends Room {
                 width: 157,
               ),
               keyId: BookshelfKey.objectId,
-              clueDialog: const EscapeGameDialog(message: '<em>Vous avez déverrouillez cette bibliothèque à l\'aide de la clé en forme de trèfle... Et il y a un manuel d\'informatique à l\'intérieur !</em><br><br>Pour redémarrer un ordinateur, utiliser la commande suivante. <p style="text-align: left; background-color: black; color: white; font-family: SourceCodePro; padding: 8px 4px;">reboot now</p>'),
-              noKeyDialog: const EscapeGameDialog(message: "<em>Cette bibliothèque est protégée par un cadenas fermé à clé, et vous ne possédez pas cette clé...</em>"),
+              clueDialog: const EscapeGameDialog(
+                title: 'Indice sur la commande',
+                message: '<em>Vous avez déverrouillé cette bibliothèque à l\'aide de la clé en forme de trèfle... Et il y a un manuel d\'informatique à l\'intérieur !</em><br><br>Pour redémarrer un ordinateur, utiliser la commande suivante. <p style="text-align: left; background-color: black; color: white; font-family: SourceCodePro; padding: 8px 4px;">reboot now</p>',
+              ),
+              noKeyDialog: const EscapeGameDialog(
+                title: 'Bibliothèque verrouillée',
+                message: "<em>Cette bibliothèque est fermée à clé et vous ne la possédez pas.</em>",
+              ),
             ),
             Clue.dialog(
               id: 'drawer',
@@ -65,10 +71,11 @@ class DeskRoom extends Room {
                 width: 138,
               ),
               clueDialog: const EscapeGameDialog(
+                title: 'Indice sur le mot de passe',
                 message:
                     "<em>Il y a un message...</em><br><br>Je n'ai pas pour habitude de noter mes mots de passe sur un papier... Je n'ai donc noté que des indices, et sûr plusieurs papiers cachés partout dans la maison !<br>Voici donc le premier indice.<br><br>Aladdin et Aladde frottent la lampe. Le génie apparaît et leur demande de formuler un vœu. Aladdin demande <q>Je veux un centime... Mais que celui-ci se dédouble tous les jours pendant 30 jours !</q>. Aladde rétorque <q>Héhé, moi je veux 1 million d'euros maintenant !</q><br><br><strong>Le premier chiffre du mot de passe de l'ordinateur se prononce comme les deux dernières lettres du nom du plus riche à l'issue des 30 jours.</strong>",
               ),
-              noKeyDialog: const EscapeGameDialog(message: '<em>Ce tiroir est protégée par un cadenas fermé à clé, et vous ne possédez pas cette clé...</em>'),
+              noKeyDialog: const EscapeGameDialog(message: '<em>Ce tiroir est fermé à clé, et vous ne la possédez pas.</em>'),
             ),
             Interactable(
               id: 'books-1',
@@ -148,12 +155,17 @@ class DeskRoom extends Room {
             Interactable(
               id: 'floor',
               renderSettings: const InteractableRenderSettings(
-                top: 372,
-                left: 274,
-                height: 10,
-                width: 386,
+                top: 349,
+                left: 266,
+                height: 22,
+                width: 634,
               ),
-              onHover: (escapeGame) => const ActionResult.success(object: InteractableTooltip(text: 'Le clair de la lune se reflète sur le sol.')),
+              onHover: (escapeGame) => const ActionResult.success(
+                object: InteractableTooltip(
+                  text: 'Le clair de la lune se reflète sur le sol.',
+                  yShift: -20,
+                ),
+              ),
             ),
           ],
         );

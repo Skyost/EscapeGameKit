@@ -35,14 +35,14 @@ class LinvingRoomRoom extends Room {
               ),
               object: bedKey,
               padlock: DigitsPadlock(
-                title: 'Entrer le code',
-                unlockMessage: 'Ce placard est protégé par un cadenas !',
+                title: 'Cadenas',
+                unlockMessage: 'Ce placard est protégé par un cadenas à code !\nIl doit y avoir un indice quelque part.',
                 failedToUnlockMessage: "Mince, ce n'est pas le bon code...",
                 digits: '120',
               ),
               onPickedUp: (escapeGame) {
                 escapeGame.openDialog(EscapeGameDialog(
-                  title: 'Object trouvé !',
+                  title: 'Objet trouvé !',
                   imageRenderSettings: RenderSettings(
                     asset: bedKey.inventoryRenderSettings?.asset,
                     width: 100,
@@ -63,14 +63,14 @@ class LinvingRoomRoom extends Room {
               ),
               object: bookshelfKey,
               padlock: DigitsPadlock(
-                title: 'Entrer le code',
-                unlockMessage: 'Il y a un coffre dans le pot de fleur... Mais il est protégé par un cadenas !',
-                failedToUnlockMessage: "Mince, ce n'est pas le bon code...",
+                title: 'Cadenas',
+                unlockMessage: 'Il y a un coffre dans le pot de fleur... Mais il est protégé par un cadenas à code !\nIl doit y avoir un indice quelque part.',
+                failedToUnlockMessage: "Zut, ce n'est pas le bon code...",
                 digits: '1000',
               ),
               onPickedUp: (escapeGame) {
                 escapeGame.openDialog(EscapeGameDialog(
-                  title: 'Object trouvé !',
+                  title: 'Objet trouvé !',
                   imageRenderSettings: RenderSettings(
                     asset: bookshelfKey.inventoryRenderSettings?.asset,
                     width: 100,
@@ -166,7 +166,10 @@ class LinvingRoomRoom extends Room {
                 width: 44,
               ),
               padlock: CaesarPadlock(),
-              clueDialog: const EscapeGameDialog(message: "Dans un étang non loin d'ici, j'ai remarqué que le nombre de nénuphars doublait chaque nuit... Au début il y en a 1, puis 2 le lendemain, puis 4 le surlendemain, etc. si bien que l'étang est recouvert de nénuphars en 7 jours seulement !<br><br><strong>Le troisième et dernier chiffre du mot de passe de l'ordinatuer est le nombre de jours qu'il faut pour que l'étang soit recouvert si au début il y a non pas 1, mais 2 nénuphars.</strong>"),
+              clueDialog: const EscapeGameDialog(
+                title: 'Indice sur le mot de passe',
+                message: "<em>Un indice se trouve derrière le coussin !</em><br><br>Dans un étang non loin d'ici, j'ai remarqué que le nombre de nénuphars double chaque nuit... Au début il y en a 1, puis 2 le lendemain, puis 4 le surlendemain, etc. si bien que l'étang est recouvert de nénuphars en 7 jours seulement !<br><br><strong>Le troisième et dernier chiffre du mot de passe de l'ordinateur est le nombre de jours qu'il faut pour que l'étang soit recouvert si au début il y a non pas 1, mais 2 nénuphars.</strong>",
+              ),
             ),
             Interactable(
               id: 'pilow-2',
@@ -231,7 +234,10 @@ class LinvingRoomRoom extends Room {
                 height: 22,
                 width: 190,
               ),
-              clueDialog: const EscapeGameDialog(message: "J'oublie toujours mon nom d'utilisateur... Mais je sais que c'est le nom de ma matière préférée à l'envers !")
+              clueDialog: const EscapeGameDialog(
+                title: "Indice sur le nom d'utilisateur",
+                message: "<em>Il y a un message sous la canapé !</em><br><br>J'oublie toujours mon nom d'utilisateur pour me connecter sur mon ordinateur... Mais je sais que c'est le nom de ma matière préférée à l'envers !",
+              ),
             ),
           ],
         );

@@ -11,7 +11,6 @@ class Error1980EscapeGame extends EscapeGame {
 
   Error1980EscapeGame()
       : super(
-          // firstRoomId: kDebugMode ? BedroomRoom.roomId : null, // TODO: Remove this one.
           rooms: [
             BedroomPresentRoom(),
             BedroomRoom(),

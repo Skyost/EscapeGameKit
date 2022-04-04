@@ -34,7 +34,7 @@ class Inventory with ChangeNotifier {
     }
   }
 
-  void hasObject(EscapeGameObject object) => hasObjectId(object.id);
+  bool hasObject(EscapeGameObject object) => hasObjectId(object.id);
 
   bool hasObjectId(String id) {
     for (EscapeGameObject object in _objects) {

@@ -25,8 +25,9 @@ extension PadlockDialogs on Padlock {
       Padlock? firstLocked = (this as PadlockSequence).firstLocked;
       while (firstLocked != null) {
         await firstLocked.tryUnlockViaDialog(context);
+        tryUnlock(null);
         Padlock? newFirstLocked = (this as PadlockSequence).firstLocked;
-        if (firstLocked == newFirstLocked) {
+        if (firstLocked == newFirstLocked || newFirstLocked == null) {
           return;
         }
         firstLocked = newFirstLocked;

@@ -1,7 +1,6 @@
 import 'package:escape_game_kit/src/game/padlocks/digits.dart';
 import 'package:escape_game_kit/src/game/padlocks/padlock.dart';
 import 'package:escape_game_kit/src/widgets/alert_dialog.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class DigitsPadlockDialog extends PadlockAlertDialog<DigitsPadlock> {
@@ -30,6 +29,7 @@ class DigitsPadlockDialog extends PadlockAlertDialog<DigitsPadlock> {
 
 class _DigitsPadlockDialogState extends PadlockAlertDialogState<DigitsPadlockDialog> {
   List<TextEditingController> controllers = [];
+  List<FocusNode> focusNodes = [];
 
   @override
   void initState() {
@@ -37,6 +37,7 @@ class _DigitsPadlockDialogState extends PadlockAlertDialogState<DigitsPadlockDia
     Iterable<String> iterable = widget.shouldSeparateTextFields ? widget.padlock.digits.characters : [''];
     for (String _ in iterable) {
       controllers.add(TextEditingController());
+      focusNodes.add(FocusNode());
     }
   }
 
@@ -47,15 +48,22 @@ class _DigitsPadlockDialogState extends PadlockAlertDialogState<DigitsPadlockDia
             alignment: WrapAlignment.center,
             spacing: 10,
             children: [
-              for (TextEditingController controller in controllers)
+              for (int i = 0; i < controllers.length; i++)
                 SizedBox(
                   width: 20,
                   child: TextField(
-                    controller: controller,
+                    controller: controllers[i],
+                    focusNode: focusNodes[i],
                     textAlign: TextAlign.center,
                     style: const TextStyle(fontSize: 20),
                     maxLength: 1,
                     decoration: const InputDecoration(counterText: ''),
+                    onChanged: (value) {
+                      if (value.isNotEmpty && i < controllers.length - 1) {
+                        focusNodes[i + 1].requestFocus();
+                      }
+                    },
+                    onSubmitted: (value) => tryUnlock(),
                   ),
                 ),
             ],
@@ -67,6 +75,7 @@ class _DigitsPadlockDialogState extends PadlockAlertDialogState<DigitsPadlockDia
             style: const TextStyle(fontSize: 20),
             maxLength: 1,
             decoration: const InputDecoration(counterText: ''),
+            onSubmitted: (value) => tryUnlock(),
           )
       ];
 
@@ -77,6 +86,9 @@ class _DigitsPadlockDialogState extends PadlockAlertDialogState<DigitsPadlockDia
   void dispose() {
     for (TextEditingController controller in controllers) {
       controller.dispose();
+    }
+    for (FocusNode focusNode in focusNodes) {
+      focusNode.dispose();
     }
     super.dispose();
   }

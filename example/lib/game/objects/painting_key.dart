@@ -1,14 +1,14 @@
 import 'package:escape_game_kit/escape_game_kit.dart';
 
-class PaintingKey extends EscapeGameObject {
-  static const String objectId = 'painting-key';
+class DeskKey extends EscapeGameObject {
+  static const String objectId = 'desk-key';
 
-  const PaintingKey()
+  const DeskKey()
       : super(
           id: objectId,
           name: 'Clé en forme de bouche',
           inventoryRenderSettings: const RenderSettings(
-            asset: 'assets/interactables/painting-key.svg',
+            asset: 'assets/interactables/desk-key.svg',
             height: 40,
           ),
         );

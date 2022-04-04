@@ -3,7 +3,8 @@ class Messages {
     author: 'DELAUNAY Hugo',
     title: 'Bug',
     date: DateTime.now(),
-    text: "Il paraît que le fichier a fait planter l'ordinateur de certains d'entre-vous... En conséquence l'évaluation de demain est annulée, nous en reparlerons plus tard."
+    text: "Il paraît que le fichier a fait planter l'ordinateur de certains d'entre-vous... En conséquence l'évaluation de demain est annulée, nous en reparlerons plus tard.\n\nBonne journée.\nH. Delaunay",
+    unread: true,
   );
 
   final MessageInfo glitchMessage = MessageInfo(
@@ -24,19 +25,19 @@ class Messages {
     TextMessageInfo(
       author: 'DESPREZ Jean',
       title: 'URGENT !!',
-      date: DateTime(2022, 4, 6, 8, 24),
+      date: DateTime(2022, 4, 5, 8, 24),
       text: "J'ai perdu mon sac, tu saurais pas où il est ?? 😭😭",
     ),
     TextMessageInfo(
       author: 'AUBIN Alix',
       title: 'Leçons pour demain',
-      date: DateTime(2022, 4, 5, 18, 47),
+      date: DateTime(2022, 4, 4, 18, 47),
       text: "Salut !\n\nC'est quoi le travail à faire pour demain ?",
     ),
     TextMessageInfo(
       author: 'PITEL Noé',
       title: 'Exo de math',
-      date: DateTime(2022, 4, 5, 17, 59),
+      date: DateTime(2022, 4, 4, 17, 59),
       text: "Hello\n\nJ'ai pas compris l'exo sur la proportionnalité de ce matin, tu pourrais me donner un coup de main ? 🤓",
     ),
   ];
@@ -66,9 +67,9 @@ class TextMessageInfo extends MessageInfo {
     bool unread = false,
     required this.text,
   }) : super(
-    author: author,
-    title: title,
-    date: date,
-    unread: unread,
-  );
+          author: author,
+          title: title,
+          date: date,
+          unread: unread,
+        );
 }

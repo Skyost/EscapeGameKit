@@ -1,8 +1,9 @@
 import 'package:escape_game_kit/escape_game_kit.dart';
 import 'package:escape_game_kit_example/game/game.dart';
+import 'package:escape_game_kit_example/game/padlocks/bruteforce_padlock.dart';
 import 'package:escape_game_kit_example/game/padlocks/caesar_padlock.dart';
 import 'package:escape_game_kit_example/game/padlocks/computer_padlock.dart';
-import 'package:escape_game_kit_example/game/padlocks/painting_padlock.dart';
+import 'package:escape_game_kit_example/game/padlocks/qr_padlock.dart';
 import 'package:escape_game_kit_example/widgets/play_button.dart';
 import 'package:escape_game_kit_example/widgets/title_screen.dart';
 import 'package:flutter/foundation.dart';
@@ -46,9 +47,10 @@ void registerPadlocks() {
       passwordText: 'Mot de passe',
     ),
   );
-  PadlockDialogs.registerBuilderFor(PaintingPadlock, PaintingPadlockDialog.builder);
+  PadlockDialogs.registerBuilderFor(BruteforcePadlock, BruteforcePadlockDialog.builder);
   PadlockDialogs.registerBuilderFor(CaesarPadlock, CaesarPadlockDialog.builder);
   PadlockDialogs.registerBuilderFor(ComputerPadlock, ComputerPadlockDialog.builder);
+  PadlockDialogs.registerBuilderFor(QrPadlock, QrPadlockDialog.builder);
 }
 
 class _EscapeGameKitExample extends StatelessWidget {
@@ -80,30 +82,33 @@ class _EscapeGameKitExample extends StatelessWidget {
             ),
           ),
           afterGameFinishedBuilder: (context, escapeGame) => TitleScreen(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: const [
-                Text(
-                  'FÉLICITATIONS !',
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 20,
-                    color: Colors.white,
+            child: Container(
+              color: Colors.black26,
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    'FÉLICITATIONS !',
+                    style: Theme.of(context).textTheme.headline1?.copyWith(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 20,
+                      color: Colors.white,
+                    ),
+                    textAlign: TextAlign.center,
                   ),
-                  textAlign: TextAlign.center,
-                ),
-                Text(
-                  'Bravo, vous avez réussi à revenir en 2022 !',
-                  style: TextStyle(
-                    color: Colors.white,
-                  ),
-                  textAlign: TextAlign.center,
-                )
-              ],
+                  Text(
+                    'Bravo, vous avez réussi à revenir en ${DateTime.now().year} !',
+                    style: Theme.of(context).textTheme.bodyText2?.copyWith(
+                      color: Colors.white,
+                    ),
+                    textAlign: TextAlign.center,
+                  )
+                ],
+              ),
             ),
           ),
           escapeGame: escapeGame,
-          autostart: kDebugMode, // TODO: Remove this one.
         ),
       );
 }

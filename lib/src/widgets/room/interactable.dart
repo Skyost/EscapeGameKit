@@ -106,7 +106,7 @@ class _InteractableWidgetState extends State<InteractableWidget> {
 
   @override
   void dispose() {
-    if (tooltipOpacity != 0) {
+    if (tooltipOverlayEntry != null) {
       tooltipOverlayEntry?.remove();
       tooltipOverlayEntry = null;
     }
@@ -159,6 +159,7 @@ class _InteractableWidgetState extends State<InteractableWidget> {
   Future<void> hideTooltip(PointerEvent event) async {
     OverlayEntry? tooltipOverlayEntry = this.tooltipOverlayEntry;
     if (tooltipOverlayEntry != null) {
+      this.tooltipOverlayEntry = null;
       tooltipOpacity = 0;
       tooltipOverlayEntry.markNeedsBuild();
       await Future.delayed(const Duration(milliseconds: 200));

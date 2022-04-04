@@ -1,13 +1,14 @@
 import 'package:escape_game_kit/escape_game_kit.dart';
+import 'package:escape_game_kit_example/widgets/padlock_input.dart';
 import 'package:flutter/material.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:url_launcher/url_launcher.dart' as launcher;
 
-class PaintingPadlock extends ObjectEqualPadlock<String> {
-  PaintingPadlock()
+class QrPadlock extends ObjectEqualPadlock<String> {
+  QrPadlock()
       : super(
           title: 'Cadenas',
-          unlockMessage: "Vous avez déverrouillez ce coffre à l'aide de la clé en forme de bouche... Mais il y a un deuxième cadenas avec une sorte de symbôle ! Qu'est-ce que cela peut être ?",
+          unlockMessage: "Il y a un cadenas avec une sorte de symbôle ! Qu'est-ce que cela peut être ?",
           failedToUnlockMessage: "Ce code ne fonctionne pas...",
         );
 
@@ -15,12 +16,12 @@ class PaintingPadlock extends ObjectEqualPadlock<String> {
   bool isObjectValid(String object) => object == '0891';
 }
 
-class PaintingPadlockDialog extends PadlockAlertDialog<PaintingPadlock> {
+class QrPadlockDialog extends PadlockAlertDialog<QrPadlock> {
   final String url;
 
-  const PaintingPadlockDialog({
+  const QrPadlockDialog({
     Key? key,
-    required PaintingPadlock padlock,
+    required QrPadlock padlock,
     required this.url,
   }) : super(
           key: key,
@@ -28,20 +29,20 @@ class PaintingPadlockDialog extends PadlockAlertDialog<PaintingPadlock> {
         );
 
   @override
-  State<StatefulWidget> createState() => _PaintingPadlockDialogState();
+  State<StatefulWidget> createState() => _QrPadlockDialogState();
 
-  static PaintingPadlockDialog builder(
+  static QrPadlockDialog builder(
     BuildContext context,
     Padlock padlock, {
     String url = 'https://url.skyost.eu/APi8Ab',
   }) =>
-      PaintingPadlockDialog(
-        padlock: padlock as PaintingPadlock,
+      QrPadlockDialog(
+        padlock: padlock as QrPadlock,
         url: url,
       );
 }
 
-class _PaintingPadlockDialogState extends PadlockAlertDialogState<PaintingPadlockDialog> {
+class _QrPadlockDialogState extends PadlockAlertDialogState<QrPadlockDialog> {
   TextEditingController controller = TextEditingController();
 
   @override
@@ -60,13 +61,9 @@ class _PaintingPadlockDialogState extends PadlockAlertDialogState<PaintingPadloc
             ),
           ),
         ),
-        TextField(
+        PadlockInputWidget(
           controller: controller,
-          style: const TextStyle(fontSize: 20),
-          decoration: const InputDecoration(
-            labelText: 'Entrer le code ici',
-            icon: Icon(Icons.key),
-          ),
+          tryUnlock: tryUnlock,
         ),
       ];
 

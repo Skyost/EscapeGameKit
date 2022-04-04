@@ -47,6 +47,7 @@ class _CredentialPadlockDialogState extends PadlockAlertDialogState<CredentialsP
                   icon: const Icon(Icons.person),
                   labelText: widget.usernameText,
                 ),
+          onSubmitted: (value) => tryUnlock(),
         ),
         TextField(
           controller: passwordController,
@@ -57,6 +58,7 @@ class _CredentialPadlockDialogState extends PadlockAlertDialogState<CredentialsP
                   labelText: widget.passwordText,
                 ),
           obscureText: true,
+          onSubmitted: (value) => tryUnlock(),
         ),
       ];
 
