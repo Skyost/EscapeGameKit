@@ -1,4 +1,5 @@
 import 'package:escape_game_kit_example/game/game.dart';
+import 'package:escape_game_kit_example/game/rooms/bedroom_present.dart';
 import 'package:escape_game_kit_example/widgets/audio.dart';
 import 'package:escape_game_kit_example/widgets/message.dart';
 import 'package:flutter/material.dart';
@@ -27,35 +28,44 @@ class _GlitchMessageWidgetState extends State<GlitchMessageWidget> {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisSize: MainAxisSize.min,
           children: [
-            const Text('Bonjour à tous.\n\nVoici le fichier audio dont vous aurez besoin pour l\'évaluation de demain.\n\n'),
-            AudioPlayer(
-              'assets/glitch/noise.mp3',
-              pause: (player) {},
-              play: (player) async {
-                setState(() => hasAudioStarted = true);
-                player.play();
-                await Future.delayed(const Duration(seconds: 4));
-                showDialog(
-                  context: context,
-                  barrierDismissible: false,
-                  builder: (context) => AlertDialog(
-                    backgroundColor: Colors.black,
-                    contentPadding: EdgeInsets.zero,
-                    shape: const RoundedRectangleBorder(),
-                    content: Image.asset(
-                      'assets/glitch/image.webp',
-                      width: MediaQuery.of(context).size.width,
-                    ),
-                  ),
-                );
-                await Future.delayed(const Duration(seconds: 8));
-                Navigator.pop(context);
-                Navigator.pop(context);
-                Navigator.pop(context);
-                widget.escapeGame.goToRoom('bedroom');
-              },
-              seek: (player, duration) {},
-            ),
+            const Text('Bonjour à tous.\n\nVoici le fichier audio dont vous aurez besoin pour l\'évaluation de demain.'),
+            if (widget.escapeGame.currentRoom.id == BedroomPresentRoom.roomId)
+              Padding(
+                padding: const EdgeInsets.only(top: 34),
+                child: AudioPlayer(
+                  'assets/glitch/noise.mp3',
+                  pause: (player) {},
+                  play: (player) async {
+                    setState(() => hasAudioStarted = true);
+                    player.play();
+                    await Future.delayed(const Duration(seconds: 4));
+                    showDialog(
+                      context: context,
+                      barrierDismissible: false,
+                      builder: (context) => AlertDialog(
+                        backgroundColor: Colors.black,
+                        contentPadding: EdgeInsets.zero,
+                        shape: const RoundedRectangleBorder(),
+                        content: Image.asset(
+                          'assets/glitch/image.webp',
+                          width: MediaQuery.of(context).size.width,
+                        ),
+                      ),
+                    );
+                    await Future.delayed(const Duration(seconds: 8));
+                    Navigator.pop(context);
+                    Navigator.pop(context);
+                    Navigator.pop(context);
+                    widget.escapeGame.goToRoom('bedroom');
+                  },
+                  seek: (player, duration) {},
+                ),
+              )
+            else
+              const Text(
+                '\n\nAudio removed on server.',
+                style: TextStyle(fontStyle: FontStyle.italic),
+              ),
             const Text('\n\nBonne journée.\nH. Delaunay'),
           ],
         ),
