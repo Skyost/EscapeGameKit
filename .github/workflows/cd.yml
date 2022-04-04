@@ -21,7 +21,7 @@ jobs:
       with:
         channel: 'stable'
     - name: Build ⚙️
-      run: flutter build web --web-renderer canvaskit
+      run: flutter build web --web-renderer canvaskit --base-href "/EscapeGameKit/"
       working-directory: ./example
     - name: Deploy 🚀
       uses: peaceiris/actions-gh-pages@v3
