@@ -10,13 +10,14 @@ import 'package:escape_game_kit_example/widgets/title_screen.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:window_manager/window_manager.dart';
 
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
-  if (defaultTargetPlatform == TargetPlatform.windows || defaultTargetPlatform == TargetPlatform.linux || defaultTargetPlatform == TargetPlatform.macOS) {
+  if (!kIsWeb && (defaultTargetPlatform == TargetPlatform.windows || defaultTargetPlatform == TargetPlatform.linux || defaultTargetPlatform == TargetPlatform.macOS)) {
     adjustWindowSize();
   }
   registerPadlocks();
@@ -54,12 +55,41 @@ void registerPadlocks() {
   PadlockDialogs.registerBuilderFor(QrPadlock, QrPadlockDialog.builder);
 }
 
-class _EscapeGameKitExample extends StatelessWidget {
+class _EscapeGameKitExample extends StatefulWidget {
   final EscapeGame escapeGame;
 
   const _EscapeGameKitExample({
     required this.escapeGame,
   });
+
+  @override
+  State<StatefulWidget> createState() => _EscapeGameKitExampleState();
+}
+
+class _EscapeGameKitExampleState extends State<_EscapeGameKitExample> {
+  @override
+  void initState() {
+    super.initState();
+    for (String asset in [
+      'assets/backgrounds/bedroom.png',
+      'assets/backgrounds/bedroom-present.png',
+      'assets/backgrounds/desk.png',
+      'assets/backgrounds/living-room.png',
+      'assets/glitch/image.webp',
+    ]) {
+      precacheImage(AssetImage(asset), context);
+    }
+    for (String asset in [
+      'assets/interactables/arrow.svg',
+      'assets/interactables/bed-key.svg',
+      'assets/interactables/bookshelf-key.svg',
+      'assets/interactables/desk-key.svg',
+      'assets/padlocks/caesar-1.svg',
+      'assets/padlocks/caesar-2.svg',
+    ]) {
+      precachePicture(ExactAssetPicture(SvgPicture.svgStringDecoderBuilder, asset), context);
+    }
+  }
 
   @override
   Widget build(BuildContext context) => MaterialApp(
@@ -85,7 +115,7 @@ class _EscapeGameKitExample extends StatelessWidget {
           afterGameFinishedBuilder: (context, escapeGame) => const TitleScreen(
             child: EndMessage(),
           ),
-          escapeGame: escapeGame,
+          escapeGame: widget.escapeGame,
         ),
       );
 }

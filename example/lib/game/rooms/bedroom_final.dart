@@ -11,7 +11,7 @@ class BedroomFinalRoom extends Room {
       : super(
           id: roomId,
           renderSettings: const RenderSettings(asset: 'assets/backgrounds/bedroom-present.png'),
-          firstVisitDialog: const EscapeGameDialog(message: "<em>Wow...<br>C'était quoi ça ??</em>"),
+          firstVisitDialog: const EscapeGameDialog(message: "<em>Wow... Il semblerait que l'on soit de retour...<br>Mais c'était quoi ça ??</em>"),
           interactables: [
             Interactable(
               id: 'left-computer',
