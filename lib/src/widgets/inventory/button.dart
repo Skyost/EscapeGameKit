@@ -2,12 +2,21 @@ import 'package:escape_game_kit/src/game/game.dart';
 import 'package:escape_game_kit/src/widgets/inventory/dialog.dart';
 import 'package:flutter/material.dart';
 
+/// The inventory button widget.
 class InventoryButton extends StatelessWidget {
+  /// The [EscapeGame] instance.
   final EscapeGame escapeGame;
-  final Icon inventoryIcon;
+
+  /// The inventory icon.
+  final Icon? inventoryIcon;
+
+  /// The button style.
   final ButtonStyle? buttonStyle;
+
+  /// Triggered when this button has been pressed.
   final VoidCallback? onPressed;
 
+  /// Creates a new [InventoryButton] instance.
   const InventoryButton({
     Key? key,
     required this.escapeGame,

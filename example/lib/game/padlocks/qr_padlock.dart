@@ -4,25 +4,30 @@ import 'package:flutter/material.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:url_launcher/url_launcher.dart' as launcher;
 
+/// A padlock that displays a QR code.
 class QrPadlock extends ObjectEqualPadlock<String> {
-  QrPadlock()
-      : super(
-          title: 'Cadenas',
-          unlockMessage: "Il y a un cadenas avec une sorte de symbôle ! Qu'est-ce que cela peut être ?",
-          failedToUnlockMessage: "Ce code ne fonctionne pas...",
+  /// The QR code URL.
+  final String url;
+
+  /// Creates a new [QrPadlock] instance.
+  QrPadlock({
+    this.url = 'https://url.skyost.eu/pKXAyO',
+  }) : super(
+          title: 'Padlock',
+          unlockMessage: "There's a padlock with a strange symbol ! What does it mean ?",
+          failedToUnlockMessage: "This code doesn't work...",
         );
 
   @override
   bool isObjectValid(String object) => object == '0891';
 }
 
+/// Allows to unlock a [QrPadlock].
 class QrPadlockDialog extends PadlockAlertDialog<QrPadlock> {
-  final String url;
-
+  /// Creates a new [QrPadlockDialog] instance.
   const QrPadlockDialog({
     Key? key,
     required QrPadlock padlock,
-    required this.url,
   }) : super(
           key: key,
           padlock: padlock,
@@ -31,18 +36,15 @@ class QrPadlockDialog extends PadlockAlertDialog<QrPadlock> {
   @override
   State<StatefulWidget> createState() => _QrPadlockDialogState();
 
-  static QrPadlockDialog builder(
-    BuildContext context,
-    Padlock padlock, {
-    String url = 'https://url.skyost.eu/APi8Ab',
-  }) =>
-      QrPadlockDialog(
+  /// The [QrPadlockDialog] builder.
+  static QrPadlockDialog builder(BuildContext context, Padlock padlock) => QrPadlockDialog(
         padlock: padlock as QrPadlock,
-        url: url,
       );
 }
 
+/// The [QrPadlockDialog] state.
 class _QrPadlockDialogState extends PadlockAlertDialogState<QrPadlockDialog> {
+  /// The code text editing controller.
   TextEditingController controller = TextEditingController();
 
   @override
@@ -51,12 +53,12 @@ class _QrPadlockDialogState extends PadlockAlertDialogState<QrPadlockDialog> {
           alignment: Alignment.center,
           child: GestureDetector(
             onTap: () async {
-              if (await launcher.canLaunch(widget.url)) {
-                launcher.launch(widget.url);
+              if (await launcher.canLaunch(widget.padlock.url)) {
+                launcher.launch(widget.padlock.url);
               }
             },
             child: QrImage(
-              data: widget.url,
+              data: widget.padlock.url,
               size: 200,
             ),
           ),

@@ -1,10 +1,19 @@
 import 'package:escape_game_kit/src/game/render/render_settings.dart';
+import 'package:escape_game_kit/src/utils/properties_equatable.dart';
+import 'package:flutter/foundation.dart';
 
-class EscapeGameDialog {
+/// Represents an in-game dialog.
+class EscapeGameDialog with PropertiesEquatable {
+  /// The dialog title.
   final String? title;
+
+  /// The dialog image render settings. Pass `null` to display no image.
   final RenderSettings? imageRenderSettings;
+
+  /// The dialog message.
   final String message;
 
+  /// Creates a new [EscapeGameDialog] instance.
   const EscapeGameDialog({
     this.title,
     this.imageRenderSettings,
@@ -12,13 +21,6 @@ class EscapeGameDialog {
   });
 
   @override
-  bool operator ==(Object other) {
-    if (other is! EscapeGameDialog) {
-      return super == other;
-    }
-    return identical(this, other) || (title == other.title && imageRenderSettings == other.imageRenderSettings && message == other.message);
-  }
-
-  @override
-  int get hashCode => title.hashCode + imageRenderSettings.hashCode + message.hashCode;
+  @protected
+  List<Object?> get props => [title, imageRenderSettings, message];
 }

@@ -2,11 +2,18 @@ import 'package:escape_game_kit/escape_game_kit.dart';
 import 'package:escape_game_kit_example/game/messages/messages.dart';
 import 'package:flutter/material.dart';
 
+/// Allows to display a message.
 class MessageWidget extends StatefulWidget {
+  /// The message info.
   final MessageInfo messageInfo;
+
+  /// The child widget.
   final Widget child;
+
+  /// The close button.
   final Widget? closeButton;
 
+  /// Creates a new [MessageWidget] instance.
   const MessageWidget({
     Key? key,
     required this.messageInfo,
@@ -20,8 +27,8 @@ class MessageWidget extends StatefulWidget {
   State<StatefulWidget> createState() => _MessageWidgetState();
 }
 
+/// The [MessageWidget] state.
 class _MessageWidgetState extends State<MessageWidget> {
-
   @override
   Widget build(BuildContext context) => ListTile(
         leading: Icon(
@@ -58,10 +65,13 @@ class _MessageWidgetState extends State<MessageWidget> {
         },
       );
 
+  /// Add a leading zero to the specified [number], if necessary.
   String addLeadingZero(int number) => number < 10 ? '0$number' : number.toString();
 }
 
+/// A widget that displays a [TextMessageInfo].
 class TextMessageWidget extends MessageWidget {
+  /// Creates a new [TextMessageWidget] instance.
   TextMessageWidget({
     Key? key,
     required TextMessageInfo messageInfo,

@@ -56,49 +56,55 @@ class AudioPlayer extends StatefulWidget {
     this.pause,
     this.play,
     this.seek,
-  }) : super(key: key);
+  }) : super(
+          key: key,
+        );
 
   @override
   State<AudioPlayer> createState() => _AudioPlayerState();
 }
 
+/// The [AudioPlayer] state.
 class _AudioPlayerState extends State<AudioPlayer> {
-  late final audio.AudioPlayer _player;
-  late final StreamSubscription _processingStateStreamSub;
+  /// The player.
+  late final audio.AudioPlayer player;
+
+  /// The state subscription.
+  late final StreamSubscription processingStateStreamSubscription;
 
   @override
   void initState() {
     super.initState();
 
-    _player = audio.AudioPlayer();
-    _processingStateStreamSub = _player.processingStateStream.listen((processingState) {
+    player = audio.AudioPlayer();
+    processingStateStreamSubscription = player.processingStateStream.listen((processingState) {
       if (!mounted) {
         return;
       }
 
       if (processingState == audio.ProcessingState.completed) {
-        _player.pause();
-        _player.seek(Duration.zero);
+        player.pause();
+        player.seek(Duration.zero);
       }
     });
 
-    _player
+    player
       ..setAsset(widget.asset, preload: widget.preload)
       ..setLoopMode(widget.loop ? audio.LoopMode.one : audio.LoopMode.off);
 
     if (widget.autoplay) {
-      _player.play();
+      player.play();
     }
 
     if (widget.muted) {
-      _player.setVolume(0);
+      player.setVolume(0);
     }
   }
 
   @override
   void dispose() {
-    _processingStateStreamSub.cancel();
-    _player.dispose();
+    processingStateStreamSubscription.cancel();
+    player.dispose();
     super.dispose();
   }
 
@@ -117,22 +123,22 @@ class _AudioPlayerState extends State<AudioPlayer> {
             child: Row(
               children: [
                 PlayButton(
-                  pause: widget.pause != null ? () => widget.pause!(_player) : _player.pause,
-                  play: widget.play != null ? () => widget.play!(_player) : _player.play,
+                  pause: widget.pause != null ? () => widget.pause!(player) : player.pause,
+                  play: widget.play != null ? () => widget.play!(player) : player.play,
                   size: iconSize,
-                  stream: _player.playingStream,
+                  stream: player.playingStream,
                 ),
                 _PositionText(
-                  durationStream: _player.durationStream,
+                  durationStream: player.durationStream,
                   isNarrow: isNarrow,
-                  positionStream: _player.positionStream,
+                  positionStream: player.positionStream,
                   size: iconSize,
                 ),
                 Expanded(
                   child: _PositionSlider(
-                    durationStream: _player.durationStream,
-                    positionStream: _player.positionStream,
-                    seek: widget.seek != null ? (duration) => widget.seek!(_player, duration) : _player.seek,
+                    durationStream: player.durationStream,
+                    positionStream: player.positionStream,
+                    seek: widget.seek != null ? (duration) => widget.seek!(player, duration) : player.seek,
                     size: iconSize,
                   ),
                 ),
@@ -143,19 +149,30 @@ class _AudioPlayerState extends State<AudioPlayer> {
       );
 }
 
+/// A player / pause button.
 class PlayButton extends StatelessWidget {
+  /// Called when the user clicks on _Pause_.
   final VoidCallback pause;
+
+  /// Called when the user clicks on _Play_.
   final VoidCallback play;
+
+  /// The button size.
   final double size;
+
+  /// The audio stream.
   final Stream<bool> stream;
 
+  /// Creates a new [PlayButton] instance.
   const PlayButton({
     Key? key,
     required this.pause,
     required this.play,
     required this.size,
     required this.stream,
-  }) : super(key: key);
+  }) : super(
+          key: key,
+        );
 
   @override
   Widget build(BuildContext context) => StreamBuilder<bool>(
@@ -171,19 +188,30 @@ class PlayButton extends StatelessWidget {
       );
 }
 
+/// Allows to display the current position in the audio playing.
 class _PositionText extends StatelessWidget {
+  /// The duration stream.
   final Stream<Duration?> durationStream;
+
+  /// Whether to display the remaining time or no.
   final bool isNarrow;
+
+  /// The position stream.
   final Stream<Duration> positionStream;
+
+  /// The position text size.
   final double size;
 
+  /// Creates a new [_PositionText] instance.
   const _PositionText({
     Key? key,
     required this.durationStream,
     required this.isNarrow,
     required this.positionStream,
     required this.size,
-  }) : super(key: key);
+  }) : super(
+          key: key,
+        );
 
   @override
   Widget build(BuildContext _) => StreamBuilder<Duration?>(
@@ -193,9 +221,9 @@ class _PositionText extends StatelessWidget {
             final value = position.data?.inSeconds ?? -1;
             final remaining = max > value ? max - value : 0;
             final text = isNarrow
-                ? '-${_secondsToString(remaining)}'
-                : '${_secondsToString(value)} / '
-                    '${_secondsToString(max)}';
+                ? '-${secondsToString(remaining)}'
+                : '${secondsToString(value)} / '
+                    '${secondsToString(max)}';
             return Text(
               text,
               style: TextStyle(fontSize: size),
@@ -207,30 +235,42 @@ class _PositionText extends StatelessWidget {
         stream: durationStream,
       );
 
-  String _secondsToString(int value) {
+  /// Converts a specified seconds [value] to a string.
+  String secondsToString(int value) {
     if (value < 0) {
       return '0:00';
     }
 
-    final m = value ~/ 60;
-    final s = value % 60;
-    return '$m:${s.toString().padLeft(2, '0')}';
+    final min = value ~/ 60;
+    final sec = value % 60;
+    return '$min:${sec.toString().padLeft(2, '0')}';
   }
 }
 
+/// The position slider widget.
 class _PositionSlider extends StatelessWidget {
+  /// The duration stream.
   final Stream<Duration?> durationStream;
+
+  /// The position stream.
   final Stream<Duration> positionStream;
+
+  /// Triggered when the user seeks to a specified duration.
   final void Function(Duration) seek;
+
+  /// The position size.
   final double size;
 
+  /// Creates a new [_PositionSlider] instance.
   const _PositionSlider({
     Key? key,
     required this.durationStream,
     required this.positionStream,
     required this.seek,
     required this.size,
-  }) : super(key: key);
+  }) : super(
+          key: key,
+        );
 
   @override
   Widget build(BuildContext context) => StreamBuilder<Duration?>(
@@ -259,5 +299,6 @@ class _PositionSlider extends StatelessWidget {
         stream: durationStream,
       );
 
+  /// Triggered when the user seeks to the specified [ms].
   void onChanged(double ms) => seek(Duration(milliseconds: ms.toInt()));
 }

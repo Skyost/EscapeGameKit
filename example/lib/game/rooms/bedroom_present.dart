@@ -1,16 +1,22 @@
 import 'package:escape_game_kit/escape_game_kit.dart';
 import 'package:escape_game_kit_example/game/game.dart';
-import 'package:escape_game_kit_example/main.dart';
+import 'package:escape_game_kit_example/widgets/main_widget.dart';
 import 'package:escape_game_kit_example/widgets/messages_dialog.dart';
 import 'package:flutter/material.dart';
 
+/// The present bedroom.
 class BedroomPresentRoom extends Room {
+  /// The room id.
   static const String roomId = 'bedroom-present';
 
+  /// Creates a new [BedroomPresentRoom] instance.
   BedroomPresentRoom()
       : super(
           id: roomId,
-          firstVisitDialog: const EscapeGameDialog(message: '<em>Ah, fini !<br>Votre journée est terminée et vous venez enfin de rentrer des cours !</em>'),
+          onFirstVisit: (escapeGame) {
+            escapeGame.openDialog(const EscapeGameDialog(message: '<em>Ah, finished !<br>Your day is over and you have finally come home from school !</em>'));
+            return const ActionResult.success();
+          },
           interactables: [
             Interactable(
               id: 'left-computer',
@@ -37,7 +43,7 @@ class BedroomPresentRoom extends Room {
                 height: 170,
                 width: 8,
               ),
-              onHover: (escapeGame) => const ActionResult.success(object: InteractableTooltip(text: "C'est un grand néon.")),
+              onHover: (escapeGame) => const ActionResult.success(object: InteractableTooltip(text: "It's a big neon.")),
             ),
             Interactable(
               id: 'desk-computer-screens',
@@ -47,7 +53,7 @@ class BedroomPresentRoom extends Room {
                 height: 50,
                 width: 130,
               ),
-              onHover: (escapeGame) => const ActionResult.success(object: InteractableTooltip(text: "Des écrans d'ordinateur sont disposés sur le bureau.")),
+              onHover: (escapeGame) => const ActionResult.success(object: InteractableTooltip(text: "Computer screens are arranged on the desk.")),
             ),
             Interactable(
               id: 'top-computer-screen',
@@ -57,7 +63,7 @@ class BedroomPresentRoom extends Room {
                 height: 60,
                 width: 100,
               ),
-              onHover: (escapeGame) => const ActionResult.success(object: InteractableTooltip(text: "Un écran d'ordinateur affichant une courbe statistique.")),
+              onHover: (escapeGame) => const ActionResult.success(object: InteractableTooltip(text: "A computer screen displaying a statistical curve.")),
             ),
             Interactable(
               id: 'papers',
@@ -69,8 +75,8 @@ class BedroomPresentRoom extends Room {
               ),
               onTap: (escapeGame) {
                 escapeGame.openDialog(const EscapeGameDialog(
-                  title: 'Liste de choses à faire',
-                  message: "Une évaluation est prévue demain, il ne faut <strong>surtout</strong> pas oublier de consulter la messagerie en rentrant des cours !!",
+                  title: 'Things to do',
+                  message: "An exam is scheduled for tomorrow, I should <strong>above all</strong> not forget to check my messages once I come back from school !!",
                 ));
                 return const ActionResult.success();
               },
@@ -83,7 +89,7 @@ class BedroomPresentRoom extends Room {
                 height: 175,
                 width: 160,
               ),
-              onHover: (escapeGame) => const ActionResult.success(object: InteractableTooltip(text: 'Il fait presque nuit dehors.')),
+              onHover: (escapeGame) => const ActionResult.success(object: InteractableTooltip(text: "It's almost dark outside.")),
             ),
             Interactable(
               id: 'shoes-box',
@@ -93,7 +99,7 @@ class BedroomPresentRoom extends Room {
                 height: 24,
                 width: 50,
               ),
-              onHover: (escapeGame) => const ActionResult.success(object: InteractableTooltip(text: 'Une boîte à chaussures.')),
+              onHover: (escapeGame) => const ActionResult.success(object: InteractableTooltip(text: 'A shoebox.')),
             ),
             Interactable(
               id: 'neon-2',
@@ -103,7 +109,7 @@ class BedroomPresentRoom extends Room {
                 height: 125,
                 width: 7,
               ),
-              onHover: (escapeGame) => const ActionResult.success(object: InteractableTooltip(text: 'Un autre grand néon.')),
+              onHover: (escapeGame) => const ActionResult.success(object: InteractableTooltip(text: 'Another big neon.')),
             ),
             Interactable(
               id: 'poster',
@@ -115,7 +121,7 @@ class BedroomPresentRoom extends Room {
               ),
               onHover: (escapeGame) => const ActionResult.success(
                 object: InteractableTooltip(
-                  text: 'C\'est une photo de Mila Kunis plus jeune.',
+                  text: "It's a picture of younger Mila Kunis.",
                   xShift: -120,
                 ),
               ),
@@ -128,7 +134,7 @@ class BedroomPresentRoom extends Room {
                 height: 25,
                 width: 294,
               ),
-              onHover: (escapeGame) => const ActionResult.success(object: InteractableTooltip(text: 'Il serait temps de changer ces ampoules.')),
+              onHover: (escapeGame) => const ActionResult.success(object: InteractableTooltip(text: "It's time to change those bulbs.")),
             ),
             Interactable(
               id: 'laptop',
@@ -138,7 +144,7 @@ class BedroomPresentRoom extends Room {
                 height: 24,
                 width: 47,
               ),
-              onHover: (escapeGame) => const ActionResult.success(object: InteractableTooltip(text: 'Un petit ordinateur portable.')),
+              onHover: (escapeGame) => const ActionResult.success(object: InteractableTooltip(text: 'A small laptop.')),
             ),
             Interactable(
               id: 'pc-computer',
@@ -148,7 +154,7 @@ class BedroomPresentRoom extends Room {
                 height: 48,
                 width: 84,
               ),
-              onHover: (escapeGame) => const ActionResult.success(object: InteractableTooltip(text: 'C\'est un ordinateur fixe.')),
+              onHover: (escapeGame) => const ActionResult.success(object: InteractableTooltip(text: 'It is a fixed computer.')),
             ),
             Interactable(
               id: 'draws',
@@ -158,7 +164,7 @@ class BedroomPresentRoom extends Room {
                 height: 62,
                 width: 65,
               ),
-              onHover: (escapeGame) => const ActionResult.success(object: InteractableTooltip(text: 'Rien dans ces tiroirs.')),
+              onHover: (escapeGame) => const ActionResult.success(object: InteractableTooltip(text: 'Nothing in these draws')),
             ),
             Interactable(
               id: 'hi-fi',
@@ -170,7 +176,7 @@ class BedroomPresentRoom extends Room {
               ),
               onHover: (escapeGame) => const ActionResult.success(
                 object: InteractableTooltip(
-                  text: 'Une chaîne HiFi qui à l\'air vraiment moderne !',
+                  text: 'A HiFi system that looks really modern !',
                   xShift: -240,
                 ),
               ),
@@ -183,7 +189,7 @@ class BedroomPresentRoom extends Room {
                 height: 16,
                 width: 48,
               ),
-              onHover: (escapeGame) => const ActionResult.success(object: InteractableTooltip(text: 'Attention, c\'est dangereux.')),
+              onHover: (escapeGame) => const ActionResult.success(object: InteractableTooltip(text: 'Warning, it\'s dangerous.')),
             ),
             Interactable(
               id: 'gaming-computer',
@@ -193,7 +199,7 @@ class BedroomPresentRoom extends Room {
                 height: 57,
                 width: 54,
               ),
-              onHover: (escapeGame) => const ActionResult.success(object: InteractableTooltip(text: 'Une tour gaming !')),
+              onHover: (escapeGame) => const ActionResult.success(object: InteractableTooltip(text: 'A gaming machine !')),
             ),
             Interactable(
               id: 'mug',
@@ -203,7 +209,7 @@ class BedroomPresentRoom extends Room {
                 height: 24,
                 width: 24,
               ),
-              onHover: (escapeGame) => const ActionResult.success(object: InteractableTooltip(text: 'Le tasse n\'a pas été lavée...')),
+              onHover: (escapeGame) => const ActionResult.success(object: InteractableTooltip(text: 'The cup has not been washed...')),
             ),
             Interactable(
               id: 'bass',
@@ -213,7 +219,7 @@ class BedroomPresentRoom extends Room {
                 height: 26,
                 width: 76,
               ),
-              onHover: (escapeGame) => const ActionResult.success(object: InteractableTooltip(text: 'Des basses !')),
+              onHover: (escapeGame) => const ActionResult.success(object: InteractableTooltip(text: 'Some bass !')),
             ),
             Interactable(
               id: 'nightstand',
@@ -223,7 +229,7 @@ class BedroomPresentRoom extends Room {
                 height: 49,
                 width: 51,
               ),
-              onHover: (escapeGame) => const ActionResult.success(object: InteractableTooltip(text: 'Une table de nuit.')),
+              onHover: (escapeGame) => const ActionResult.success(object: InteractableTooltip(text: 'A nightstand.')),
             ),
             Interactable(
               id: 'bed',
@@ -233,7 +239,7 @@ class BedroomPresentRoom extends Room {
                 height: 82,
                 width: 225,
               ),
-              onHover: (escapeGame) => const ActionResult.success(object: InteractableTooltip(text: 'Il n\'est pas encore l\'heure de dormir !')),
+              onHover: (escapeGame) => const ActionResult.success(object: InteractableTooltip(text: 'It\'s not time to sleep yet !')),
             ),
             Interactable(
               id: 'books',
@@ -245,7 +251,7 @@ class BedroomPresentRoom extends Room {
               ),
               onHover: (escapeGame) => const ActionResult.success(
                 object: InteractableTooltip(
-                  text: 'Ce ne sont pas des livres de maths !',
+                  text: 'These are not math books !',
                   xShift: -240,
                 ),
               ),
@@ -258,7 +264,7 @@ class BedroomPresentRoom extends Room {
                 height: 73,
                 width: 27,
               ),
-              onHover: (escapeGame) => const ActionResult.success(object: InteractableTooltip(text: 'Un ordinateur de bureau.')),
+              onHover: (escapeGame) => const ActionResult.success(object: InteractableTooltip(text: 'A desktop computer.')),
             ),
           ],
         );

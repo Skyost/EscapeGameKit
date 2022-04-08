@@ -1,54 +1,67 @@
+/// The messages, shown in the [MessagesDialog].
 class Messages {
+  /// The message shown at the end.
   final TextMessageInfo endMessage = TextMessageInfo(
     author: 'DELAUNAY Hugo',
     title: 'Bug',
     date: DateTime.now(),
-    text: "Il paraît que le fichier a fait planter l'ordinateur de certains d'entre-vous... En conséquence l'évaluation de demain est annulée, nous en reparlerons plus tard.\n\nBonne journée.\nH. Delaunay",
+    text: "Apparently the audio file has made the computer of some of you completely crazy... Consequently the exam of tomorrow is cancelled, we will talk about it soon.\n\nHave a nice day.\nH. Delaunay",
     unread: true,
   );
 
+  /// The glitch message.
   final MessageInfo glitchMessage = MessageInfo(
     author: 'DELAUNAY Hugo',
-    title: 'Fichier audio',
+    title: 'Audio file',
     date: DateTime.now(),
     unread: true,
   );
 
+  /// All text messages.
   final List<TextMessageInfo> textMessages = [
     TextMessageInfo(
-      author: 'SERVICE INFORMATIQUE',
-      title: 'Attention',
+      author: 'IT SERVICE',
+      title: 'Warning',
       date: DateTime.now().subtract(const Duration(hours: 1)),
       unread: true,
-      text: "Le réseau informatique du collège est très instable aujourd'hui.\nVous êtes donc priés de faire attention à ce que vous faîtes dessus.\n\nBien cordialement.\nLe service informatique",
+      text: "The IT network is particularly unstable today.\nPlease be careful at what you're doing on it.\n\nBest regards.\nThe IT service",
     ),
     TextMessageInfo(
-      author: 'DESPREZ Jean',
+      author: 'DESJARDINS Nils',
       title: 'URGENT !!',
       date: DateTime(2022, 4, 5, 8, 24),
-      text: "J'ai perdu mon sac, tu saurais pas où il est ?? 😭😭",
+      text: "I've lost my bag, do you know where it is ?? 😭😭",
     ),
     TextMessageInfo(
-      author: 'AUBIN Alix',
-      title: 'Leçons pour demain',
+      author: 'NABOT Axel',
+      title: 'Work for tomorrow',
       date: DateTime(2022, 4, 4, 18, 47),
-      text: "Salut !\n\nC'est quoi le travail à faire pour demain ?",
+      text: "Hi !\n\nWhat do we have to do for tomorrow ?",
     ),
     TextMessageInfo(
-      author: 'PITEL Noé',
-      title: 'Exo de math',
+      author: 'LEPTI Leo',
+      title: 'Math exercise',
       date: DateTime(2022, 4, 4, 17, 59),
-      text: "Hello\n\nJ'ai pas compris l'exo sur la proportionnalité de ce matin, tu pourrais me donner un coup de main ? 🤓",
+      text: "Hello\n\nI haven't understood the exercise about proportionality, can you help me please ? 🤓",
     ),
   ];
 }
 
+/// Contains some info about a message.
 class MessageInfo {
+  /// The author.
   final String author;
+
+  /// The title.
   final String title;
+
+  /// The date.
   DateTime date;
+
+  /// Whether this message has been read or not.
   bool unread;
 
+  /// Creates a new [MessageInfo] instance.
   MessageInfo({
     required this.author,
     required this.title,
@@ -57,9 +70,12 @@ class MessageInfo {
   });
 }
 
+/// A [MessageInfo] that contains a [text].
 class TextMessageInfo extends MessageInfo {
+  /// The text.
   final String text;
 
+  /// Creates a new [TextMessageInfo] instance.
   TextMessageInfo({
     required String author,
     required String title,

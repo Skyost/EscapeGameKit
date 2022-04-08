@@ -1,28 +1,31 @@
+import 'package:escape_game_kit/src/utils/properties_equatable.dart';
 import 'package:flutter/material.dart';
 
-class InteractableTooltip {
+/// Represents a displayable tooltip.
+class InteractableTooltip with PropertiesEquatable {
+  /// The tooltip text.
   final String text;
-  final double yShift;
+
+  /// Controls how this tooltip should be shifted in the `x` coordinate.
   final double xShift;
 
+  /// Controls how this tooltip should be shifted in the `y` coordinate.
+  final double yShift;
+
+  /// Creates a new [InteractableTooltip] instance.
   const InteractableTooltip({
     required this.text,
-    this.yShift = 1,
     this.xShift = 1,
+    this.yShift = 1,
   });
 
-  double calculateTopPosition(Offset mousePosition) => mousePosition.dy + yShift;
+  /// Calculates the `x` coordinate according to the provided [mousePosition].
+  double calculateX(Offset mousePosition) => mousePosition.dx + xShift;
 
-  double calculateLeftPosition(Offset mousePosition) => mousePosition.dx + xShift;
-
-  @override
-  bool operator ==(Object other) {
-    if (other is! InteractableTooltip) {
-      return super == other;
-    }
-    return identical(this, other) || (text == other.text && yShift == other.yShift && xShift == other.xShift);
-  }
+  /// Calculates the `y` coordinate according to the provided [mousePosition].
+  double calculateY(Offset mousePosition) => mousePosition.dy + yShift;
 
   @override
-  int get hashCode => text.hashCode + yShift.hashCode + xShift.hashCode;
+  @protected
+  List<Object?> get props => [text, xShift, yShift];
 }

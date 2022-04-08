@@ -33,7 +33,7 @@ export 'src/widgets/padlocks/credentials.dart';
 export 'src/widgets/padlocks/dialogs.dart';
 export 'src/widgets/padlocks/digits.dart';
 export 'src/widgets/padlocks/pattern.dart';
-export 'src/widgets/render_settings_stack.dart';
+export 'src/widgets/render_settings.dart';
 export 'src/widgets/room/background.dart';
 export 'src/widgets/room/interactable.dart';
 export 'src/widgets/room/room.dart';

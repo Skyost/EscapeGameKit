@@ -2,15 +2,21 @@ import 'package:escape_game_kit/src/game/game.dart';
 import 'package:escape_game_kit/src/game/inventory/object.dart';
 import 'package:escape_game_kit/src/utils/assets_extension.dart';
 import 'package:escape_game_kit/src/utils/auto_image.dart';
-import 'package:escape_game_kit/src/widgets/render_settings_stack.dart';
+import 'package:escape_game_kit/src/widgets/render_settings.dart';
 import 'package:flutter/material.dart';
 
+/// Allows to build the widget that displays an [EscapeGameObject].
 typedef EscapeGameObjectWidgetBuilder = Widget Function(BuildContext context, EscapeGame escapeGame, EscapeGameObject object);
 
+/// Base class that allows to create a widget that display an [Inventory].
 abstract class InventoryWidget extends StatefulWidget {
+  /// The [EscapeGame] instance.
   final EscapeGame escapeGame;
+
+  /// The [EscapeGameObject] widget builder.
   final EscapeGameObjectWidgetBuilder objectWidgetBuilder;
 
+  /// Creates a new [InventoryWidget] instance.
   const InventoryWidget({
     Key? key,
     required this.escapeGame,
@@ -19,18 +25,21 @@ abstract class InventoryWidget extends StatefulWidget {
           key: key,
         );
 
+  /// The default [EscapeGameObject] widget builder.
   static Widget defaultObjectWidgetBuilder(BuildContext context, EscapeGame escapeGame, EscapeGameObject object) => Tooltip(
         message: object.name,
         child: AutoImage(
           asset: object.inventoryRenderSettings?.asset ?? object.defaultAssetPath,
           width: object.inventoryRenderSettings?.width,
           height: object.inventoryRenderSettings?.height,
-          errorBuilder: RenderSettingsStackWidget.getImageErrorWidgetBuilder(object.inventoryRenderSettings),
+          errorBuilder: RenderSettingsWidget.getImageErrorWidgetBuilder(object.inventoryRenderSettings),
         ),
       );
 }
 
+/// Base class that allows to create the state of a widget that display an [Inventory].
 abstract class InventoryWidgetState<T extends InventoryWidget> extends State<T> {
+  /// The currently displayed objects.
   List<EscapeGameObject> objects = [];
 
   @override
@@ -56,6 +65,7 @@ abstract class InventoryWidgetState<T extends InventoryWidget> extends State<T> 
     super.dispose();
   }
 
+  /// Refreshes the currently displayed objects.
   void refreshObjects() {
     if (mounted && objects != widget.escapeGame.inventory.objects) {
       setState(() {

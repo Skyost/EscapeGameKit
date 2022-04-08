@@ -1,14 +1,17 @@
 import 'package:escape_game_kit/escape_game_kit.dart';
 
-class BookshelfKey extends EscapeGameObject {
-  static const String objectId = 'bookshelf-key';
+/// The clover key.
+class CloverKey extends EscapeGameObject {
+  /// This object id.
+  static const String objectId = 'clover-key';
 
-  const BookshelfKey()
+  /// Creates a new clover key instance.
+  const CloverKey()
       : super(
           id: objectId,
-          name: 'Clé en forme de trèfle',
+          name: 'Clover shaped key',
           inventoryRenderSettings: const RenderSettings(
-            asset: 'assets/interactables/bookshelf-key.svg',
+            asset: 'assets/interactables/clover-key.svg',
             height: 40,
           ),
         );

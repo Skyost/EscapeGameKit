@@ -1,28 +1,46 @@
 import 'package:escape_game_kit/src/game/dialog.dart';
 import 'package:escape_game_kit/src/game/padlocks/padlock.dart';
 import 'package:escape_game_kit/src/utils/auto_image.dart';
-import 'package:escape_game_kit/src/widgets/render_settings_stack.dart';
+import 'package:escape_game_kit/src/widgets/render_settings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_widget_from_html_core/flutter_widget_from_html_core.dart';
 
+/// An [AlertDialog], built for escape games.
 class EscapeGameAlertDialog extends StatelessWidget {
-  static const _contentPadding = EdgeInsets.fromLTRB(24, 20, 24, 24);
+  /// The default content padding.
+  static const _defaultContentPadding = EdgeInsets.fromLTRB(24, 20, 24, 24);
 
+  /// The dialog title.
   final String? title;
+
+  /// The text to show when [children.isEmpty] is `true`.
   final String? empty;
+
+  /// The dialog background color.
   final Color? backgroundColor;
+
+  /// The dialog content padding.
   final EdgeInsets contentPadding;
+
+  /// The dialog children.
   final List<Widget> children;
+
+  /// The dialog actions.
   final List<Widget>? actions;
+
+  /// The bottom child.
   final Widget? bottom;
+
+  /// The dialog scroll controller.
   final ScrollController? scrollController;
 
+  /// Creates a new [EscapeGameAlertDialog] instance.
   const EscapeGameAlertDialog({
     Key? key,
     this.title,
     this.empty,
     this.backgroundColor,
-    this.contentPadding = _contentPadding,
+    this.contentPadding = _defaultContentPadding,
     required this.children,
     this.actions,
     this.bottom,
@@ -31,11 +49,12 @@ class EscapeGameAlertDialog extends StatelessWidget {
           key: key,
         );
 
+  /// Creates a new [EscapeGameAlertDialog] instance with only one [child].
   EscapeGameAlertDialog.oneChild({
     Key? key,
     String? title,
     Color? backgroundColor,
-    EdgeInsets contentPadding = _contentPadding,
+    EdgeInsets contentPadding = _defaultContentPadding,
     required Widget child,
     List<Widget>? actions,
     Widget? bottom,
@@ -51,6 +70,7 @@ class EscapeGameAlertDialog extends StatelessWidget {
           scrollController: scrollController,
         );
 
+  /// Creates a new [EscapeGameAlertDialog] instance from the specified [escapeGameDialog].
   EscapeGameAlertDialog.fromEscapeGameDialog({
     Key? key,
     required EscapeGameDialog escapeGameDialog,
@@ -61,7 +81,7 @@ class EscapeGameAlertDialog extends StatelessWidget {
             if (escapeGameDialog.imageRenderSettings?.asset != null)
               Padding(
                 padding: const EdgeInsets.only(bottom: 10),
-                child: RenderSettingsStackWidget(
+                child: RenderSettingsWidget(
                   child: AutoImage(
                     asset: escapeGameDialog.imageRenderSettings!.asset!,
                     width: escapeGameDialog.imageRenderSettings!.width,
@@ -102,6 +122,7 @@ class EscapeGameAlertDialog extends StatelessWidget {
         actions: actions,
       );
 
+  /// Creates the child widget.
   Widget _createChildWidget(BuildContext context) {
     List<Widget> children = [];
     if (this.children.isEmpty && empty != null) {
@@ -133,27 +154,43 @@ class EscapeGameAlertDialog extends StatelessWidget {
   }
 }
 
+/// Displays the [padlock.failedToUnlockMessage].
 class EscapeGameAlertDialogPadlockNewTry extends StatelessWidget {
+  /// The padlock.
   final Padlock? padlock;
 
+  /// The text style.
+  final TextStyle textStyle;
+
+  /// The text align.
+  final TextAlign textAlign;
+
+  /// Creates a new [EscapeGameAlertDialogPadlockNewTry] instance.
   const EscapeGameAlertDialogPadlockNewTry({
     Key? key,
     this.padlock,
+    this.textStyle = const TextStyle(fontWeight: FontWeight.bold, color: Colors.red),
+    this.textAlign = TextAlign.center,
   }) : super(
           key: key,
         );
 
   @override
-  Widget build(BuildContext context) => Text(
-        padlock?.failedToUnlockMessage ?? kDefaultFailedToUnlockMessage,
-        style: const TextStyle(fontWeight: FontWeight.bold, color: Colors.red),
-        textAlign: TextAlign.center,
-      );
+  Widget build(BuildContext context) => padlock?.failedToUnlockMessage == null
+      ? const SizedBox.shrink()
+      : Text(
+          padlock!.failedToUnlockMessage!,
+          style: textStyle,
+          textAlign: textAlign,
+        );
 }
 
+/// Allows to create an _OK_ button easily.
 class EscapeGameAlertDialogOkButton<T> extends StatelessWidget {
+  /// Triggered when pressed.
   final VoidCallback? onPressed;
 
+  /// Creates a new [EscapeGameAlertDialogOkButton] instance.
   const EscapeGameAlertDialogOkButton({
     Key? key,
     this.onPressed,
@@ -168,9 +205,12 @@ class EscapeGameAlertDialogOkButton<T> extends StatelessWidget {
       );
 }
 
+/// Allows to create a _Close_ button easily.
 class EscapeGameAlertDialogCloseButton extends StatelessWidget {
+  /// Whether it is a cancel or a close button.
   final bool cancel;
 
+  /// Creates a new [EscapeGameAlertDialogCloseButton] instance.
   const EscapeGameAlertDialogCloseButton({
     Key? key,
     this.cancel = true,
@@ -187,9 +227,12 @@ class EscapeGameAlertDialogCloseButton extends StatelessWidget {
       );
 }
 
+/// Allows to easily create dialogs to unlock padlocks.
 abstract class PadlockAlertDialog<T extends Padlock> extends StatefulWidget {
+  /// The padlock.
   final T padlock;
 
+  /// Creates a new [PadlockAlertDialog] instance.
   const PadlockAlertDialog({
     Key? key,
     required this.padlock,
@@ -198,7 +241,9 @@ abstract class PadlockAlertDialog<T extends Padlock> extends StatefulWidget {
         );
 }
 
+/// Base state for a [PadlockAlertDialog] widget.
 abstract class PadlockAlertDialogState<T extends PadlockAlertDialog> extends State<T> {
+  /// Whether this is the first try.
   bool isFirstTry = true;
 
   @override
@@ -216,17 +261,22 @@ abstract class PadlockAlertDialogState<T extends PadlockAlertDialog> extends Sta
         actions: buildActions(context),
       );
 
+  /// Builds the dialog body.
   List<Widget> buildBody(BuildContext context);
 
+  /// Builds the dialog actions.
   List<Widget> buildActions(BuildContext context) => [
         EscapeGameAlertDialogOkButton(onPressed: tryUnlock),
         const EscapeGameAlertDialogCloseButton(),
       ];
 
+  /// Builds the dialog bottom widget.
   Widget? buildBottom(BuildContext context) => isFirstTry ? null : EscapeGameAlertDialogPadlockNewTry(padlock: widget.padlock);
 
+  /// Returns the entered code.
   dynamic getCode();
 
+  /// Tries to unlock the padlock.
   void tryUnlock() {
     bool unlockResult = widget.padlock.tryUnlock(getCode());
     if (unlockResult) {

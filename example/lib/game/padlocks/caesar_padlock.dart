@@ -3,19 +3,23 @@ import 'package:escape_game_kit_example/widgets/padlock_input.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
+/// A padlock that can be unlocked by entering the good digits, which is encrypted using a Caesar code.
 class CaesarPadlock extends ObjectEqualPadlock<String> {
+  /// Creates a new [CaesarPadlock] instance.
   CaesarPadlock()
       : super(
-          title: 'Cadenas',
-          unlockMessage: 'Tiens, il y a un cadenas avec une sorte de disque coulissant...',
-          failedToUnlockMessage: "Ce code ne fonctionne pas.",
+          title: 'Padlock',
+          unlockMessage: 'It seems to be a padlock with a strange wheel...',
+          failedToUnlockMessage: "This code doesn't work.",
         );
 
   @override
   bool isObjectValid(String object) => object.toLowerCase() == '50';
 }
 
+/// Allows to unlock a [CaesarPadlock].
 class CaesarPadlockDialog extends PadlockAlertDialog<CaesarPadlock> {
+  /// Creates a new [CaesarPadlockDialog] instance.
   const CaesarPadlockDialog({
     Key? key,
     required CaesarPadlock padlock,
@@ -27,16 +31,27 @@ class CaesarPadlockDialog extends PadlockAlertDialog<CaesarPadlock> {
   @override
   State<StatefulWidget> createState() => _CaesarPadlockDialogState();
 
-  static CaesarPadlockDialog builder(BuildContext context, Padlock padlock) => CaesarPadlockDialog(padlock: padlock as CaesarPadlock);
+  /// The [CaesarPadlockDialog] builder.
+  static CaesarPadlockDialog builder(BuildContext context, Padlock padlock) => CaesarPadlockDialog(
+        padlock: padlock as CaesarPadlock,
+      );
 }
 
+/// The [CaesarPadlockDialog] state.
 class _CaesarPadlockDialogState extends PadlockAlertDialogState<CaesarPadlockDialog> {
+  /// The wheel width.
   static const double width = 220;
 
+  /// The letters.
   static const List<String> letters = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
-  static const encryptedText = 'PVADHNAGR';
 
+  /// The encrypted text.
+  static const encryptedText = 'SVSGUL';
+
+  /// The text editing controller.
   TextEditingController controller = TextEditingController();
+
+  /// How many times the wheel has been turned.
   int turns = 0;
 
   @override
@@ -103,6 +118,7 @@ class _CaesarPadlockDialogState extends PadlockAlertDialogState<CaesarPadlockDia
   @override
   dynamic getCode() => controller.text;
 
+  /// Returns the decrypted text.
   String get decryptedText {
     String result = '';
     for (String letter in encryptedText.characters) {

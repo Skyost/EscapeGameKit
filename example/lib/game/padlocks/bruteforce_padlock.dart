@@ -1,21 +1,26 @@
 import 'package:escape_game_kit/escape_game_kit.dart';
 import 'package:flutter/material.dart';
 
+/// A padlock that can be unlocked by trying a lot of codes.
 class BruteforcePadlock extends ObjectEqualPadlock<String> {
+  /// The code.
   final String digits;
 
+  /// Creates a new [BruteforcePadlock] instance.
   BruteforcePadlock({
     this.digits = '2018',
   }) : super(
-          title: 'Cadenas',
-          unlockMessage: "Ce tiroir est protégé par un drôle de cadenas qui affiche des informations additionnelles... Essayons différents codes !",
+          title: 'Padlock',
+          unlockMessage: "This draw is protected by a strange padlock which is showing various info... Let's try some codes !",
         );
 
   @override
   bool isObjectValid(String object) => object.toLowerCase() == digits;
 }
 
+/// Allows to unlock a [BruteforcePadlock].
 class BruteforcePadlockDialog extends PadlockAlertDialog<BruteforcePadlock> {
+  /// Creates a new [BruteforcePadlockDialog] instance.
   const BruteforcePadlockDialog({
     Key? key,
     required BruteforcePadlock padlock,
@@ -27,11 +32,18 @@ class BruteforcePadlockDialog extends PadlockAlertDialog<BruteforcePadlock> {
   @override
   State<StatefulWidget> createState() => _BruteforcePadlockDialogState();
 
-  static BruteforcePadlockDialog builder(BuildContext context, Padlock padlock) => BruteforcePadlockDialog(padlock: padlock as BruteforcePadlock);
+  /// The [BruteforcePadlockDialog] builder.
+  static BruteforcePadlockDialog builder(BuildContext context, Padlock padlock) => BruteforcePadlockDialog(
+        padlock: padlock as BruteforcePadlock,
+      );
 }
 
+/// The [BruteforcePadlockDialog] state.
 class _BruteforcePadlockDialogState extends PadlockAlertDialogState<BruteforcePadlockDialog> {
+  /// Text editing controllers.
   List<TextEditingController> controllers = [];
+
+  /// Focus nodes.
   List<FocusNode> focusNodes = [];
 
   @override
@@ -71,6 +83,7 @@ class _BruteforcePadlockDialogState extends PadlockAlertDialogState<BruteforcePa
                   onChanged: (value) {
                     if (value.isNotEmpty && i < controllers.length - 1) {
                       focusNodes[i + 1].requestFocus();
+                      controllers[i + 1].selection = const TextSelection(baseOffset: 0, extentOffset: 1);
                     }
                   },
                   onSubmitted: (value) => tryUnlock(),
@@ -104,7 +117,7 @@ class _BruteforcePadlockDialogState extends PadlockAlertDialogState<BruteforcePa
     }
 
     return Text(
-      'Le code est incorrect : $goodDigits chiffre(s) correct(s) et $wellPlacedDigits chiffre(s) bien placé(s).',
+      'Incorrect code : $goodDigits correct(s) digit(s) and $wellPlacedDigits well placed digit(s).',
       style: const TextStyle(fontWeight: FontWeight.bold, color: Colors.red),
       textAlign: TextAlign.center,
     );

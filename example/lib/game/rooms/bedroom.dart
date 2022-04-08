@@ -1,19 +1,25 @@
 import 'dart:math';
 
 import 'package:escape_game_kit/escape_game_kit.dart';
-import 'package:escape_game_kit_example/game/objects/bed_key.dart';
-import 'package:escape_game_kit_example/game/objects/painting_key.dart';
+import 'package:escape_game_kit_example/game/objects/clover_key.dart';
+import 'package:escape_game_kit_example/game/objects/mouth_key.dart';
 import 'package:escape_game_kit_example/game/padlocks/bruteforce_padlock.dart';
 import 'package:escape_game_kit_example/game/padlocks/computer_padlock.dart';
 
+/// The bedroom.
 class BedroomRoom extends Room {
+  /// The room id.
   static const String roomId = 'bedroom';
 
+  /// Creates a new [BedroomRoom] instance.
   BedroomRoom({
-    EscapeGameObject deskKey = const DeskKey(),
+    EscapeGameObject mouthKey = const MouthKey(),
   }) : super(
           id: roomId,
-          firstVisitDialog: const EscapeGameDialog(message: "<em>Mince, que s'est-il passé ?<br>Et surtout, où est-on !?</em>"),
+          onFirstVisit: (escapeGame) {
+            escapeGame.openDialog(const EscapeGameDialog(message: "<em>Shit, what has just happened ?<br>And above all, where are we !?</em>"));
+            return const ActionResult.success();
+          },
           interactables: [
             Door(
               id: 'desk-door',
@@ -27,16 +33,16 @@ class BedroomRoom extends Room {
                 hoverAnimation: InteractableAnimation(type: InteractableAnimationType.pulse),
               ),
               onTap: (escapeGame) {
-                if (!escapeGame.inventory.hasObject(deskKey)) {
+                if (!escapeGame.inventory.hasObject(mouthKey)) {
                   escapeGame.openDialog(const EscapeGameDialog(
-                    title: 'Porte verrouillée',
-                    message: "<em>Mince, la porte de la bibliothèque est verrouillée, et vous n'avez pas la clé !</em>",
+                    title: 'Door locked',
+                    message: "<em>Damn, the desk door is locked, and you don't have the key !</em>",
                   ));
                   return const ActionResult.failed();
                 }
                 return const ActionResult.success();
               },
-              onHover: (escapeGame) => const ActionResult.success(object: InteractableTooltip(text: 'Vers le bureau')),
+              onHover: (escapeGame) => const ActionResult.success(object: InteractableTooltip(text: 'Go to the desk')),
               roomId: 'desk',
             ),
             Door(
@@ -51,10 +57,10 @@ class BedroomRoom extends Room {
                 hoverAnimation: InteractableAnimation(type: InteractableAnimationType.pulse),
               ),
               onTap: (escapeGame) {
-                if (!escapeGame.inventory.hasObject(deskKey)) {
+                if (!escapeGame.inventory.hasObject(mouthKey)) {
                   escapeGame.openDialog(const EscapeGameDialog(
-                    title: 'Porte verrouillée',
-                    message: "<em>Mince, la porte du salon est verrouillée, et vous n'avez pas la clé !</em>",
+                    title: 'Door locked',
+                    message: "<em>Damn, the living room door is locked, and you don't have the key !</em>",
                   ));
                   return const ActionResult.failed();
                 }
@@ -62,8 +68,8 @@ class BedroomRoom extends Room {
               },
               onHover: (escapeGame) => const ActionResult.success(
                 object: InteractableTooltip(
-                  text: 'Vers le salon',
-                  xShift: -20,
+                  text: 'Go to the living room',
+                  xShift: -50,
                 ),
               ),
               roomId: 'living-room',
@@ -80,12 +86,12 @@ class BedroomRoom extends Room {
               padlock: PadlockSequence(
                 padlocks: [
                   CredentialsPadlock(
-                    username: 'shtam',
+                    username: 'htam',
                     password: '146',
                     caseSensitive: false,
-                    title: 'Connexion',
-                    unlockMessage: 'Zut, il faut se connecter !',
-                    failedToUnlockMessage: 'Impossible de se connecter... Il doit y avoir une erreur quelque part.',
+                    title: 'Login',
+                    unlockMessage: 'Oh no, we need to login !',
+                    failedToUnlockMessage: 'Cannot login... There must be an error somewhere.',
                   ),
                   ComputerPadlock(),
                 ],
@@ -99,7 +105,7 @@ class BedroomRoom extends Room {
                 height: 80,
                 width: 60,
               ),
-              onHover: (escapeGame) => const ActionResult.success(object: InteractableTooltip(text: 'Un grand miroir.')),
+              onHover: (escapeGame) => const ActionResult.success(object: InteractableTooltip(text: 'A big mirror.')),
             ),
             Interactable(
               id: 'top-drawers',
@@ -109,10 +115,10 @@ class BedroomRoom extends Room {
                 height: 30,
                 width: 70,
               ),
-              onHover: (escapeGame) => const ActionResult.success(object: InteractableTooltip(text: "Il n'y a rien dans les deux tiroirs du dessus.")),
+              onHover: (escapeGame) => const ActionResult.success(object: InteractableTooltip(text: "There's nothing in the first two draws.")),
             ),
             PickableObject(
-              object: deskKey,
+              object: mouthKey,
               renderSettings: const InteractableRenderSettings(
                 top: 320,
                 left: 250,
@@ -122,17 +128,17 @@ class BedroomRoom extends Room {
               padlock: BruteforcePadlock(),
               onPickedUp: (escapeGame) {
                 escapeGame.openDialog(EscapeGameDialog(
-                  title: 'Objet trouvé !',
+                  title: 'Object found !',
                   imageRenderSettings: RenderSettings(
-                    asset: deskKey.inventoryRenderSettings?.asset,
+                    asset: mouthKey.inventoryRenderSettings?.asset,
                     width: 100,
                     height: 100,
                   ),
-                  message: '<em>Vous avez trouvé une clé en forme de bouche !</em>',
+                  message: '<em>You just a found a mouth shaped key !</em>',
                 ));
                 return const ActionResult.success();
               },
-              removedTooltip: const InteractableTooltip(text: 'Vous avez trouvé une clé dans ce tiroir.'),
+              removedTooltip: const InteractableTooltip(text: "You've found a key in this draw."),
             ),
             Interactable(
               id: 'wardrobe',
@@ -142,7 +148,7 @@ class BedroomRoom extends Room {
                 height: 217,
                 width: 100,
               ),
-              onHover: (escapeGame) => const ActionResult.success(object: InteractableTooltip(text: 'Ce n\'est qu\'une armoire.')),
+              onHover: (escapeGame) => const ActionResult.success(object: InteractableTooltip(text: 'This is just a wardrobe.')),
             ),
             Interactable(
               id: 'window',
@@ -152,7 +158,7 @@ class BedroomRoom extends Room {
                 height: 213,
                 width: 122,
               ),
-              onHover: (escapeGame) => const ActionResult.success(object: InteractableTooltip(text: 'Il fait encore nuit dehors.')),
+              onHover: (escapeGame) => const ActionResult.success(object: InteractableTooltip(text: 'It\'s still dark outside.')),
             ),
             Clue.dialog(
               id: 'bed-chest',
@@ -162,14 +168,14 @@ class BedroomRoom extends Room {
                 height: 78,
                 width: 288,
               ),
-              keyId: BedKey.objectId,
+              keyId: EightKey.objectId,
               clueDialog: const EscapeGameDialog(
-                title: 'Indice sur le mot de passe',
-                message: "<em>Vous avez déverrouillé ce coffre à l'aide de la clé en forme de huit... Et il contient un message !</em><br><br>Des lapins et des poules courent dans le jardin. On ne sait pas combien il y en a, mais on compte 20 pattes et 6 têtes.<br><br><strong>Le deuxième chiffre du mot de passe de l'ordinateur est le nombre de lapins.</strong>",
+                title: 'Hint on the password',
+                message: "<em>You have unlocked this chest using the eight shaped key... And there is a message !</em><br><br>Rabbits and chickens are in the garden. We don't know how many there are, but we can count 20 paws and 6 heads.<br><br><strong>The second digit of the computer password is the rabbit count.</strong>",
               ),
               noKeyDialog: const EscapeGameDialog(
-                title: 'Coffre verrouillé',
-                message: '<em>Il semble y avoir un coffre sous ce lit, mais il est verouillé par une clé...</em>',
+                title: 'Locked chest',
+                message: '<em>There seems to be a chest under this bed, but it has been locked with a key, and you don\'t have it...</em>',
               ),
             ),
             Clue.dialog(
@@ -181,8 +187,8 @@ class BedroomRoom extends Room {
                 width: 38,
               ),
               clueDialog: const EscapeGameDialog(
-                title: 'Indice sur un cadenas',
-                message: "<em>Tiens, il y a un indice derrière cette lampe !</em><br><br>Je n'arrêtais jamais d'oublier le code du cadenas du coffre caché dans le pot de fleur du salon... Mais maintenant plus de souci !<br>Pour le déverrouiller, il suffit d'entrer le nombre de combinaisons de codes à 3 chiffres possibles !",
+                title: 'Hint on a padlock',
+                message: "<em>There seems to be a hint behind this lamp !</em><br><br>I was always forgetting the code of the chest padlock that is hidden in the flower pot in the living room... But now no more worries !<br>To unlock it, we just need to input the number of possible 3-digit code combinations !",
               ),
             ),
             Interactable(
@@ -193,7 +199,7 @@ class BedroomRoom extends Room {
                 height: 55,
                 width: 31,
               ),
-              onHover: (escapeGame) => const ActionResult.success(object: InteractableTooltip(text: 'Des bougies éclairent la pièce.')),
+              onHover: (escapeGame) => const ActionResult.success(object: InteractableTooltip(text: 'Some candles are lighting up the room.')),
             ),
           ],
         );

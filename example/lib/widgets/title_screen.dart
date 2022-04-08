@@ -1,9 +1,12 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 
+/// The title screen, shown before the game starts.
 class TitleScreen extends StatelessWidget {
+  /// The child widget.
   final Widget child;
 
+  /// Creates a new [TitleScreen] instance.
   const TitleScreen({
     Key? key,
     required this.child,
@@ -39,7 +42,7 @@ class TitleScreen extends StatelessWidget {
                         'assets/icon.png',
                         height: 60,
                       ),
-                      applicationLegalese: "Copyright © 2022 Hugo Delaunay. Tous droits réservés.\nL'icône provient de FreePik, les décors ainsi que les objets ont été créés par upklyak.",
+                      applicationLegalese: "Copyright © 2022 Hugo Delaunay. All rights reserved.\nThanks to FreePik for the icon, and thanks to upklyak for the sets and the objects.",
                     ),
                   );
                 },

@@ -1,12 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
+/// A widget that either display a SVG or a more classic image.
 class AutoImage extends StatefulWidget {
+  /// The image asset.
   final String asset;
+
+  /// The image width.
   final double? width;
+
+  /// The image height.
   final double? height;
+
+  /// The error builder.
   final ImageErrorWidgetBuilder? errorBuilder;
 
+  /// Creates a new [AutoImage] instance.
   const AutoImage({
     Key? key,
     required this.asset,
@@ -21,9 +30,15 @@ class AutoImage extends StatefulWidget {
   State<StatefulWidget> createState() => _AutoImageState();
 }
 
+/// The [AutoImage] state.
 class _AutoImageState extends State<AutoImage> {
+  /// Whether the currently displayed SVG is loading.
   late bool isSvgLoading;
+
+  /// The SVG loading error.
   Object? svgError;
+
+  /// The SVG loading error stacktrace.
   StackTrace? svgStackTrace;
 
   @override
@@ -72,5 +87,6 @@ class _AutoImageState extends State<AutoImage> {
           );
   }
 
+  /// Returns whether the asset is a SVG.
   bool get isSvg => widget.asset.endsWith('.svg');
 }

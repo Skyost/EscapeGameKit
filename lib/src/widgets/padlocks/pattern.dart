@@ -3,6 +3,7 @@ import 'package:escape_game_kit/src/game/padlocks/pattern.dart';
 import 'package:escape_game_kit/src/widgets/alert_dialog.dart';
 import 'package:flutter/material.dart';
 
+/// Allows to unlock a [PatternPadlock].
 /// Thanks [https://github.com/baothg/pattern_lock_screen_flutter/blob/master/lib/main.dart](`pattern_lock_screen_flutter`).
 class PatternPadlockDialog extends PadlockAlertDialog<PatternPadlock> {
   /// Padding of points area relative to distance between points.
@@ -14,28 +15,21 @@ class PatternPadlockDialog extends PadlockAlertDialog<PatternPadlock> {
   /// Color of not selected points.
   final Color notSelectedColor;
 
-  /// Radius of points.
-  final double pointRadius;
-
   /// Whether show user's input and highlight selected points.
   final bool showInput;
-
-  /// Needed distance from input to point to select point.
-  final int selectThreshold;
 
   /// Whether fill points.
   final bool fillPoints;
 
+  /// Creates a new [PatternPadlockDialog] instance.
   const PatternPadlockDialog({
     Key? key,
     required PatternPadlock padlock,
-    required this.relativePadding,
+    this.relativePadding = 0.5,
     this.selectedColor,
-    required this.notSelectedColor,
-    required this.pointRadius,
-    required this.showInput,
-    required this.selectThreshold,
-    required this.fillPoints,
+    this.notSelectedColor = Colors.black45,
+    this.showInput = true,
+    this.fillPoints = false,
   }) : super(
           key: key,
           padlock: padlock,
@@ -44,31 +38,18 @@ class PatternPadlockDialog extends PadlockAlertDialog<PatternPadlock> {
   @override
   State<StatefulWidget> createState() => _PatternPadlockDialogState();
 
-  static PatternPadlockDialog builder(
-    BuildContext context,
-    Padlock padlock, {
-    double relativePadding = 0.7,
-    Color? selectedColor,
-    Color notSelectedColor = Colors.black45,
-    double pointRadius = 20,
-    bool showInput = true,
-    int selectThreshold = 25,
-    bool fillPoints = false,
-  }) =>
-      PatternPadlockDialog(
+  /// The [PatternPadlockDialog] builder.
+  static PatternPadlockDialog builder(BuildContext context, Padlock padlock) => PatternPadlockDialog(
         padlock: padlock as PatternPadlock,
-        relativePadding: relativePadding,
-        selectedColor: selectedColor,
-        notSelectedColor: notSelectedColor,
-        pointRadius: pointRadius,
-        showInput: showInput,
-        selectThreshold: selectThreshold,
-        fillPoints: fillPoints,
       );
 }
 
+/// The [PatternPadlockDialog] state.
 class _PatternPadlockDialogState extends PadlockAlertDialogState<PatternPadlockDialog> {
+  /// The current offset.
   Offset? offset;
+
+  /// The current codes.
   List<int> codes = [];
 
   @override
@@ -87,23 +68,28 @@ class _PatternPadlockDialogState extends PadlockAlertDialogState<PatternPadlockD
 
   @override
   List<Widget> buildBody(BuildContext context) => [
-    Center(
-      child: GestureDetector(
-        child: CustomPaint(
-          painter: _LockScreenPainter(
-            color: Theme.of(context).primaryColorDark,
-            codes: codes,
-            offset: offset,
-            onSelect: _onSelect,
+        Center(
+          child: GestureDetector(
+            child: CustomPaint(
+              painter: _PatternPainter(
+                dimension: widget.padlock.dimension,
+                codes: codes,
+                offset: offset,
+                onSelect: onSelect,
+                relativePadding: widget.relativePadding,
+                selectedColor: widget.selectedColor ?? Theme.of(context).primaryColor,
+                notSelectedColor: widget.notSelectedColor,
+                showInput: widget.showInput,
+                fillPoints: widget.fillPoints,
+              ),
+              size: Size.square(MediaQuery.of(context).size.shortestSide / 2),
+            ),
+            onPanStart: onPanStart,
+            onPanUpdate: onPanUpdate,
+            onPanEnd: onPanEnd,
           ),
-          size: Size.square(MediaQuery.of(context).size.shortestSide / 2),
         ),
-        onPanStart: _onPanStart,
-        onPanUpdate: _onPanUpdate,
-        onPanEnd: _onPanEnd,
-      ),
-    ),
-  ];
+      ];
 
   @override
   dynamic getCode() => codes.map((index) => PatternCoordinate(x: index % widget.padlock.dimension, y: index ~/ widget.padlock.dimension)).toList();
@@ -111,11 +97,14 @@ class _PatternPadlockDialogState extends PadlockAlertDialogState<PatternPadlockD
   @override
   List<Widget> buildActions(BuildContext context) => const [EscapeGameAlertDialogCloseButton()];
 
-  void _onPanStart(DragStartDetails event) => _clearCodes();
+  /// Triggered when the pan starts.
+  void onPanStart(DragStartDetails event) => clearCodes();
 
-  void _onPanUpdate(DragUpdateDetails event) => setState(() => offset = event.localPosition);
+  /// Triggered when the pan updates.
+  void onPanUpdate(DragUpdateDetails event) => setState(() => offset = event.localPosition);
 
-  void _onPanEnd(DragEndDetails event) {
+  /// Triggered when the pan ends.
+  void onPanEnd(DragEndDetails event) {
     if (codes.isNotEmpty) {
       tryUnlock();
     }
@@ -125,13 +114,15 @@ class _PatternPadlockDialogState extends PadlockAlertDialogState<PatternPadlockD
     });
   }
 
-  void _onSelect(int code) {
+  /// Triggered when a [code] is selected.
+  void onSelect(int code) {
     if (codes.isEmpty || codes.last != code) {
       codes.add(code);
     }
   }
 
-  void _clearCodes() {
+  /// Allows to clear currently selected codes.
+  void clearCodes() {
     setState(() {
       codes = [];
       offset = null;
@@ -139,26 +130,62 @@ class _PatternPadlockDialogState extends PadlockAlertDialogState<PatternPadlockD
   }
 }
 
-class _LockScreenPainter extends CustomPainter {
-  final int _total = 9;
-  final int _col = 3;
+/// Allows to paint the pattern.
+class _PatternPainter extends CustomPainter {
+  /// The canvas size.
   late Size size;
 
-  final Color color;
+  /// The padlock dimension.
+  final int dimension;
+
+  /// The selected codes.
   final List<int> codes;
+
+  /// The current offset.
   final Offset? offset;
+
+  /// Triggered when a code has been selected.
   final Function(int code) onSelect;
 
-  _LockScreenPainter({
-    required this.color,
+  /// Padding of points area relative to distance between points.
+  final double relativePadding;
+
+  /// Color of selected points. `Theme.of(context).primaryColor` if null.
+  final Color selectedColor;
+
+  /// Color of not selected points.
+  final Color notSelectedColor;
+
+  /// Whether show user's input and highlight selected points.
+  final bool showInput;
+
+  /// Whether fill points.
+  final bool fillPoints;
+
+  /// Creates a new [_PatternPainter] instance.
+  _PatternPainter({
+    required this.dimension,
     required this.codes,
     this.offset,
     required this.onSelect,
+    required this.relativePadding,
+    required this.selectedColor,
+    required this.notSelectedColor,
+    required this.showInput,
+    required this.fillPoints,
   });
 
-  double get _sizeCode => size.width / _col;
+  /// Returns the total dots count.
+  int get total => dimension ^ 2;
 
-  Paint get _painter => Paint()
+  /// Returns the column count.
+  int get columns => dimension;
+
+  /// Returns the size code.
+  double get sizeCode => size.width / columns;
+
+  /// Creates a new [Paint] instance.
+  Paint get painter => Paint()
     ..color = Colors.white
     ..strokeWidth = 2.0;
 
@@ -166,69 +193,70 @@ class _LockScreenPainter extends CustomPainter {
   void paint(Canvas canvas, Size size) {
     this.size = Size.square(size.shortestSide);
 
-    for (var i = 0; i < _total; i++) {
-      var _offset = _getOffetByIndex(i);
-      var _color = _getColorByIndex(i);
+    for (int i = 0; i < total; i++) {
+      Offset offset = getOffsetByIndex(i);
+      Color color = getColorByIndex(i);
 
-      var _radiusIn = _sizeCode / 2.0 * 0.2;
-      _drawCircle(canvas, _offset, _radiusIn, _color, true);
+      double radiusIn = sizeCode / 2.0 * 0.2;
+      drawCircle(canvas, offset, radiusIn, color, true);
 
-      var _radiusOut = _sizeCode / 2.0 * 0.6;
-      _drawCircle(canvas, _offset, _radiusOut, _color);
+      double radiusOut = sizeCode / 2.0 * 0.6;
+      drawCircle(canvas, offset, radiusOut, color);
 
-      var _pathGesture = _getCirclePath(_offset, _radiusOut);
-      if (offset != null && _pathGesture.contains(offset!)) onSelect(i);
+      Path pathGesture = getCirclePath(offset, radiusOut);
+      if (pathGesture.contains(offset)) {
+        onSelect(i);
+      }
     }
 
-    for (var i = 0; i < codes.length; i++) {
-      var _start = _getOffetByIndex(codes[i]);
-      if (i + 1 < codes.length) {
-        var _end = _getOffetByIndex(codes[i + 1]);
-        _drawLine(canvas, _start, _end);
-      } else if (offset != null) {
-        Offset _end = offset!;
-        _drawLine(canvas, _start, _end);
+    if (showInput) {
+      for (int i = 0; i < codes.length; i++) {
+        Offset start = getOffsetByIndex(codes[i]);
+        if (i + 1 < codes.length) {
+          Offset end = getOffsetByIndex(codes[i + 1]);
+          drawLine(canvas, start, end);
+        } else if (offset != null) {
+          Offset _end = offset!;
+          drawLine(canvas, start, _end);
+        }
       }
     }
   }
 
-  Path _getCirclePath(Offset offset, double radius) {
-    var _rect = Rect.fromCircle(radius: radius, center: offset);
-    return Path()..addOval(_rect);
+  /// Returns a circle path.
+  Path getCirclePath(Offset offset, double radius) => Path()..addOval(Rect.fromCircle(radius: radius, center: offset));
+
+  /// Draws a circle.
+  void drawCircle(Canvas canvas, Offset offset, double radius, Color color, [bool isDot = false]) {
+    Path path = getCirclePath(offset, radius);
+    Paint painter = this.painter
+      ..color = color
+      ..style = isDot && fillPoints ? PaintingStyle.fill : PaintingStyle.stroke;
+    canvas.drawPath(path, painter);
   }
 
-  void _drawCircle(Canvas canvas, Offset offset, double radius, Color color, [bool isDot = false]) {
-    var _path = _getCirclePath(offset, radius);
-    var _painter = this._painter
-      ..color = color
-      ..style = isDot ? PaintingStyle.fill : PaintingStyle.stroke;
-    canvas.drawPath(_path, _painter);
-  }
-
-  void _drawLine(Canvas canvas, Offset start, Offset end) {
-    var _painter = this._painter
-      ..color = color
+  /// Draws a line.
+  void drawLine(Canvas canvas, Offset start, Offset end) {
+    Paint painter = this.painter
+      ..color = selectedColor
       ..style = PaintingStyle.stroke
       ..strokeWidth = 4.0;
-    var _path = Path();
-    _path.moveTo(start.dx, start.dy);
-    _path.lineTo(end.dx, end.dy);
-    canvas.drawPath(_path, _painter);
+    Path path = Path();
+    path.moveTo(start.dx, start.dy);
+    path.lineTo(end.dx, end.dy);
+    canvas.drawPath(path, painter);
   }
 
-  Color _getColorByIndex(int i) {
-    return codes.contains(i) ? Colors.indigo : Colors.grey;
-  }
+  /// Returns the color associated to the specified index.
+  Color getColorByIndex(int i) => codes.contains(i) && showInput ? selectedColor : notSelectedColor;
 
-  Offset _getOffetByIndex(int i) {
-    var _dxCode = _sizeCode * (i % _col + .5);
-    var _dyCode = _sizeCode * ((i / _col).floor() + .5);
-    var _offsetCode = Offset(_dxCode, _dyCode);
-    return _offsetCode;
+  /// Returns the offset associated to the specified index.
+  Offset getOffsetByIndex(int i) {
+    double dxCode = sizeCode * (i % columns + relativePadding);
+    double dyCode = sizeCode * ((i / columns).floor() + relativePadding);
+    return Offset(dxCode, dyCode);
   }
 
   @override
-  bool shouldRepaint(_LockScreenPainter oldDelegate) {
-    return offset != oldDelegate.offset;
-  }
+  bool shouldRepaint(_PatternPainter oldDelegate) => offset != oldDelegate.offset;
 }

@@ -3,9 +3,12 @@ import 'package:escape_game_kit/src/game/padlocks/padlock.dart';
 import 'package:escape_game_kit/src/widgets/alert_dialog.dart';
 import 'package:flutter/material.dart';
 
+/// Allows to unlock a [DigitsPadlock].
 class DigitsPadlockDialog extends PadlockAlertDialog<DigitsPadlock> {
+  /// Whether text fields should be separated.
   final bool shouldSeparateTextFields;
 
+  /// Creates a new [DigitsPadlockDialog] instance.
   DigitsPadlockDialog({
     Key? key,
     required DigitsPadlock padlock,
@@ -19,16 +22,18 @@ class DigitsPadlockDialog extends PadlockAlertDialog<DigitsPadlock> {
   @override
   State<StatefulWidget> createState() => _DigitsPadlockDialogState();
 
-  static DigitsPadlockDialog builder(
-    BuildContext context,
-    Padlock padlock, {
-    bool? shouldSeparateTextFields,
-  }) =>
-      DigitsPadlockDialog(padlock: padlock as DigitsPadlock);
+  /// The [DigitsPadlockDialog] builder.
+  static DigitsPadlockDialog builder(BuildContext context, Padlock padlock) => DigitsPadlockDialog(
+        padlock: padlock as DigitsPadlock,
+      );
 }
 
+/// The [DigitsPadlockDialog] state.
 class _DigitsPadlockDialogState extends PadlockAlertDialogState<DigitsPadlockDialog> {
+  /// Text editing controllers.
   List<TextEditingController> controllers = [];
+
+  /// Focus nodes.
   List<FocusNode> focusNodes = [];
 
   @override
@@ -61,6 +66,7 @@ class _DigitsPadlockDialogState extends PadlockAlertDialogState<DigitsPadlockDia
                     onChanged: (value) {
                       if (value.isNotEmpty && i < controllers.length - 1) {
                         focusNodes[i + 1].requestFocus();
+                        controllers[i + 1].selection = const TextSelection(baseOffset: 0, extentOffset: 1);
                       }
                     },
                     onSubmitted: (value) => tryUnlock(),

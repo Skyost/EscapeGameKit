@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
+/// The widget shown at the end of the game.
 class EndMessage extends StatelessWidget {
+  /// Creates a new [EndMessage] instance.
   const EndMessage({
     Key? key,
   }) : super(
@@ -15,7 +17,7 @@ class EndMessage extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             Text(
-              'FÉLICITATIONS !',
+              'CONGRATULATIONS !',
               style: Theme.of(context).textTheme.headline1?.copyWith(
                     fontWeight: FontWeight.bold,
                     fontSize: 20,
@@ -24,7 +26,7 @@ class EndMessage extends StatelessWidget {
               textAlign: TextAlign.center,
             ),
             Text(
-              'Bravo, vous avez réussi à revenir en ${DateTime.now().year} !',
+              'Well done, you got back to ${DateTime.now().year} with success !',
               style: Theme.of(context).textTheme.bodyText2?.copyWith(
                     color: Colors.white,
                   ),

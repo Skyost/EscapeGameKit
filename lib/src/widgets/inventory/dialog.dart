@@ -2,10 +2,12 @@ import 'package:escape_game_kit/src/game/game.dart';
 import 'package:escape_game_kit/src/game/inventory/object.dart';
 import 'package:escape_game_kit/src/widgets/alert_dialog.dart';
 import 'package:escape_game_kit/src/widgets/inventory/widget.dart';
-import 'package:escape_game_kit/src/widgets/render_settings_stack.dart';
+import 'package:escape_game_kit/src/widgets/render_settings.dart';
 import 'package:flutter/material.dart';
 
+/// Allows to display the inventory in a dialog.
 class InventoryDialog extends InventoryWidget {
+  /// Creates a new [InventoryDialog] instance.
   const InventoryDialog({
     Key? key,
     required EscapeGame escapeGame,
@@ -19,6 +21,7 @@ class InventoryDialog extends InventoryWidget {
   @override
   State<StatefulWidget> createState() => _InventoryDialogState();
 
+  /// Opens the dialog.
   static void openDialog(
     BuildContext context, {
     required EscapeGame escapeGame,
@@ -33,6 +36,7 @@ class InventoryDialog extends InventoryWidget {
       );
 }
 
+/// The [InventoryDialog] state.
 class _InventoryDialogState extends InventoryWidgetState<InventoryDialog> {
   @override
   Widget build(BuildContext context) => EscapeGameAlertDialog.oneChild(
@@ -48,7 +52,7 @@ class _InventoryDialogState extends InventoryWidgetState<InventoryDialog> {
                 spacing: 10,
                 children: [
                   for (EscapeGameObject object in objects)
-                    RenderSettingsStackWidget(
+                    RenderSettingsWidget(
                       renderSettings: object.inventoryRenderSettings,
                       child: widget.objectWidgetBuilder(context, widget.escapeGame, object),
                     ),

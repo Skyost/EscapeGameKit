@@ -1,14 +1,17 @@
 import 'package:escape_game_kit/escape_game_kit.dart';
-import 'package:escape_game_kit_example/game/objects/bed_key.dart';
 import 'package:escape_game_kit_example/game/objects/bookshelf_key.dart';
+import 'package:escape_game_kit_example/game/objects/clover_key.dart';
 import 'package:escape_game_kit_example/game/padlocks/caesar_padlock.dart';
 
+/// The living room.
 class LinvingRoomRoom extends Room {
+  /// The room id.
   static const String roomId = 'living-room';
 
+  /// Creates a new [LinvingRoomRoom] instance.
   LinvingRoomRoom({
-    EscapeGameObject bookshelfKey = const BookshelfKey(),
-    EscapeGameObject bedKey = const BedKey(),
+    EscapeGameObject cloverKey = const CloverKey(),
+    EscapeGameObject eightKey = const EightKey(),
   }) : super(
           id: roomId,
           interactables: [
@@ -23,7 +26,7 @@ class LinvingRoomRoom extends Room {
                 rotationAngle: -1,
                 hoverAnimation: InteractableAnimation(type: InteractableAnimationType.pulse),
               ),
-              onHover: (escapeGame) => const ActionResult.success(object: InteractableTooltip(text: 'Vers la chambre')),
+              onHover: (escapeGame) => const ActionResult.success(object: InteractableTooltip(text: 'Go to the bedroom')),
               roomId: 'bedroom',
             ),
             PickableObject(
@@ -33,26 +36,26 @@ class LinvingRoomRoom extends Room {
                 height: 38,
                 width: 38,
               ),
-              object: bedKey,
+              object: eightKey,
               padlock: DigitsPadlock(
-                title: 'Cadenas',
-                unlockMessage: 'Ce placard est protégé par un cadenas à code !\nIl doit y avoir un indice quelque part.',
-                failedToUnlockMessage: "Mince, ce n'est pas le bon code...",
+                title: 'Padlock',
+                unlockMessage: 'This cupboard is protected by a code padlock !\nThere must be a hint somewhere.',
+                failedToUnlockMessage: "Goddamn, this is not working...",
                 digits: '120',
               ),
               onPickedUp: (escapeGame) {
                 escapeGame.openDialog(EscapeGameDialog(
-                  title: 'Objet trouvé !',
+                  title: 'Object found !',
                   imageRenderSettings: RenderSettings(
-                    asset: bedKey.inventoryRenderSettings?.asset,
+                    asset: eightKey.inventoryRenderSettings?.asset,
                     width: 100,
                     height: 100,
                   ),
-                  message: '<em>Vous avez trouvé une clé en forme de huit !</em>',
+                  message: '<em>You just a found an height shaped key !</em>',
                 ));
                 return const ActionResult.success();
               },
-              removedTooltip: const InteractableTooltip(text: 'Vous avez trouvé une clé dans ce placard.'),
+              removedTooltip: const InteractableTooltip(text: "You've found a key in this cupboard."),
             ),
             PickableObject(
               renderSettings: const InteractableRenderSettings(
@@ -61,26 +64,26 @@ class LinvingRoomRoom extends Room {
                 height: 109,
                 width: 50,
               ),
-              object: bookshelfKey,
+              object: cloverKey,
               padlock: DigitsPadlock(
-                title: 'Cadenas',
-                unlockMessage: 'Il y a un coffre dans le pot de fleur... Mais il est protégé par un cadenas à code !\nIl doit y avoir un indice quelque part.',
-                failedToUnlockMessage: "Zut, ce n'est pas le bon code...",
+                title: 'Padlock',
+                unlockMessage: 'There is a chest in this flowerpot... But it is protected by a code padlock !\nThere must be a hint somewhere.',
+                failedToUnlockMessage: "Damn, that's not the code...",
                 digits: '1000',
               ),
               onPickedUp: (escapeGame) {
                 escapeGame.openDialog(EscapeGameDialog(
-                  title: 'Objet trouvé !',
+                  title: 'Object found !',
                   imageRenderSettings: RenderSettings(
-                    asset: bookshelfKey.inventoryRenderSettings?.asset,
+                    asset: cloverKey.inventoryRenderSettings?.asset,
                     width: 100,
                     height: 100,
                   ),
-                  message: '<em>Vous avez trouvé une clé en forme de trèfle !</em>',
+                  message: '<em>You just a found a clover shaped key !</em>',
                 ));
                 return const ActionResult.success();
               },
-              removedTooltip: const InteractableTooltip(text: 'Vous avez trouvé une clé dans ce pot de fleur.'),
+              removedTooltip: const InteractableTooltip(text: "You've found a key in this flowerpot."),
             ),
             Interactable(
               id: 'frame-1',
@@ -90,7 +93,7 @@ class LinvingRoomRoom extends Room {
                 height: 76,
                 width: 71,
               ),
-              onHover: (escapeGame) => const ActionResult.success(object: InteractableTooltip(text: 'Joli cadre... Bien qu\'un peu vide.')),
+              onHover: (escapeGame) => const ActionResult.success(object: InteractableTooltip(text: 'Nice frame... Although a little empty.')),
             ),
             Interactable(
               id: 'frame-2',
@@ -100,7 +103,7 @@ class LinvingRoomRoom extends Room {
                 height: 83,
                 width: 74,
               ),
-              onHover: (escapeGame) => const ActionResult.success(object: InteractableTooltip(text: 'Ce cadre semble également vide.')),
+              onHover: (escapeGame) => const ActionResult.success(object: InteractableTooltip(text: 'This frame also seems a bit empty.')),
             ),
             Interactable(
               id: 'frame-3',
@@ -110,7 +113,7 @@ class LinvingRoomRoom extends Room {
                 height: 102,
                 width: 90,
               ),
-              onHover: (escapeGame) => const ActionResult.success(object: InteractableTooltip(text: 'Du marbre surplombe la cheminée.')),
+              onHover: (escapeGame) => const ActionResult.success(object: InteractableTooltip(text: 'Marble overhangs the fireplace.')),
             ),
             Interactable(
               id: 'fire',
@@ -120,7 +123,7 @@ class LinvingRoomRoom extends Room {
                 height: 60,
                 width: 69,
               ),
-              onHover: (escapeGame) => const ActionResult.success(object: InteractableTooltip(text: 'Attention, ça brule !')),
+              onHover: (escapeGame) => const ActionResult.success(object: InteractableTooltip(text: 'Careful, it\'s hot !')),
             ),
             Interactable(
               id: 'flowerpot',
@@ -132,7 +135,7 @@ class LinvingRoomRoom extends Room {
               ),
               onHover: (escapeGame) => const ActionResult.success(
                 object: InteractableTooltip(
-                  text: 'Ce n\'est qu\'un pot de fleur comme un autre...',
+                  text: "It's just a flower pot like any other...",
                   xShift: -200,
                 ),
               ),
@@ -145,7 +148,7 @@ class LinvingRoomRoom extends Room {
                 height: 114,
                 width: 112,
               ),
-              onHover: (escapeGame) => const ActionResult.success(object: InteractableTooltip(text: 'Quel grand fauteuil.')),
+              onHover: (escapeGame) => const ActionResult.success(object: InteractableTooltip(text: 'What a big chair.')),
             ),
             Interactable(
               id: 'chair-2',
@@ -155,7 +158,7 @@ class LinvingRoomRoom extends Room {
                 height: 97,
                 width: 94,
               ),
-              onHover: (escapeGame) => const ActionResult.success(object: InteractableTooltip(text: 'Joli fauteuil !')),
+              onHover: (escapeGame) => const ActionResult.success(object: InteractableTooltip(text: 'Nice chair !')),
             ),
             Clue.dialog(
               id: 'pillow-1',
@@ -167,8 +170,8 @@ class LinvingRoomRoom extends Room {
               ),
               padlock: CaesarPadlock(),
               clueDialog: const EscapeGameDialog(
-                title: 'Indice sur le mot de passe',
-                message: "<em>Un indice se trouve derrière le coussin !</em><br><br>Dans un étang non loin d'ici, j'ai remarqué que le nombre de nénuphars double chaque nuit... Au début il y en a 1, puis 2 le lendemain, puis 4 le surlendemain, etc. si bien que l'étang est recouvert de nénuphars en 7 jours seulement !<br><br><strong>Le troisième et dernier chiffre du mot de passe de l'ordinateur est le nombre de jours qu'il faut pour que l'étang soit recouvert si au début il y a non pas 1, mais 2 nénuphars.</strong>",
+                title: 'Hint on the password',
+                message: "<em>An hint is behind the pillow !</em><br><br>In a pond not far from here, I noticed that the number of water lilies doubles every night... At first there is 1, then 2 the next day, then 4 the day after, etc. so much so that the pond is covered with water lilies in just 7 days !<br><br><strong>The third and last digit of the computer password is the number of days it takes for the pond to be covered if at the beginning there are not 1, but 2 water lilies.</strong>",
               ),
             ),
             Interactable(
@@ -179,7 +182,7 @@ class LinvingRoomRoom extends Room {
                 height: 31,
                 width: 38,
               ),
-              onHover: (escapeGame) => const ActionResult.success(object: InteractableTooltip(text: 'Un coussin... Sans rien derrière.')),
+              onHover: (escapeGame) => const ActionResult.success(object: InteractableTooltip(text: 'A pillow... With nothing behind it.')),
             ),
             Interactable(
               id: 'window',
@@ -191,7 +194,7 @@ class LinvingRoomRoom extends Room {
               ),
               onHover: (escapeGame) => const ActionResult.success(
                 object: InteractableTooltip(
-                  text: 'Il fait encore nuit dehors.',
+                  text: 'It is still dark outside.',
                   xShift: -160,
                 ),
               ),
@@ -204,7 +207,7 @@ class LinvingRoomRoom extends Room {
                 height: 59,
                 width: 138,
               ),
-              onHover: (escapeGame) => const ActionResult.success(object: InteractableTooltip(text: 'Une table, mais il n\'y a rien dessus.')),
+              onHover: (escapeGame) => const ActionResult.success(object: InteractableTooltip(text: 'A table with nothing on it.')),
             ),
             Interactable(
               id: 'lamp-1',
@@ -214,7 +217,7 @@ class LinvingRoomRoom extends Room {
                 height: 47,
                 width: 30,
               ),
-              onHover: (escapeGame) => const ActionResult.success(object: InteractableTooltip(text: 'Une petite lampe de chevet.')),
+              onHover: (escapeGame) => const ActionResult.success(object: InteractableTooltip(text: 'A small bedside lamp.')),
             ),
             Interactable(
               id: 'lamp-2',
@@ -224,7 +227,7 @@ class LinvingRoomRoom extends Room {
                 height: 148,
                 width: 38,
               ),
-              onHover: (escapeGame) => const ActionResult.success(object: InteractableTooltip(text: 'C\'est une grande lampe, mais elle est éteinte.')),
+              onHover: (escapeGame) => const ActionResult.success(object: InteractableTooltip(text: 'It\'s a big lamp, but it has been turned off.')),
             ),
             Clue.dialog(
               id: 'sofa',
@@ -235,8 +238,8 @@ class LinvingRoomRoom extends Room {
                 width: 190,
               ),
               clueDialog: const EscapeGameDialog(
-                title: "Indice sur le nom d'utilisateur",
-                message: "<em>Il y a un message sous la canapé !</em><br><br>J'oublie toujours mon nom d'utilisateur pour me connecter sur mon ordinateur... Mais je sais que c'est le nom de ma matière préférée à l'envers !",
+                title: "Hint on the username",
+                message: "<em>There's a message under the couch !</em><br><br>I always forget my username to login to my computer... But I know it's the name of my favorite school subject backwards !",
               ),
             ),
           ],

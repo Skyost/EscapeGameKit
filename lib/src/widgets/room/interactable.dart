@@ -6,14 +6,19 @@ import 'package:escape_game_kit/src/game/room/interactables/tooltip.dart';
 import 'package:escape_game_kit/src/utils/assets_extension.dart';
 import 'package:escape_game_kit/src/utils/auto_image.dart';
 import 'package:escape_game_kit/src/widgets/padlocks/dialogs.dart';
-import 'package:escape_game_kit/src/widgets/render_settings_stack.dart';
+import 'package:escape_game_kit/src/widgets/render_settings.dart';
 import 'package:escape_game_kit/src/widgets/room/interactable_animation.dart';
 import 'package:flutter/material.dart';
 
+/// Allows to render an [Interactable].
 class InteractableWidget extends StatefulWidget {
+  /// The [EscapeGame] instance.
   final EscapeGame escapeGame;
+
+  /// The interactable.
   final Interactable interactable;
 
+  /// Creates a new [InteractableWidget] instance.
   InteractableWidget({
     Key? key,
     required this.escapeGame,
@@ -25,23 +30,32 @@ class InteractableWidget extends StatefulWidget {
   @override
   State<StatefulWidget> createState() => _InteractableWidgetState();
 
+  /// Triggered when the [interactable] has been tapped on.
   @protected
   Future<void> onInteractableTapped(BuildContext context) async {
     ActionResult result = interactable.onTap(escapeGame);
     if (result.state == ActionResultState.needAction && result.object is Padlock) {
       await (result.object as Padlock).tryUnlockViaDialog(context);
-      if ((result.object as Padlock).state.isUnlocked) {
+      if ((result.object as Padlock).isUnlocked) {
         interactable.onTap(escapeGame);
       }
     }
   }
 }
 
+/// The [InteractableWidget] state.
 class _InteractableWidgetState extends State<InteractableWidget> {
+  /// The current tooltip opacity.
   double tooltipOpacity = 0;
+
+  /// The current tooltip overlay entry.
   OverlayEntry? tooltipOverlayEntry;
+
+  /// The current tooltip animation controller.
+  AnimationController? tooltipAnimationController;
+
+  /// The current mouse position.
   Offset? mousePosition;
-  AnimationController? hoverAnimationController;
 
   @override
   void initState() {
@@ -63,7 +77,7 @@ class _InteractableWidgetState extends State<InteractableWidget> {
       asset: widget.interactable.renderSettings?.asset ?? widget.interactable.defaultAssetPath,
       width: widget.interactable.renderSettings?.width,
       height: widget.interactable.renderSettings?.height,
-      errorBuilder: RenderSettingsStackWidget.getImageErrorWidgetBuilder(widget.interactable.renderSettings),
+      errorBuilder: RenderSettingsWidget.getImageErrorWidgetBuilder(widget.interactable.renderSettings),
     );
 
     InteractableTooltip? tooltip = widget.interactable.onHover(widget.escapeGame).object;
@@ -73,7 +87,7 @@ class _InteractableWidgetState extends State<InteractableWidget> {
         if (tooltip != null) {
           showTooltip(event, tooltip);
         }
-        hoverAnimationController?.forward(from: widget.interactable.renderSettings?.hoverAnimation?.from);
+        tooltipAnimationController?.forward(from: widget.interactable.renderSettings?.hoverAnimation?.from);
       },
       onHover: (event) {
         if (tooltip != null) {
@@ -84,7 +98,7 @@ class _InteractableWidgetState extends State<InteractableWidget> {
         if (tooltip != null) {
           hideTooltip(event);
         }
-        hoverAnimationController?.reset();
+        tooltipAnimationController?.reset();
       },
       child: Listener(
         onPointerUp: (event) => widget.onInteractableTapped(context),
@@ -94,7 +108,7 @@ class _InteractableWidgetState extends State<InteractableWidget> {
           child: InteractableAnimationWidget(
             animation: widget.interactable.renderSettings?.hoverAnimation,
             child: image,
-            controller: (controller) => hoverAnimationController = controller,
+            controller: (controller) => tooltipAnimationController = controller,
             animate: false,
           ),
         ),
@@ -114,12 +128,13 @@ class _InteractableWidgetState extends State<InteractableWidget> {
     super.dispose();
   }
 
+  /// Shows the specified [tooltip].
   void showTooltip(PointerEvent event, InteractableTooltip tooltip) {
     updateTooltipPosition(event);
     tooltipOverlayEntry = OverlayEntry(
       builder: (context) => Positioned(
-        top: tooltip.calculateTopPosition(mousePosition!),
-        left: tooltip.calculateLeftPosition(mousePosition!),
+        top: tooltip.calculateY(mousePosition!),
+        left: tooltip.calculateX(mousePosition!),
         child: AnimatedOpacity(
           opacity: tooltipOpacity,
           duration: const Duration(milliseconds: 200),
@@ -148,6 +163,7 @@ class _InteractableWidgetState extends State<InteractableWidget> {
     });
   }
 
+  /// Updates the current tooltip position.
   void updateTooltipPosition(PointerEvent event) {
     Offset? previousPosition = mousePosition;
     mousePosition = event.position;
@@ -156,6 +172,7 @@ class _InteractableWidgetState extends State<InteractableWidget> {
     }
   }
 
+  /// Hides the current tooltip.
   Future<void> hideTooltip(PointerEvent event) async {
     OverlayEntry? tooltipOverlayEntry = this.tooltipOverlayEntry;
     if (tooltipOverlayEntry != null) {
@@ -167,6 +184,7 @@ class _InteractableWidgetState extends State<InteractableWidget> {
     }
   }
 
+  /// Refreshes the widget state.
   void refreshState() {
     if (mounted) {
       setState(() {});

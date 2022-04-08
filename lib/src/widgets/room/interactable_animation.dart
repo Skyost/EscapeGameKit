@@ -2,12 +2,21 @@ import 'package:animate_do/animate_do.dart';
 import 'package:escape_game_kit/src/game/room/interactables/render_settings.dart';
 import 'package:flutter/material.dart';
 
+/// Allows to render an [InteractableAnimation] thanks to `animate_do`.
 class InteractableAnimationWidget extends StatelessWidget {
+  /// The animation.
   final InteractableAnimation? animation;
+
+  /// The child widget.
   final Widget child;
+
+  /// The animation controller.
   final Function(AnimationController)? controller;
+
+  /// Whether to animate.
   final bool animate;
 
+  /// Creates a new [InteractableAnimationWidget] instance.
   const InteractableAnimationWidget({
     Key? key,
     required this.animation,

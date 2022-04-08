@@ -1,9 +1,11 @@
 import 'dart:async';
 
+import 'package:escape_game_kit/src/utils/number_extension.dart';
+import 'package:escape_game_kit/src/utils/properties_equatable.dart';
 import 'package:flutter/material.dart';
 
 /// A little utility class that allows to create countdowns.
-class Countdown {
+class Countdown with PropertiesEquatable {
   /// The countdown duration.
   final Duration duration;
 
@@ -104,15 +106,8 @@ class Countdown {
   }
 
   @override
-  bool operator ==(Object other) {
-    if (other is! Countdown) {
-      return super == other;
-    }
-    return identical(this, other) || (duration == other.duration && secondsToSubtract == other.secondsToSubtract && _currentSecondsToSubtract == other._currentSecondsToSubtract && _currentDuration == other._currentDuration && _timer == other._timer);
-  }
-
-  @override
-  int get hashCode => duration.hashCode + secondsToSubtract.hashCode + _currentSecondsToSubtract.hashCode + _currentDuration.hashCode + _timer.hashCode;
+  @protected
+  List<Object?> get props => [duration, secondsToSubtract, _currentSecondsToSubtract, _currentDuration, _timer];
 }
 
 /// Represents a countdown listener that can react to various countdown events.
@@ -186,13 +181,11 @@ class _CountdownWidgetState extends State<CountdownWidget> with AutomaticKeepAli
     int minutes = currentDuration?.inMinutes ?? 0;
     int seconds = (currentDuration?.inSeconds ?? 0) % 60;
     return Text(
-      withLeadingZero(minutes) + ':' + withLeadingZero(seconds),
+      '${minutes.withLeadingZero}:${seconds.withLeadingZero}',
       style: widget.textStyle,
       textAlign: widget.textAlign,
     );
   }
-
-  String withLeadingZero(int number) => (number < 10 ? '0' : '') + number.toString();
 
   @override
   void dispose() {

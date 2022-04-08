@@ -4,9 +4,12 @@ import 'package:escape_game_kit_example/widgets/audio.dart';
 import 'package:escape_game_kit_example/widgets/message.dart';
 import 'package:flutter/material.dart';
 
+/// This widget allows to show the glitch animation when the user clicks on the audio player.
 class GlitchMessageWidget extends StatefulWidget {
+  /// The [Error1980EscapeGame] instance.
   final Error1980EscapeGame escapeGame;
 
+  /// Creates a new [GlitchMessageWidget] instance.
   const GlitchMessageWidget({
     Key? key,
     required this.escapeGame,
@@ -18,7 +21,9 @@ class GlitchMessageWidget extends StatefulWidget {
   State<StatefulWidget> createState() => _GlitchMessageWidgetState();
 }
 
+/// The [GlitchMessageWidget] state.
 class _GlitchMessageWidgetState extends State<GlitchMessageWidget> {
+  /// Whether the audio has started playing.
   bool hasAudioStarted = false;
 
   @override
@@ -28,7 +33,7 @@ class _GlitchMessageWidgetState extends State<GlitchMessageWidget> {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisSize: MainAxisSize.min,
           children: [
-            const Text('Bonjour à tous.\n\nVoici le fichier audio dont vous aurez besoin pour l\'évaluation de demain.'),
+            const Text('Hello everyone.\n\nHere is the file you need for tomorrow\'s exam.'),
             if (widget.escapeGame.currentRoom.id == BedroomPresentRoom.roomId)
               Padding(
                 padding: const EdgeInsets.only(top: 34),
@@ -66,7 +71,7 @@ class _GlitchMessageWidgetState extends State<GlitchMessageWidget> {
                 '\n\nAudio removed from remote server.',
                 style: TextStyle(fontStyle: FontStyle.italic),
               ),
-            const Text('\n\nBonne journée.\nH. Delaunay'),
+            const Text('\n\nHave a nice day.\nH. Delaunay'),
           ],
         ),
         closeButton: TextButton(

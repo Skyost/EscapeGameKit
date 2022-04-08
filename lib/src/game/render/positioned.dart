@@ -1,11 +1,21 @@
 import 'package:escape_game_kit/src/game/render/render_settings.dart';
+import 'package:flutter/foundation.dart';
 
+/// Controls how an object should be rendered and positioned in the game.
 class PositionedRenderSettings extends RenderSettings {
+  /// The top position.
   final double? top;
+
+  /// The right position.
   final double? right;
+
+  /// The bottom position.
   final double? bottom;
+
+  /// The left position.
   final double? left;
 
+  /// Creates a new [PositionedRenderSettings] instance.
   const PositionedRenderSettings({
     this.top,
     this.right,
@@ -43,5 +53,6 @@ class PositionedRenderSettings extends RenderSettings {
   }
 
   @override
-  int get hashCode => super.hashCode + top.hashCode + right.hashCode + bottom.hashCode + left.hashCode;
+  @protected
+  List<Object?> get props => [...super.props, width, height, rotationAngle, asset, isInvisible];
 }

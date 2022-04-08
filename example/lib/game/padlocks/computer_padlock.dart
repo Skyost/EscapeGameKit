@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_widget_from_html_core/flutter_widget_from_html_core.dart';
 import 'package:just_audio/just_audio.dart' as audio;
 
+/// A very special padlock that can be unlocked by entering a specific command.
 class ComputerPadlock extends ObjectEqualPadlock<String> {
   ComputerPadlock()
       : super(
@@ -13,35 +14,48 @@ class ComputerPadlock extends ObjectEqualPadlock<String> {
   bool isObjectValid(String object) => object == 'reboot now';
 }
 
-class ComputerPadlockDialog extends StatefulWidget {
-  final ComputerPadlock padlock;
-
+/// Allows to unlock a [ComputerPadlock].
+class ComputerPadlockDialog extends PadlockAlertDialog<ComputerPadlock> {
+  /// Creates a new [ComputerPadlockDialog] instance.
   const ComputerPadlockDialog({
     Key? key,
-    required this.padlock,
+    required ComputerPadlock padlock,
   }) : super(
           key: key,
+          padlock: padlock,
         );
 
   @override
   State<StatefulWidget> createState() => _ComputerPadlockkDialogState();
 
+  /// The [ComputerPadlockDialog] builder.
   static ComputerPadlockDialog builder(BuildContext context, Padlock padlock) => ComputerPadlockDialog(
         padlock: padlock as ComputerPadlock,
       );
 }
 
+/// The [ComputerPadlockDialog] state.
 class _ComputerPadlockkDialogState extends State<ComputerPadlockDialog> {
+  /// Contains all previously entered commands.
   List<String> previouslyEnteredCommands = [
     commandToHtml('Starting MS-DOS...<br><br>', color: 'white'),
     commandToHtml('FATAL ERROR (1980)'),
     commandToHtml('Please restart system.<br><br>'),
   ];
+
+  /// Whether the user has entered the good command.
   bool hasSucceeded = false;
 
+  /// The command text editing focus node.
   late FocusNode commandFocus;
+
+  /// The command text editing controller.
   TextEditingController commandController = TextEditingController();
+
+  /// The current scroll controller.
   ScrollController scrollController = ScrollController();
+
+  /// The glitch audio player.
   audio.AudioPlayer audioPlayer = audio.AudioPlayer();
 
   @override
@@ -127,8 +141,10 @@ class _ComputerPadlockkDialogState extends State<ComputerPadlockDialog> {
     super.dispose();
   }
 
+  /// Converts a command to HTML.
   static String commandToHtml(String command, {String color = '#f44336'}) => '<p style="color: $color;">$command</p>';
 
+  /// Triggered when the user has successfully unlocked this padlock.
   Future<void> onSuccess() async {
     audioPlayer.play();
     await Future.delayed(const Duration(seconds: 2));

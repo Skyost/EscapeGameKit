@@ -6,9 +6,12 @@ import 'package:escape_game_kit_example/game/rooms/bedroom_present.dart';
 import 'package:escape_game_kit_example/game/rooms/desk.dart';
 import 'package:escape_game_kit_example/game/rooms/linving_room.dart';
 
+/// The [EscapeGame] class.
 class Error1980EscapeGame extends EscapeGame {
+  /// All messages shown in the [MessagesDialog].
   final Messages messages = Messages();
 
+  /// Creates a new [Error1980EscapeGame] instance.
   Error1980EscapeGame()
       : super(
           rooms: [
@@ -18,9 +21,6 @@ class Error1980EscapeGame extends EscapeGame {
             LinvingRoomRoom(),
             BedroomFinalRoom(),
           ],
-          inventory: Inventory(
-            title: 'Inventaire',
-            emptyMessage: "Vous n'avez rien dans votre inventaire.",
-          ),
+          inventory: Inventory(),
         );
 }

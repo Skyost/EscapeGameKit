@@ -1,7 +1,7 @@
 import 'package:escape_game_kit/src/game/game.dart';
 import 'package:escape_game_kit/src/game/room/interactables/interactable.dart';
 import 'package:escape_game_kit/src/game/room/room.dart';
-import 'package:escape_game_kit/src/widgets/render_settings_stack.dart';
+import 'package:escape_game_kit/src/widgets/render_settings.dart';
 import 'package:escape_game_kit/src/widgets/room/background.dart';
 import 'package:escape_game_kit/src/widgets/room/create_interactable_dialog.dart';
 import 'package:escape_game_kit/src/widgets/room/interactable.dart';
@@ -11,12 +11,21 @@ import 'package:flutter/material.dart';
 typedef BackgroundWidgetBuilder = Widget Function(BuildContext context, EscapeGame escapeGame, Room room);
 typedef InteractableWidgetBuilder = Widget Function(BuildContext context, EscapeGame escapeGame, Room room, Interactable interactable);
 
+/// Allows to render a [Room].
 class RoomWidget extends StatefulWidget {
+  /// The [EscapeGame] instance.
   final EscapeGame escapeGame;
+
+  /// The room.
   final Room room;
+
+  /// The background widget builder.
   final BackgroundWidgetBuilder backgroundWidgetBuilder;
+
+  /// The interactable widget builder.
   final InteractableWidgetBuilder interactableWidgetBuilder;
 
+  /// Creates a new [RoomWidget] instance.
   RoomWidget({
     Key? key,
     required this.escapeGame,
@@ -30,21 +39,25 @@ class RoomWidget extends StatefulWidget {
   @override
   State<StatefulWidget> createState() => _RoomWidgetState();
 
+  /// The default [Room] background widget builder.
   static Widget defaultBackgroundWidgetBuilder(BuildContext context, EscapeGame escapeGame, Room room) => RoomBackgroundWidget(
         room: room,
       );
 
+  /// The default [Interactable] widget builder.
   static Widget defaultInteractableWidgetBuilder(BuildContext context, EscapeGame escapeGame, Room room, Interactable interactable) => InteractableWidget(
         escapeGame: escapeGame,
         interactable: interactable,
       );
 }
 
+/// The [RoomWidget] state.
 class _RoomWidgetState extends State<RoomWidget> {
+  /// The first corner of the translucent rectangle.
   Offset? firstCorner;
+
+  /// The second corner of the translucent rectangle.
   Offset? secondCorner;
-  Rect? debugRect;
-  Size? widgetSize;
 
   @override
   void initState() {
@@ -65,7 +78,7 @@ class _RoomWidgetState extends State<RoomWidget> {
   @override
   Widget build(BuildContext context) => Stack(
         children: [
-          RenderSettingsStackWidget(
+          RenderSettingsWidget(
             renderSettings: widget.room.renderSettings,
             child: widget.backgroundWidgetBuilder(context, widget.escapeGame, widget.room),
           ),
@@ -75,12 +88,7 @@ class _RoomWidgetState extends State<RoomWidget> {
               child: Tooltip(
                 message: 'Top: ${translucentRectangle!.top.round()} ; left: ${translucentRectangle!.left.round()}.\nWidth: ${translucentRectangle!.width.round()} ; height : ${translucentRectangle!.height.round()}.',
                 child: GestureDetector(
-                  onTap: () {
-                    showDialog(
-                      context: context,
-                      builder: (context) => CreateInteractableDialog(translucentRectangle: translucentRectangle!),
-                    );
-                  },
+                  onTap: () => CreateInteractableDialog.openDialog(context, translucentRectangle: translucentRectangle!),
                   child: Container(color: Colors.teal.withOpacity(0.5)),
                 ),
               ),
@@ -110,7 +118,7 @@ class _RoomWidgetState extends State<RoomWidget> {
               ),
             ),
           for (Interactable interactable in widget.room.interactables)
-            RenderSettingsStackWidget(
+            RenderSettingsWidget(
               renderSettings: interactable.renderSettings,
               child: widget.interactableWidgetBuilder(context, widget.escapeGame, widget.room, interactable),
             )
@@ -123,8 +131,10 @@ class _RoomWidgetState extends State<RoomWidget> {
     super.dispose();
   }
 
+  /// Returns the translucent rectangle (built with [firstCorner] and [secondCorner]).
   Rect? get translucentRectangle => firstCorner == null || secondCorner == null ? null : Rect.fromPoints(firstCorner!, secondCorner!);
 
+  /// Refreshes the widget state.
   void refreshState() {
     if (mounted) {
       setState(() {});

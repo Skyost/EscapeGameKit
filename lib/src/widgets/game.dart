@@ -2,26 +2,50 @@ import 'package:escape_game_kit/src/game/game.dart';
 import 'package:escape_game_kit/src/game/room/room.dart';
 import 'package:escape_game_kit/src/widgets/alert_dialog.dart';
 import 'package:escape_game_kit/src/widgets/inventory/button.dart';
-import 'package:escape_game_kit/src/widgets/render_settings_stack.dart';
+import 'package:escape_game_kit/src/widgets/render_settings.dart';
 import 'package:escape_game_kit/src/widgets/room/room.dart';
 import 'package:escape_game_kit/src/widgets/room_transition.dart';
 import 'package:flutter/material.dart';
 
+/// Allows to build a widget according to the specified [escapeGame].
 typedef GameWidgetBuilder = Widget Function(BuildContext context, EscapeGame escapeGame);
+
+/// Allows to render a specified [room].
 typedef RoomWidgetBuilder = Widget Function(BuildContext context, EscapeGame escapeGame, Room room);
+
+/// Should be triggered when the user tries to exit the current [escapeGame].
 typedef TryExitCallback = Future<bool> Function(EscapeGame escapeGame);
+
+/// Builds a [RoomTransition] according to the [previousRoom] and the [newRoom].
 typedef RoomTransitionBuilder = RoomTransition Function(EscapeGame escapeGame, Room? previousRoom, Room newRoom);
 
+/// The main widget, that allows to render an [escapeGame].
 class EscapeGameWidget extends StatefulWidget {
+  /// The [EscapeGame] instance.
   final EscapeGame escapeGame;
+
+  /// Whether to start automatically the game.
   final bool autostart;
+
+  /// Builds the widget that is rendered before the game start.
   final GameWidgetBuilder? beforeGameStartBuilder;
+
+  /// Builds a widget that renders the [escapeGame.currentRoom].
   final RoomWidgetBuilder roomWidgetBuilder;
+
+  /// Builds a widget that renders the [escapeGame.inventory].
   final GameWidgetBuilder inventoryWidgetBuilder;
+
+  /// Builds the widget that is rendered after the game end.
   final GameWidgetBuilder? afterGameFinishedBuilder;
+
+  /// Called when the user tried to exit the game.
   final TryExitCallback? onTryToExit;
+
+  /// Allows to build the [RoomTransition] that corresponds to the current room and the previous room.
   final RoomTransitionBuilder roomTransitionBuilder;
 
+  /// Creates a new [EscapeGameWidget] instance.
   const EscapeGameWidget({
     Key? key,
     required this.escapeGame,
@@ -39,21 +63,30 @@ class EscapeGameWidget extends StatefulWidget {
   @override
   State<StatefulWidget> createState() => _EscapeGameWidgetState();
 
+  /// The default [Room] widget builder.
   static Widget defaultRoomWidgetBuilder(BuildContext context, EscapeGame escapeGame, Room room) => RoomWidget(
         escapeGame: escapeGame,
         room: room,
       );
 
+  /// The default [Inventory] widget builder.
   static Widget defaultInventoryWidgetBuilder(BuildContext context, EscapeGame escapeGame) => InventoryButton(
         escapeGame: escapeGame,
       );
 
+  /// The default [RoomTransition] builder.
   static RoomTransition defaultRoomTransitionBuilder(EscapeGame escapeGame, Room? previousRoom, Room newRoom) => const RoomTransition();
 }
 
+/// The [EscapeGameWidget] state.
 class _EscapeGameWidgetState extends State<EscapeGameWidget> {
+  /// The current room transition.
   RoomTransition roomTransition = const RoomTransition();
+
+  /// Whether a dialog is opened.
   bool isDialogOpened = false;
+
+  /// The current room to display.
   Room? currentRoom;
 
   @override
@@ -96,7 +129,7 @@ class _EscapeGameWidgetState extends State<EscapeGameWidget> {
           key: ValueKey('stack-room-${currentRoom!.id}'),
           children: [
             child,
-            RenderSettingsStackWidget(
+            RenderSettingsWidget(
               renderSettings: widget.escapeGame.inventory.renderSettings,
               child: widget.inventoryWidgetBuilder(context, widget.escapeGame),
             ),
@@ -120,6 +153,7 @@ class _EscapeGameWidgetState extends State<EscapeGameWidget> {
     super.dispose();
   }
 
+  /// Refreshes the current dialog.
   Future<void> refreshDialog() async {
     if (mounted && widget.escapeGame.isDialogOpened && !isDialogOpened) {
       isDialogOpened = true;
@@ -132,6 +166,7 @@ class _EscapeGameWidgetState extends State<EscapeGameWidget> {
     }
   }
 
+  /// Refreshes the current room.
   void refreshCurrentRoom() {
     if (mounted) {
       setState(() {

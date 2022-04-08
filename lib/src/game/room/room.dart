@@ -3,24 +3,39 @@ import 'dart:collection';
 import 'package:escape_game_kit/src/game/dialog.dart';
 import 'package:escape_game_kit/src/game/render/render_settings.dart';
 import 'package:escape_game_kit/src/game/room/interactables/interactable.dart';
+import 'package:escape_game_kit/src/utils/properties_equatable.dart';
 import 'package:flutter/foundation.dart';
 
-class Room with ChangeNotifier {
+/// Represents a room.
+class Room with PropertiesEquatable, ChangeNotifier {
+  /// The room id.
   final String id;
-  final RenderSettings? renderSettings;
-  final HashSet<Interactable> _interactables;
-  final EscapeGameDialog? firstVisitDialog;
 
+  /// Controls how to render this room.
+  final RenderSettings? renderSettings;
+
+  /// The room interactables.
+  final HashSet<Interactable> _interactables;
+
+  /// Triggered when this room is visited for the first time.
+  final Action<EscapeGameDialog>? onFirstVisit;
+
+  /// Returns whether this room has been visited.
+  bool hasBeenVisited = false;
+
+  /// Creates a new [Room] instance.
   Room({
     required this.id,
     this.renderSettings,
     Iterable<Interactable>? interactables,
-    this.firstVisitDialog,
+    this.onFirstVisit,
   }) : _interactables = HashSet.from(interactables ?? <Interactable>{});
 
+  /// Returns the room interactables.
   HashSet<Interactable> get interactables => HashSet.of(_interactables);
 
-  Interactable? getInteractableFromId(String id) {
+  /// Returns an interactable object by its [Interactable.id].
+  Interactable? getInteractableById(String id) {
     for (Interactable interactable in _interactables) {
       if (interactable.id == id) {
         return interactable;
@@ -29,6 +44,7 @@ class Room with ChangeNotifier {
     return null;
   }
 
+  /// Adds an [Interactable] to the [interactables] list.
   void addInteractable(Interactable interactable, {bool notify = true}) {
     if (_interactables.add(interactable)) {
       interactable.addListener(notifyListeners);
@@ -38,6 +54,7 @@ class Room with ChangeNotifier {
     }
   }
 
+  /// Removes an [Interactable] from the [interactables] list.
   void removeInteractable(Interactable interactable, {bool notify = true}) {
     if (_interactables.remove(interactable)) {
       interactable.removeListener(notifyListeners);
@@ -47,8 +64,9 @@ class Room with ChangeNotifier {
     }
   }
 
+  /// Removes an interactable object by its [Interactable.id].
   void removeInteractableFromId(String id, {bool notify = true}) {
-    Interactable? interactable = getInteractableFromId(id);
+    Interactable? interactable = getInteractableById(id);
     if (interactable != null) {
       removeInteractable(interactable, notify: notify);
     }
@@ -63,13 +81,6 @@ class Room with ChangeNotifier {
   }
 
   @override
-  bool operator ==(Object other) {
-    if (other is! Room) {
-      return super == other;
-    }
-    return identical(this, other) || (id == other.id && renderSettings == other.renderSettings && setEquals(_interactables, other._interactables) && firstVisitDialog == other.firstVisitDialog);
-  }
-
-  @override
-  int get hashCode => id.hashCode + renderSettings.hashCode + _interactables.hashCode + firstVisitDialog.hashCode;
+  @protected
+  List<Object?> get props => [id, renderSettings, _interactables, onFirstVisit, hasBeenVisited];
 }

@@ -6,9 +6,12 @@ import 'package:escape_game_kit_example/widgets/glitch_message.dart';
 import 'package:escape_game_kit_example/widgets/message.dart';
 import 'package:flutter/material.dart';
 
+/// Allows to display all [escapeGame.messages].
 class MessagesDialog extends StatelessWidget {
+  /// The [Error1980EscapeGame] instance.
   final Error1980EscapeGame escapeGame;
 
+  /// Creates a new [MessagesDialog] instance.
   const MessagesDialog({
     Key? key,
     required this.escapeGame,
@@ -18,7 +21,7 @@ class MessagesDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => EscapeGameAlertDialog(
-        title: 'Messagerie',
+        title: 'Messages',
         contentPadding: EdgeInsets.zero,
         children: [
           if (escapeGame.currentRoom.id == BedroomFinalRoom.roomId)

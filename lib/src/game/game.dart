@@ -2,20 +2,36 @@ import 'dart:collection';
 
 import 'package:escape_game_kit/src/game/dialog.dart';
 import 'package:escape_game_kit/src/game/inventory/inventory.dart';
+import 'package:escape_game_kit/src/game/room/interactables/action_result.dart';
 import 'package:escape_game_kit/src/game/room/room.dart';
 import 'package:escape_game_kit/src/utils/countdown.dart';
+import 'package:escape_game_kit/src/utils/properties_equatable.dart';
 import 'package:flutter/foundation.dart';
 
-class EscapeGame with CountdownListener, ChangeNotifier {
+/// Represents an [EscapeGame], with some [rooms] and an [inventory].
+class EscapeGame with CountdownListener, PropertiesEquatable, ChangeNotifier {
+  /// The in-game inventory.
   final Inventory inventory;
+
+  /// The game rooms.
   Set<Room> rooms;
-  Set<String> visitedRooms;
+
+  /// The current room id.
   String _currentRoom;
+
+  /// The game [Countdown].
   Countdown? countdown;
+
+  /// Whether this game is started.
   bool _isStarted = false;
+
+  /// Whether this game is finished.
   bool _isFinished = false;
+
+  /// The currently displayed dialog.
   EscapeGameDialog? _dialog;
 
+  /// Creates a new [EscapeGame] instance.
   EscapeGame({
     Inventory? inventory,
     Iterable<Room>? rooms,
@@ -24,31 +40,43 @@ class EscapeGame with CountdownListener, ChangeNotifier {
   })  : assert(rooms != null && rooms.isNotEmpty),
         rooms = HashSet.from(rooms!),
         inventory = inventory ?? Inventory(),
-        _currentRoom = firstRoomId ?? rooms.first.id,
-        visitedRooms = {} {
+        _currentRoom = firstRoomId ?? rooms.first.id {
     this.inventory.addListener(notifyListeners);
   }
 
+  /// Returns the current room.
   Room get currentRoom => rooms.firstWhere((room) => room.id == _currentRoom);
 
-  void goToRoom(String roomId, {bool notify = true}) {
+  /// Changes the current room.
+  ActionResult goToRoom(String roomId, {bool notify = true}) {
     currentRoom.removeListener(notifyListeners);
+    String oldRoom = _currentRoom;
     _currentRoom = roomId;
     Room current = currentRoom;
     current.addListener(notifyListeners);
     if (notify) {
       notifyListeners();
     }
-    if (current.firstVisitDialog != null && !visitedRooms.contains(roomId)) {
-      openDialog(current.firstVisitDialog!, notify: notify);
+    if (!current.hasBeenVisited) {
+      if (current.onFirstVisit != null) {
+        ActionResult result = current.onFirstVisit!(this);
+        if (result.state != ActionResultState.success) {
+          goToRoom(oldRoom, notify: notify);
+        }
+        return result;
+      }
+      current.hasBeenVisited = true;
     }
-    visitedRooms.add(roomId);
+    return ActionResult.success(object: current);
   }
 
+  /// Returns the opened dialog.
   EscapeGameDialog? get openedDialog => _dialog;
 
+  /// Returns whether a dialog is currently opened.
   bool get isDialogOpened => _dialog != null;
 
+  /// Opens the specified dialog.
   void openDialog(EscapeGameDialog dialog, {bool notify = true}) {
     _dialog = dialog;
     if (notify) {
@@ -56,6 +84,7 @@ class EscapeGame with CountdownListener, ChangeNotifier {
     }
   }
 
+  /// Closes the currently opened dialog.
   void closeDialog({bool notify = true}) {
     _dialog = null;
     if (notify) {
@@ -63,19 +92,24 @@ class EscapeGame with CountdownListener, ChangeNotifier {
     }
   }
 
+  /// Returns whether this game is started.
   bool get isStarted => _isStarted;
 
-  void start({bool notify = true}) {
+  /// Starts this game.
+  ActionResult start({bool notify = true}) {
     countdown?.start();
     _isStarted = true;
-    goToRoom(_currentRoom);
+    ActionResult result = goToRoom(_currentRoom);
     if (notify) {
       notifyListeners();
     }
+    return result;
   }
 
+  /// Returns whether this game is finished.
   bool get isFinished => _isFinished;
 
+  /// Finishes this game.
   void finish({bool notify = true}) {
     countdown?.pause();
     _isFinished = true;
@@ -92,13 +126,6 @@ class EscapeGame with CountdownListener, ChangeNotifier {
   }
 
   @override
-  bool operator ==(Object other) {
-    if (other is! EscapeGame) {
-      return super == other;
-    }
-    return identical(this, other) || (inventory == other.inventory && setEquals(rooms, other.rooms) && setEquals(visitedRooms, other.visitedRooms) && _currentRoom == other._currentRoom && countdown == other.countdown && _isStarted == other._isStarted && _isFinished == other._isFinished && _dialog == other._dialog);
-  }
-
-  @override
-  int get hashCode => inventory.hashCode + rooms.hashCode + visitedRooms.hashCode + _currentRoom.hashCode + countdown.hashCode + _isStarted.hashCode + _isFinished.hashCode + _dialog.hashCode;
+  @protected
+  List<Object?> get props => [inventory, rooms, _currentRoom, countdown, _isStarted, _isFinished, _dialog];
 }

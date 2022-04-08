@@ -6,12 +6,21 @@ import 'package:escape_game_kit/src/game/room/interactables/interactable.dart';
 import 'package:escape_game_kit/src/game/room/interactables/render_settings.dart';
 import 'package:escape_game_kit/src/game/room/interactables/tooltip.dart';
 
+/// A [LockedInteractable] that is meant to be a pickable object.
 class PickableObject extends LockedInteractable {
+  /// The target [EscapeGameObject].
   final EscapeGameObject object;
+
+  /// Triggered when the object has been picked up.
   final Action? onPickedUp;
+
+  /// Whether to remove this interactable after being picked up.
   final bool removeAfterPickedUp;
+
+  /// Give an [InteractableTooltip] in order to replace this [Clue] when found (if [removeAfterPickedUp] is `true`).
   final InteractableTooltip? removedTooltip;
 
+  /// Creates a new [PickableObject] instance.
   PickableObject({
     required this.object,
     this.onPickedUp,
@@ -38,7 +47,7 @@ class PickableObject extends LockedInteractable {
         escapeGame.currentRoom.removeInteractable(this);
         if (removedTooltip != null) {
           escapeGame.currentRoom.addInteractable(Interactable(
-            id: '$id-removed',
+            id: '$id-picked-up',
             renderSettings: renderSettings,
             onHover: (escapeGame) => ActionResult.success(object: removedTooltip!),
           ));

@@ -2,9 +2,12 @@ import 'package:escape_game_kit/src/widgets/alert_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+/// A debug dialog that allows to easily create an [Interactable].
 class CreateInteractableDialog extends StatefulWidget {
+  /// Where to create the [Interactable].
   final Rect translucentRectangle;
 
+  /// Creates a new [CreateInteractableDialog] instance.
   const CreateInteractableDialog({
     Key? key,
     required this.translucentRectangle,
@@ -14,11 +17,25 @@ class CreateInteractableDialog extends StatefulWidget {
 
   @override
   State<StatefulWidget> createState() => _CreateInteractableDialogState();
+
+  /// Opens the dialog.
+  static void openDialog(BuildContext context, {required Rect translucentRectangle}) => showDialog(
+        context: context,
+        builder: (context) => CreateInteractableDialog(
+          translucentRectangle: translucentRectangle,
+        ),
+      );
 }
 
+/// The [CreateInteractableDialog] state.
 class _CreateInteractableDialogState extends State<CreateInteractableDialog> {
+  /// The id text editing controller.
   TextEditingController idController = TextEditingController();
+
+  /// The tooltip text editing controller.
   TextEditingController tooltipController = TextEditingController();
+
+  /// The code text editing controller.
   TextEditingController codeController = TextEditingController();
 
   @override
@@ -84,6 +101,7 @@ class _CreateInteractableDialogState extends State<CreateInteractableDialog> {
     super.dispose();
   }
 
+  /// Updates the code.
   void updateCode() {
     codeController.text = '''Interactable(
   id: ${buildDartString(idController)},
@@ -96,7 +114,9 @@ class _CreateInteractableDialogState extends State<CreateInteractableDialog> {
 ),''';
   }
 
+  /// Returns the tooltip code.
   String get tooltipCode => tooltipController.text.isEmpty ? '' : "\n  onHover: (escapeGame) => const ActionResult.success(object: InteractableTooltip(text: ${buildDartString(tooltipController)})),";
 
+  /// Builds a Dart string, already escaped.
   String buildDartString(TextEditingController controller) => "'${controller.text.replaceAll("'", "\\'")}'";
 }

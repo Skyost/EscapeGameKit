@@ -9,17 +9,22 @@ import 'package:escape_game_kit/src/widgets/padlocks/digits.dart';
 import 'package:escape_game_kit/src/widgets/padlocks/pattern.dart';
 import 'package:flutter/material.dart';
 
+/// Builds a dialog that allows to unlock a [Padlock].
 typedef PadlockDialogBuilder = Widget? Function(BuildContext context, Padlock padlock);
 
+/// Allows to unlock padlocks with a dialog.
 extension PadlockDialogs on Padlock {
+  /// The padlock dialog builders.
   static final Map<Type, PadlockDialogBuilder> _builders = {
     CredentialsPadlock: CredentialsPadlockDialog.builder,
     PatternPadlock: PatternPadlockDialog.builder,
     DigitsPadlock: DigitsPadlockDialog.builder,
   };
 
+  /// Registers a [PadlockDialogBuilder] for the specified [type].
   static void registerBuilderFor(Type type, PadlockDialogBuilder builder) => _builders[type] = builder;
 
+  /// Tries to unlock this padlock using a dialog.
   Future<void> tryUnlockViaDialog(BuildContext context) async {
     if (this is PadlockSequence) {
       Padlock? firstLocked = (this as PadlockSequence).firstLocked;
@@ -44,7 +49,8 @@ extension PadlockDialogs on Padlock {
     );
   }
 
-  static Widget? _buildPadlockDialog(BuildContext context, Padlock padlock) {
+  /// Builds a padlock for the specified [padlock].
+  Widget? _buildPadlockDialog(BuildContext context, Padlock padlock) {
     PadlockDialogBuilder? padlockDialogBuilder = _builders[padlock.runtimeType];
     return padlockDialogBuilder == null ? null : padlockDialogBuilder(context, padlock);
   }

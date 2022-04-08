@@ -3,15 +3,20 @@ import 'package:escape_game_kit/src/game/padlocks/padlock.dart';
 import 'package:escape_game_kit/src/widgets/alert_dialog.dart';
 import 'package:flutter/material.dart';
 
+/// Allows to unlock a [CredentialsPadlock].
 class CredentialsPadlockDialog extends PadlockAlertDialog<CredentialsPadlock> {
+  /// The username text prompt.
   final String? usernameText;
+
+  /// The password text prompt.
   final String? passwordText;
 
+  /// Creates a new [CredentialsPadlockDialog] instance.
   const CredentialsPadlockDialog({
     Key? key,
     required CredentialsPadlock padlock,
-    this.usernameText,
-    this.passwordText,
+    this.usernameText = 'Username',
+    this.passwordText = 'Password',
   }) : super(
           padlock: padlock,
           key: key,
@@ -20,21 +25,18 @@ class CredentialsPadlockDialog extends PadlockAlertDialog<CredentialsPadlock> {
   @override
   State<StatefulWidget> createState() => _CredentialPadlockDialogState();
 
-  static CredentialsPadlockDialog builder(
-    BuildContext context,
-    Padlock padlock, {
-    String? usernameText = 'Username',
-    String? passwordText = 'Password',
-  }) =>
-      CredentialsPadlockDialog(
+  /// The [CredentialsPadlockDialog] builder.
+  static CredentialsPadlockDialog builder(BuildContext context, Padlock padlock) => CredentialsPadlockDialog(
         padlock: padlock as CredentialsPadlock,
-        usernameText: usernameText,
-        passwordText: passwordText,
       );
 }
 
+/// The [CredentialsPadlockDialog] state.
 class _CredentialPadlockDialogState extends PadlockAlertDialogState<CredentialsPadlockDialog> {
+  /// The username text editing controller.
   TextEditingController usernameController = TextEditingController();
+
+  /// The password text editing controller.
   TextEditingController passwordController = TextEditingController();
 
   @override
