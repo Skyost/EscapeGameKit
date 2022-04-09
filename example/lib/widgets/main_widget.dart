@@ -42,8 +42,8 @@ class _MainWidgetState extends State<MainWidget> {
     }
     for (String asset in [
       'assets/interactables/arrow.svg',
-      'assets/interactables/bed-key.svg',
-      'assets/interactables/bookshelf-key.svg',
+      'assets/interactables/eight-key.svg',
+      'assets/interactables/clover-key.svg',
       'assets/interactables/mouth-key.svg',
       'assets/padlocks/caesar-1.svg',
       'assets/padlocks/caesar-2.svg',
@@ -55,7 +55,7 @@ class _MainWidgetState extends State<MainWidget> {
   @override
   Widget build(BuildContext context) => MaterialApp(
         navigatorKey: navigatorKey,
-        title: 'EscapeGameKit Example',
+        title: 'ERROR 1980',
         theme: ThemeData(
           primarySwatch: Colors.indigo,
           scrollbarTheme: const ScrollbarThemeData(isAlwaysShown: true),

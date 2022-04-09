@@ -83,7 +83,8 @@ class _BruteforcePadlockDialogState extends PadlockAlertDialogState<BruteforcePa
                   onChanged: (value) {
                     if (value.isNotEmpty && i < controllers.length - 1) {
                       focusNodes[i + 1].requestFocus();
-                      controllers[i + 1].selection = const TextSelection(baseOffset: 0, extentOffset: 1);
+                      TextEditingController controller = controllers[i + 1];
+                      controller.selection = TextSelection(baseOffset: 0, extentOffset: controller.text.length);
                     }
                   },
                   onSubmitted: (value) => tryUnlock(),

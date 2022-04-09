@@ -62,8 +62,8 @@ class EscapeGame with CountdownListener, PropertiesEquatable, ChangeNotifier {
         ActionResult result = current.onFirstVisit!(this);
         if (result.state != ActionResultState.success) {
           goToRoom(oldRoom, notify: notify);
+          return result;
         }
-        return result;
       }
       current.hasBeenVisited = true;
     }
