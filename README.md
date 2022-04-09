@@ -9,12 +9,10 @@ be used on mobile platforms as well !
 ## Example
 
 You'll find an example in the [`example`](https://github.com/Skyost/EscapeGameKit/tree/master/example)
-directory. It's a little escape game I created for my students called _ERROR 1980_. I've translated
+directory. It's a little escape game called _ERROR 1980_ that I've created for my students. I've translated
 it into english, so that you can try it [here](https://skyost.github.io/EscapeGameKit/game.html).
 
-<img src="https://github.com/Skyost/EscapeGameKit/raw/master/example/screenshots/screenshot-1.png" width="30%">
-<img src="https://github.com/Skyost/EscapeGameKit/raw/master/example/screenshots/screenshot-2.png" width="30%">
-<img src="https://github.com/Skyost/EscapeGameKit/raw/master/example/screenshots/screenshot-5.png" width="30%">
+<img src="https://github.com/Skyost/EscapeGameKit/raw/master/example/screenshots/screenshot-1.png" width="30%"><img src="https://github.com/Skyost/EscapeGameKit/raw/master/example/screenshots/screenshot-2.png" width="30%"><img src="https://github.com/Skyost/EscapeGameKit/raw/master/example/screenshots/screenshot-5.png" width="30%">
 
 <details>
   <summary>More screenshots</summary>
@@ -35,11 +33,11 @@ Everything you need in order to get started with started with library is availab
 The plugin is currently in beta. Here's the list of things we (me, and hopefully any contributor 😀)
 need to work on before release :
 
-* **Better support of hot reload**. Currently, escape games doesn't support hot reload.
-* **Better support of Android and iOS platforms**.
+* [ ] **Better support of hot reload**. Currently, escape games doesn't support hot reload.
+* [ ] **Better support of Android and iOS platforms**.
   The plugin is still untested on these platforms, but it should perfectly work. The only problem
   we may encounter is with tooltips.
-* **Add fullscreen / window size support**. It should be possible using
+* [ ] **Add fullscreen / window size support**. It should be possible using
   [`Transform.scale`](https://api.flutter.dev/flutter/widgets/Transform/Transform.scale.html) or
   something like that.
 
