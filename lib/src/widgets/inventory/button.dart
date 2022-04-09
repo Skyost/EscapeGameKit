@@ -47,6 +47,7 @@ class InventoryButton extends StatelessWidget {
             ButtonStyle(
               backgroundColor: MaterialStateProperty.all(Colors.black54),
               foregroundColor: MaterialStateProperty.all(Colors.white),
+              shape: MaterialStateProperty.all(const RoundedRectangleBorder()),
             ),
         onPressed: onPressed ??
             () => InventoryDialog.openDialog(

@@ -7,8 +7,10 @@ import 'package:flutter/material.dart';
 class RenderSettingsWidget extends StatelessWidget {
   /// The render settings.
   final RenderSettings? renderSettings;
+
   /// The child widget.
   final Widget child;
+
   /// The invisible background.
   final Color? invisibleBackground;
 

@@ -1,5 +1,6 @@
 import 'package:escape_game_kit/src/game/game.dart';
 import 'package:escape_game_kit/src/game/room/room.dart';
+import 'package:escape_game_kit/src/utils/countdown.dart';
 import 'package:escape_game_kit/src/widgets/alert_dialog.dart';
 import 'package:escape_game_kit/src/widgets/inventory/button.dart';
 import 'package:escape_game_kit/src/widgets/render_settings.dart';
@@ -36,6 +37,9 @@ class EscapeGameWidget extends StatefulWidget {
   /// Builds a widget that renders the [escapeGame.inventory].
   final GameWidgetBuilder inventoryWidgetBuilder;
 
+  /// Builds a widget that renders the [escapeGame.countdown].
+  final GameWidgetBuilder countdownWidgetBuilder;
+
   /// Builds the widget that is rendered after the game end.
   final GameWidgetBuilder? afterGameFinishedBuilder;
 
@@ -53,6 +57,7 @@ class EscapeGameWidget extends StatefulWidget {
     this.beforeGameStartBuilder,
     this.roomWidgetBuilder = defaultRoomWidgetBuilder,
     this.inventoryWidgetBuilder = defaultInventoryWidgetBuilder,
+    this.countdownWidgetBuilder = defaultCountdownWidgetBuilder,
     this.afterGameFinishedBuilder,
     this.onTryToExit,
     this.roomTransitionBuilder = defaultRoomTransitionBuilder,
@@ -73,6 +78,18 @@ class EscapeGameWidget extends StatefulWidget {
   static Widget defaultInventoryWidgetBuilder(BuildContext context, EscapeGame escapeGame) => InventoryButton(
         escapeGame: escapeGame,
       );
+
+  /// The default [Countdown] widget builder.
+  static Widget defaultCountdownWidgetBuilder(BuildContext context, EscapeGame escapeGame) => escapeGame.countdown == null
+      ? const SizedBox.shrink()
+      : Container(
+          padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 10),
+          color: Colors.black54,
+          child: CountdownWidget(
+            countdown: escapeGame.countdown!,
+            textStyle: const TextStyle(color: Colors.white),
+          ),
+        );
 
   /// The default [RoomTransition] builder.
   static RoomTransition defaultRoomTransitionBuilder(EscapeGame escapeGame, Room? previousRoom, Room newRoom) => const RoomTransition();
@@ -133,6 +150,11 @@ class _EscapeGameWidgetState extends State<EscapeGameWidget> {
               renderSettings: widget.escapeGame.inventory.renderSettings,
               child: widget.inventoryWidgetBuilder(context, widget.escapeGame),
             ),
+            if (widget.escapeGame.countdown != null)
+              RenderSettingsWidget(
+                renderSettings: widget.escapeGame.countdown!.renderSettings,
+                child: widget.countdownWidgetBuilder(context, widget.escapeGame),
+              ),
           ],
         );
       }

@@ -1,11 +1,15 @@
 import 'dart:async';
 
+import 'package:escape_game_kit/src/game/render/positioned.dart';
 import 'package:escape_game_kit/src/utils/number_extension.dart';
 import 'package:escape_game_kit/src/utils/properties_equatable.dart';
 import 'package:flutter/material.dart';
 
 /// A little utility class that allows to create countdowns.
 class Countdown with PropertiesEquatable {
+  /// The render settings.
+  final PositionedRenderSettings renderSettings;
+
   /// The countdown duration.
   final Duration duration;
 
@@ -26,6 +30,11 @@ class Countdown with PropertiesEquatable {
 
   /// Creates a new countdown instance.
   Countdown({
+    this.renderSettings = const PositionedRenderSettings(
+      top: 10,
+      right: 10,
+      isInvisible: false,
+    ),
     required this.duration,
     this.secondsToSubtract = 1,
   }) {
