@@ -11,7 +11,7 @@ class EightKey extends EscapeGameObject {
           id: objectId,
           name: 'Eight shaped key',
           inventoryRenderSettings: const RenderSettings(
-            asset: 'assets/interactables/eight-key.svg',
+            asset: 'assets/objects/eight-key.svg',
             height: 40,
           ),
         );

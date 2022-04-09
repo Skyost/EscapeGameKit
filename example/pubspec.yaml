@@ -36,4 +36,5 @@ flutter:
     - assets/fonts/
     - assets/glitch/
     - assets/interactables/
+    - assets/objects/
     - assets/padlocks/

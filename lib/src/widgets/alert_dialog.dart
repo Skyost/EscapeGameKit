@@ -82,10 +82,9 @@ class EscapeGameAlertDialog extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.only(bottom: 10),
                 child: RenderSettingsWidget(
-                  child: AutoImage(
-                    asset: escapeGameDialog.imageRenderSettings!.asset!,
-                    width: escapeGameDialog.imageRenderSettings!.width,
-                    height: escapeGameDialog.imageRenderSettings!.height,
+                  child: AutoImage.fromRenderSettings(
+                    renderSettings: escapeGameDialog.imageRenderSettings,
+                    defaultAssetPath: escapeGameDialog.imageRenderSettings!.asset!,
                   ),
                   renderSettings: escapeGameDialog.imageRenderSettings,
                 ),

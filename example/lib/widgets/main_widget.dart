@@ -42,9 +42,9 @@ class _MainWidgetState extends State<MainWidget> {
     }
     for (String asset in [
       'assets/interactables/arrow.svg',
-      'assets/interactables/eight-key.svg',
-      'assets/interactables/clover-key.svg',
-      'assets/interactables/mouth-key.svg',
+      'assets/objects/eight-key.svg',
+      'assets/objects/clover-key.svg',
+      'assets/objects/mouth-key.svg',
       'assets/padlocks/caesar-1.svg',
       'assets/padlocks/caesar-2.svg',
     ]) {
@@ -60,13 +60,13 @@ class _MainWidgetState extends State<MainWidget> {
           primarySwatch: Colors.indigo,
           scrollbarTheme: const ScrollbarThemeData(isAlwaysShown: true),
         ),
-        locale: const Locale('fr'),
+        locale: const Locale('en'),
         localizationsDelegates: const [
           GlobalMaterialLocalizations.delegate,
           GlobalWidgetsLocalizations.delegate,
           GlobalCupertinoLocalizations.delegate,
         ],
-        supportedLocales: const [Locale('fr')],
+        supportedLocales: const [Locale('en')],
         home: EscapeGameWidget(
           beforeGameStartBuilder: (context, escapeGame) => TitleScreen(
             child: PlayButton(

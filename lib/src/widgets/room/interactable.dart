@@ -3,10 +3,8 @@ import 'package:escape_game_kit/src/game/padlocks/padlock.dart';
 import 'package:escape_game_kit/src/game/room/interactables/action_result.dart';
 import 'package:escape_game_kit/src/game/room/interactables/interactable.dart';
 import 'package:escape_game_kit/src/game/room/interactables/tooltip.dart';
-import 'package:escape_game_kit/src/utils/assets_extension.dart';
 import 'package:escape_game_kit/src/utils/auto_image.dart';
 import 'package:escape_game_kit/src/widgets/padlocks/dialogs.dart';
-import 'package:escape_game_kit/src/widgets/render_settings.dart';
 import 'package:escape_game_kit/src/widgets/room/interactable_animation.dart';
 import 'package:flutter/material.dart';
 
@@ -73,13 +71,6 @@ class _InteractableWidgetState extends State<InteractableWidget> {
       result = const SizedBox.shrink();
     }
 
-    Widget image = AutoImage(
-      asset: widget.interactable.renderSettings?.asset ?? widget.interactable.defaultAssetPath,
-      width: widget.interactable.renderSettings?.width,
-      height: widget.interactable.renderSettings?.height,
-      errorBuilder: RenderSettingsWidget.getImageErrorWidgetBuilder(widget.interactable.renderSettings),
-    );
-
     InteractableTooltip? tooltip = widget.interactable.onHover(widget.escapeGame).object;
     result = MouseRegion(
       cursor: SystemMouseCursors.click,
@@ -107,7 +98,7 @@ class _InteractableWidgetState extends State<InteractableWidget> {
           animation: widget.interactable.renderSettings?.enterAnimation,
           child: InteractableAnimationWidget(
             animation: widget.interactable.renderSettings?.hoverAnimation,
-            child: image,
+            child: AutoImage.fromRenderSettings(renderSettings: widget.interactable.renderSettings),
             controller: (controller) => tooltipAnimationController = controller,
             animate: false,
           ),

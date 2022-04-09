@@ -134,7 +134,7 @@ class BedroomRoom extends Room {
                     width: 100,
                     height: 100,
                   ),
-                  message: '<em>You just a found a mouth shaped key !</em>',
+                  message: '<em>You just found a mouth shaped key !</em>',
                 ));
                 return const ActionResult.success();
               },

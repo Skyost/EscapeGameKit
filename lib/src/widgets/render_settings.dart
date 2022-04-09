@@ -73,12 +73,4 @@ class RenderSettingsWidget extends StatelessWidget {
       child: child,
     );
   }
-
-  /// The [ImageErrorWidgetBuilder] that corresponds to the given [renderSettings].
-  static ImageErrorWidgetBuilder? getImageErrorWidgetBuilder(RenderSettings? renderSettings) {
-    if (renderSettings?.isInvisible == true) {
-      return (context, error, stackTrace) => const SizedBox.expand();
-    }
-    return null;
-  }
 }

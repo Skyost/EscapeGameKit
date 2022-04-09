@@ -11,7 +11,7 @@ class MouthKey extends EscapeGameObject {
           id: objectId,
           name: 'Mouth shaped key',
           inventoryRenderSettings: const RenderSettings(
-            asset: 'assets/interactables/mouth-key.svg',
+            asset: 'assets/objects/mouth-key.svg',
             height: 40,
           ),
         );

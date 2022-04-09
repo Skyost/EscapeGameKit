@@ -11,7 +11,7 @@ class CloverKey extends EscapeGameObject {
           id: objectId,
           name: 'Clover shaped key',
           inventoryRenderSettings: const RenderSettings(
-            asset: 'assets/interactables/clover-key.svg',
+            asset: 'assets/objects/clover-key.svg',
             height: 40,
           ),
         );
