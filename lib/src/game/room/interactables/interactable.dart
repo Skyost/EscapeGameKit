@@ -95,10 +95,7 @@ class LockedInteractable extends Interactable {
   @override
   ActionResult onTap(EscapeGame escapeGame) {
     if (padlock?.isLocked == true) {
-      return ActionResult(
-        state: ActionResultState.needAction,
-        object: padlock,
-      );
+      return ActionResult.needAction(object: padlock);
     }
     return super.onTap(escapeGame);
   }
