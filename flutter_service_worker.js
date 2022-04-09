@@ -4,8 +4,8 @@ const TEMP = 'flutter-temp-cache';
 const CACHE_NAME = 'flutter-app-cache';
 const RESOURCES = {
   "main.dart.js": "659ce70b5d3ad1d41d84940b05a5640f",
-"index.html": "ba3a2573abbf76cbdc7671b515486822",
-"/": "ba3a2573abbf76cbdc7671b515486822",
+"index.html": "97f310ed9db920ae45db372ea9d75669",
+"/": "97f310ed9db920ae45db372ea9d75669",
 "assets/fonts/MaterialIcons-Regular.otf": "7e7a6cccddf6d7b20012a548461d5d81",
 "assets/AssetManifest.json": "ffebe93a314f2500efd5a7c354e9966a",
 "assets/packages/window_manager/images/ic_chrome_maximize.png": "af7499d7657c8b69d23b85156b60298c",
@@ -143,7 +143,7 @@ const RESOURCES = {
 "icons/windows11/Square44x44Logo.altform-unplated_targetsize-24.png": "7747ab000af8f92e75e0768ff4d2fd5e",
 "icons/windows11/Square44x44Logo.altform-lightunplated_targetsize-64.png": "fb506c2d063c4318256538226b649a66",
 "icons/windows11/LargeTile.scale-125.png": "daf8cf9c10d2fcada1fa2a6a78deef36",
-"game.html": "a193e624652edb116ae64812f8a8aeb0",
+"game.html": "a936f37c219cf960f1d6d5dd91843b0d",
 "manifest.json": "13af899f550d1e4388dc93ae36c43053",
 "version.json": "0fde7eb6022326bfe8262a51a6cc35f6",
 "favicon.ico": "add32ebb3a78e5bed3d5f11ff4c944e8",
