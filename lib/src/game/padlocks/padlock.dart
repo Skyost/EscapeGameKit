@@ -1,4 +1,4 @@
-import 'package:escape_game_kit/src/game/padlocks/state.dart';
+import 'package:escape_game_kit/src/game/padlocks/hint.dart';
 import 'package:escape_game_kit/src/utils/properties_equatable.dart';
 import 'package:flutter/foundation.dart';
 
@@ -14,7 +14,7 @@ const String kDefaultFailedToUnlockMessage = 'Oops, looks like you have to try a
 /// Represents an in-game padlock that should be unlocked in order for the user to complete an action.
 abstract class Padlock<C> with PropertiesEquatable {
   /// Controls whether this padlock is locked.
-  bool _isLocked;
+  bool _isLocked = true;
 
   /// The padlock title.
   final String? title;
@@ -25,14 +25,16 @@ abstract class Padlock<C> with PropertiesEquatable {
   /// The message displayed when the user fails to unlock this padlock.
   final String? failedToUnlockMessage;
 
+  /// The padlock hint.
+  final PadlockHint? hint;
+
   /// Creates a new [Padlock] instance.
   Padlock({
-    PadlockState? state,
     this.title = kDefaultPadlockTitle,
     this.unlockMessage = kDefaultPadlockUnlockMessage,
     this.failedToUnlockMessage = kDefaultFailedToUnlockMessage,
-    bool isLocked = true,
-  }) : _isLocked = isLocked;
+    this.hint,
+  });
 
   /// Tries to unlock the current padlock with the specified [code].
   bool tryUnlock(C code);
@@ -64,16 +66,16 @@ abstract class ObjectEqualPadlock<T> extends Padlock<T> {
   /// Creates a new [ObjectEqualPadlock] instance.
   ObjectEqualPadlock({
     T? validObject,
-    PadlockState? state,
     String? title = kDefaultPadlockTitle,
     String? unlockMessage = kDefaultPadlockUnlockMessage,
     String? failedToUnlockMessage = kDefaultFailedToUnlockMessage,
+    PadlockHint? hint,
   })  : _validObject = validObject,
         super(
-          state: state,
           title: title,
           unlockMessage: unlockMessage,
           failedToUnlockMessage: failedToUnlockMessage,
+          hint: hint,
         );
 
   /// Returns whether the given object is valid.
@@ -99,16 +101,16 @@ abstract class ListEqualPadlock<T> extends ObjectEqualPadlock<List<T>> {
   /// Creates a new [ListEqualPadlock] instance.
   ListEqualPadlock({
     required List<T> validList,
-    PadlockState? state,
     String? title = kDefaultPadlockTitle,
     String? unlockMessage = kDefaultPadlockUnlockMessage,
     String? failedToUnlockMessage = kDefaultFailedToUnlockMessage,
+    PadlockHint? hint,
   }) : super(
           validObject: validList,
-          state: state,
           title: title,
           unlockMessage: unlockMessage,
           failedToUnlockMessage: failedToUnlockMessage,
+          hint: hint,
         );
 
   @override

@@ -1,5 +1,5 @@
+import 'package:escape_game_kit/src/game/padlocks/hint.dart';
 import 'package:escape_game_kit/src/game/padlocks/padlock.dart';
-import 'package:escape_game_kit/src/game/padlocks/state.dart';
 import 'package:escape_game_kit/src/utils/properties_equatable.dart';
 import 'package:flutter/foundation.dart';
 
@@ -12,16 +12,16 @@ class PatternPadlock extends ListEqualPadlock<PatternCoordinate> {
   PatternPadlock({
     required this.dimension,
     required List<PatternCoordinate> validPattern,
-    PadlockState? state,
     String? title = kDefaultPadlockTitle,
     String? unlockMessage = kDefaultPadlockUnlockMessage,
     String? failedToUnlockMessage = kDefaultFailedToUnlockMessage,
+    PadlockHint? hint,
   }) : super(
           validList: validPattern,
-          state: state,
           title: title,
           unlockMessage: unlockMessage,
           failedToUnlockMessage: failedToUnlockMessage,
+          hint: hint,
         );
 
   @override

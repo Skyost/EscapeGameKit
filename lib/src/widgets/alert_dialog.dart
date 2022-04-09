@@ -154,37 +154,6 @@ class EscapeGameAlertDialog extends StatelessWidget {
   }
 }
 
-/// Displays the [padlock.failedToUnlockMessage].
-class EscapeGameAlertDialogPadlockNewTry extends StatelessWidget {
-  /// The padlock.
-  final Padlock? padlock;
-
-  /// The text style.
-  final TextStyle textStyle;
-
-  /// The text align.
-  final TextAlign textAlign;
-
-  /// Creates a new [EscapeGameAlertDialogPadlockNewTry] instance.
-  const EscapeGameAlertDialogPadlockNewTry({
-    Key? key,
-    this.padlock,
-    this.textStyle = const TextStyle(fontWeight: FontWeight.bold, color: Colors.red),
-    this.textAlign = TextAlign.center,
-  }) : super(
-          key: key,
-        );
-
-  @override
-  Widget build(BuildContext context) => padlock?.failedToUnlockMessage == null
-      ? const SizedBox.shrink()
-      : Text(
-          padlock!.failedToUnlockMessage!,
-          style: textStyle,
-          textAlign: textAlign,
-        );
-}
-
 /// Allows to create an _OK_ button easily.
 class EscapeGameAlertDialogOkButton<T> extends StatelessWidget {
   /// Triggered when pressed.
@@ -244,7 +213,7 @@ abstract class PadlockAlertDialog<T extends Padlock> extends StatefulWidget {
 /// Base state for a [PadlockAlertDialog] widget.
 abstract class PadlockAlertDialogState<T extends PadlockAlertDialog> extends State<T> {
   /// Whether this is the first try.
-  bool isFirstTry = true;
+  int tryCount = 0;
 
   @override
   Widget build(BuildContext context) => EscapeGameAlertDialog(
@@ -264,8 +233,15 @@ abstract class PadlockAlertDialogState<T extends PadlockAlertDialog> extends Sta
   /// Builds the dialog body.
   List<Widget> buildBody(BuildContext context);
 
+  /// Creates the hint button.
+  Widget createHintButton(BuildContext context) => TextButton(
+        onPressed: showHintDialog,
+        child: const Text('HINT'),
+      );
+
   /// Builds the dialog actions.
   List<Widget> buildActions(BuildContext context) => [
+        if (widget.padlock.hint != null && widget.padlock.hint!.minimumTriesBeforeShowing <= tryCount) createHintButton(context),
         EscapeGameAlertDialogOkButton(onPressed: tryUnlock),
         const EscapeGameAlertDialogCloseButton(),
       ];
@@ -276,13 +252,63 @@ abstract class PadlockAlertDialogState<T extends PadlockAlertDialog> extends Sta
   /// Returns the entered code.
   dynamic getCode();
 
+  /// Shows the hint dialog.
+  void showHintDialog({String dialogTitle = 'Hint'}) {
+    showDialog(
+      context: context,
+      builder: (context) => EscapeGameAlertDialog.oneChild(
+        title: dialogTitle,
+        child: Text(
+          widget.padlock.hint!.text,
+          style: const TextStyle(
+            fontStyle: FontStyle.italic,
+          ),
+        ),
+      ),
+    );
+  }
+
   /// Tries to unlock the padlock.
   void tryUnlock() {
     bool unlockResult = widget.padlock.tryUnlock(getCode());
     if (unlockResult) {
       Navigator.pop(context);
     } else {
-      setState(() => isFirstTry = false);
+      setState(() => tryCount++);
     }
   }
+
+  /// Returns whether this is the first try.
+  bool get isFirstTry => tryCount == 0;
+}
+
+/// Displays the [padlock.failedToUnlockMessage].
+class EscapeGameAlertDialogPadlockNewTry extends StatelessWidget {
+  /// The padlock.
+  final Padlock? padlock;
+
+  /// The text style.
+  final TextStyle textStyle;
+
+  /// The text align.
+  final TextAlign textAlign;
+
+  /// Creates a new [EscapeGameAlertDialogPadlockNewTry] instance.
+  const EscapeGameAlertDialogPadlockNewTry({
+    Key? key,
+    this.padlock,
+    this.textStyle = const TextStyle(fontWeight: FontWeight.bold, color: Colors.red),
+    this.textAlign = TextAlign.center,
+  }) : super(
+          key: key,
+        );
+
+  @override
+  Widget build(BuildContext context) => padlock?.failedToUnlockMessage == null
+      ? const SizedBox.shrink()
+      : Text(
+          padlock!.failedToUnlockMessage!,
+          style: textStyle,
+          textAlign: textAlign,
+        );
 }
