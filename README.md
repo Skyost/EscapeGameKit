@@ -33,11 +33,11 @@ Everything you need to get started with this library is available in the
 The plugin is currently in beta. Here's the list of things we (me, and hopefully any contributor 😀)
 need to work on before release :
 
-* [ ] **Better support of hot reload**. Currently, escape games don't support hot reload.
-* [ ] **Better support of Android and iOS platforms**.
+* **Better support of hot reload**. Currently, escape games don't support hot reload.
+* **Better support of Android and iOS platforms**.
   The plugin is still untested on these platforms, but it should perfectly work. The only problem
   we may encounter is with tooltips.
-* [ ] **Add fullscreen / custom window size support**. It should be possible using
+* **Add fullscreen / custom window size support**. It should be possible using
   [`Transform.scale`](https://api.flutter.dev/flutter/widgets/Transform/Transform.scale.html) or
   something like that.
 
