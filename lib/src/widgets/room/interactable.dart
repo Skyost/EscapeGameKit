@@ -132,10 +132,7 @@ class _InteractableWidgetState extends State<InteractableWidget> {
           child: IgnorePointer(
             ignoring: true,
             child: Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(5),
-                color: Colors.black54,
-              ),
+              color: Colors.black54,
               padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
               child: Text(
                 tooltip.text,
