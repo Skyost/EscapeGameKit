@@ -50,6 +50,7 @@ class _CredentialPadlockDialogState extends PadlockAlertDialogState<CredentialsP
                   labelText: widget.usernameText,
                 ),
           onSubmitted: (value) => tryUnlock(),
+          autofocus: true,
         ),
         TextField(
           controller: passwordController,

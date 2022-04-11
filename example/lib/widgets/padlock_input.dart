@@ -26,5 +26,6 @@ class PadlockInputWidget extends StatelessWidget {
           icon: Icon(Icons.key),
         ),
         onSubmitted: tryUnlock == null ? null : (string) => tryUnlock!(),
+        autofocus: true,
       );
 }

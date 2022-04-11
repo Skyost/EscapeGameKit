@@ -51,8 +51,15 @@ class _BruteforcePadlockDialogState extends PadlockAlertDialogState<BruteforcePa
     super.initState();
     Iterable<String> iterable = widget.padlock.digits.characters;
     for (String _ in iterable) {
-      controllers.add(TextEditingController());
-      focusNodes.add(FocusNode());
+      TextEditingController controller = TextEditingController();
+      FocusNode focusNode = FocusNode();
+      focusNode.addListener(() {
+        if (focusNode.hasFocus) {
+          controller.selection = TextSelection(baseOffset: 0, extentOffset: controller.text.length);
+        }
+      });
+      controllers.add(controller);
+      focusNodes.add(focusNode);
     }
   }
 
@@ -80,11 +87,10 @@ class _BruteforcePadlockDialogState extends PadlockAlertDialogState<BruteforcePa
                   style: const TextStyle(fontSize: 20),
                   maxLength: 1,
                   decoration: const InputDecoration(counterText: ''),
+                  autofocus: i == 0,
                   onChanged: (value) {
                     if (value.isNotEmpty && i < controllers.length - 1) {
-                      focusNodes[i + 1].requestFocus();
-                      TextEditingController controller = controllers[i + 1];
-                      controller.selection = TextSelection(baseOffset: 0, extentOffset: controller.text.length);
+                      focusNodes[i].nextFocus();
                     }
                   },
                   onSubmitted: (value) => tryUnlock(),

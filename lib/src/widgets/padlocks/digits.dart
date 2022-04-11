@@ -41,8 +41,15 @@ class _DigitsPadlockDialogState extends PadlockAlertDialogState<DigitsPadlockDia
     super.initState();
     Iterable<String> iterable = widget.shouldSeparateTextFields ? widget.padlock.digits.characters : [''];
     for (String _ in iterable) {
-      controllers.add(TextEditingController());
-      focusNodes.add(FocusNode());
+      TextEditingController controller = TextEditingController();
+      FocusNode focusNode = FocusNode();
+      focusNode.addListener(() {
+        if (focusNode.hasFocus) {
+          controller.selection = TextSelection(baseOffset: 0, extentOffset: controller.text.length);
+        }
+      });
+      controllers.add(controller);
+      focusNodes.add(focusNode);
     }
   }
 
@@ -63,11 +70,10 @@ class _DigitsPadlockDialogState extends PadlockAlertDialogState<DigitsPadlockDia
                     style: const TextStyle(fontSize: 20),
                     maxLength: 1,
                     decoration: const InputDecoration(counterText: ''),
+                    autofocus: i == 0,
                     onChanged: (value) {
                       if (value.isNotEmpty && i < controllers.length - 1) {
-                        focusNodes[i + 1].requestFocus();
-                        TextEditingController controller = controllers[i + 1];
-                        controller.selection = TextSelection(baseOffset: 0, extentOffset: controller.text.length);
+                        focusNodes[i].nextFocus();
                       }
                     },
                     onSubmitted: (value) => tryUnlock(),
@@ -83,6 +89,7 @@ class _DigitsPadlockDialogState extends PadlockAlertDialogState<DigitsPadlockDia
             maxLength: 1,
             decoration: const InputDecoration(counterText: ''),
             onSubmitted: (value) => tryUnlock(),
+            autofocus: true,
           )
       ];
 
