@@ -43,7 +43,7 @@ class _CreateInteractableDialogState extends State<CreateInteractableDialog> {
     super.initState();
     idController.addListener(updateCode);
     tooltipController.addListener(updateCode);
-    WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       updateCode();
     });
   }
@@ -51,6 +51,18 @@ class _CreateInteractableDialogState extends State<CreateInteractableDialog> {
   @override
   Widget build(BuildContext context) => EscapeGameAlertDialog(
         title: 'Interactable creator',
+        actions: [
+          TextButton(
+            onPressed: () {
+              Clipboard.setData(ClipboardData(text: codeController.text));
+              ScaffoldMessenger.maybeOf(context)?.showSnackBar(const SnackBar(
+                content: Text('Done !'),
+              ));
+            },
+            child: const Text('COPY TO CLIPBOARD'),
+          ),
+          const EscapeGameAlertDialogCloseButton(cancel: false),
+        ],
         children: [
           const Text(
             'This dialog allows you to quickly create an Interactable object.',
@@ -78,18 +90,6 @@ class _CreateInteractableDialogState extends State<CreateInteractableDialog> {
               labelText: 'Code',
             ),
           ),
-        ],
-        actions: [
-          TextButton(
-            onPressed: () {
-              Clipboard.setData(ClipboardData(text: codeController.text));
-              ScaffoldMessenger.maybeOf(context)?.showSnackBar(const SnackBar(
-                content: Text('Done !'),
-              ));
-            },
-            child: const Text('COPY TO CLIPBOARD'),
-          ),
-          const EscapeGameAlertDialogCloseButton(cancel: false),
         ],
       );
 

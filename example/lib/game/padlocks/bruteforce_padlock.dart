@@ -50,7 +50,7 @@ class _BruteforcePadlockDialogState extends PadlockAlertDialogState<BruteforcePa
   void initState() {
     super.initState();
     Iterable<String> iterable = widget.padlock.digits.characters;
-    for (String _ in iterable) {
+    for (int i = 0; i < iterable.length; i++) {
       TextEditingController controller = TextEditingController();
       FocusNode focusNode = FocusNode();
       focusNode.addListener(() {

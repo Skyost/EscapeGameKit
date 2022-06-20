@@ -53,8 +53,9 @@ class _QrPadlockDialogState extends PadlockAlertDialogState<QrPadlockDialog> {
           alignment: Alignment.center,
           child: GestureDetector(
             onTap: () async {
-              if (await launcher.canLaunch(widget.padlock.url)) {
-                launcher.launch(widget.padlock.url);
+              Uri url = Uri.parse(widget.padlock.url);
+              if (await launcher.canLaunchUrl(url)) {
+                launcher.launchUrl(url);
               }
             },
             child: QrImage(

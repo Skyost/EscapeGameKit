@@ -33,26 +33,26 @@ class RenderSettingsWidget extends StatelessWidget {
     Widget child = this.child;
     if (renderSettings!.rotationAngle != null) {
       child = Transform.rotate(
-        child: child,
         angle: renderSettings!.rotationAngle!,
+        child: child,
       );
     }
 
     if (renderSettings!.isInvisible) {
       child = Visibility(
-        child: child,
         visible: false,
         maintainState: true,
         maintainAnimation: true,
         maintainSize: true,
         maintainInteractivity: true,
         maintainSemantics: true,
+        child: child,
       );
 
       if ((invisibleBackground?.opacity ?? 0) != 0) {
         child = DecoratedBox(
-          child: child,
           decoration: BoxDecoration(color: invisibleBackground),
+          child: child,
         );
       }
     }

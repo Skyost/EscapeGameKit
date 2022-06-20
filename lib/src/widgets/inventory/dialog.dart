@@ -11,7 +11,8 @@ class InventoryDialog extends InventoryWidget {
   const InventoryDialog({
     Key? key,
     required EscapeGame escapeGame,
-    EscapeGameObjectWidgetBuilder objectWidgetBuilder = InventoryWidget.defaultObjectWidgetBuilder,
+    EscapeGameObjectWidgetBuilder objectWidgetBuilder =
+        InventoryWidget.defaultObjectWidgetBuilder,
   }) : super(
           key: key,
           escapeGame: escapeGame,
@@ -25,7 +26,8 @@ class InventoryDialog extends InventoryWidget {
   static void openDialog(
     BuildContext context, {
     required EscapeGame escapeGame,
-    EscapeGameObjectWidgetBuilder objectWidgetBuilder = InventoryWidget.defaultObjectWidgetBuilder,
+    EscapeGameObjectWidgetBuilder objectWidgetBuilder =
+        InventoryWidget.defaultObjectWidgetBuilder,
   }) =>
       showDialog(
         context: context,
@@ -41,6 +43,9 @@ class _InventoryDialogState extends InventoryWidgetState<InventoryDialog> {
   @override
   Widget build(BuildContext context) => EscapeGameAlertDialog.oneChild(
         title: widget.escapeGame.inventory.title,
+        actions: const [
+          EscapeGameAlertDialogCloseButton(cancel: false),
+        ],
         child: widget.escapeGame.inventory.objects.isEmpty
             ? Text(
                 widget.escapeGame.inventory.emptyMessage,
@@ -54,12 +59,10 @@ class _InventoryDialogState extends InventoryWidgetState<InventoryDialog> {
                   for (EscapeGameObject object in objects)
                     RenderSettingsWidget(
                       renderSettings: object.inventoryRenderSettings,
-                      child: widget.objectWidgetBuilder(context, widget.escapeGame, object),
+                      child: widget.objectWidgetBuilder(
+                          context, widget.escapeGame, object),
                     ),
                 ],
               ),
-        actions: const [
-          EscapeGameAlertDialogCloseButton(cancel: false),
-        ],
       );
 }

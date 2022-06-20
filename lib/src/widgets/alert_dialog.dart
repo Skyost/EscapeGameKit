@@ -82,11 +82,11 @@ class EscapeGameAlertDialog extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.only(bottom: 10),
                 child: RenderSettingsWidget(
+                  renderSettings: escapeGameDialog.imageRenderSettings,
                   child: AutoImage.fromRenderSettings(
                     renderSettings: escapeGameDialog.imageRenderSettings,
                     defaultAssetPath: escapeGameDialog.imageRenderSettings!.asset!,
                   ),
-                  renderSettings: escapeGameDialog.imageRenderSettings,
                 ),
               ),
             HtmlWidget('<div align="center">${escapeGameDialog.message}</div>'),
@@ -217,6 +217,8 @@ abstract class PadlockAlertDialogState<T extends PadlockAlertDialog> extends Sta
   @override
   Widget build(BuildContext context) => EscapeGameAlertDialog(
         title: widget.padlock.title,
+        bottom: buildBottom(context),
+        actions: buildActions(context),
         children: [
           if (widget.padlock.unlockMessage != null)
             Text(
@@ -225,8 +227,6 @@ abstract class PadlockAlertDialogState<T extends PadlockAlertDialog> extends Sta
             ),
           ...buildBody(context),
         ],
-        bottom: buildBottom(context),
-        actions: buildActions(context),
       );
 
   /// Builds the dialog body.

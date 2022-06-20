@@ -55,6 +55,8 @@ class _PatternPadlockDialogState extends PadlockAlertDialogState<PatternPadlockD
   @override
   Widget build(BuildContext context) => EscapeGameAlertDialog(
         title: widget.padlock.title,
+        bottom: isFirstTry ? null : EscapeGameAlertDialogPadlockNewTry(padlock: widget.padlock),
+        actions: const [EscapeGameAlertDialogCloseButton()],
         children: [
           if (widget.padlock.unlockMessage != null)
             Text(
@@ -62,14 +64,15 @@ class _PatternPadlockDialogState extends PadlockAlertDialogState<PatternPadlockD
               textAlign: TextAlign.center,
             ),
         ],
-        bottom: isFirstTry ? null : EscapeGameAlertDialogPadlockNewTry(padlock: widget.padlock),
-        actions: const [EscapeGameAlertDialogCloseButton()],
       );
 
   @override
   List<Widget> buildBody(BuildContext context) => [
         Center(
           child: GestureDetector(
+            onPanStart: onPanStart,
+            onPanUpdate: onPanUpdate,
+            onPanEnd: onPanEnd,
             child: CustomPaint(
               painter: _PatternPainter(
                 dimension: widget.padlock.dimension,
@@ -84,9 +87,6 @@ class _PatternPadlockDialogState extends PadlockAlertDialogState<PatternPadlockD
               ),
               size: Size.square(MediaQuery.of(context).size.shortestSide / 2),
             ),
-            onPanStart: onPanStart,
-            onPanUpdate: onPanUpdate,
-            onPanEnd: onPanEnd,
           ),
         ),
       ];
@@ -216,8 +216,8 @@ class _PatternPainter extends CustomPainter {
           Offset end = getOffsetByIndex(codes[i + 1]);
           drawLine(canvas, start, end);
         } else if (offset != null) {
-          Offset _end = offset!;
-          drawLine(canvas, start, _end);
+          Offset end = offset!;
+          drawLine(canvas, start, end);
         }
       }
     }

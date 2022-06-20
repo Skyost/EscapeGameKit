@@ -40,7 +40,7 @@ class _DigitsPadlockDialogState extends PadlockAlertDialogState<DigitsPadlockDia
   void initState() {
     super.initState();
     Iterable<String> iterable = widget.shouldSeparateTextFields ? widget.padlock.digits.characters : [''];
-    for (String _ in iterable) {
+    for (int i = 0; i < iterable.length; i++) {
       TextEditingController controller = TextEditingController();
       FocusNode focusNode = FocusNode();
       focusNode.addListener(() {

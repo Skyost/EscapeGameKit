@@ -36,361 +36,360 @@ class InteractableAnimationWidget extends StatelessWidget {
     switch (animation!.type) {
       case InteractableAnimationType.fadeIn:
         return FadeIn(
-          child: child,
           duration: animation!.duration,
           delay: animation!.delay,
           controller: controller,
           manualTrigger: animation!.manualTrigger,
           animate: animate,
+          child: child,
         );
       case InteractableAnimationType.fadeInDown:
         return FadeInDown(
-          child: child,
           duration: animation!.duration,
           delay: animation!.delay,
           controller: controller,
           manualTrigger: animation!.manualTrigger,
           animate: animate,
           from: animation!.from,
+          child: child,
         );
       case InteractableAnimationType.fadeInDownBig:
         return FadeInDownBig(
-          child: child,
           duration: animation!.duration,
           delay: animation!.delay,
           controller: controller,
           manualTrigger: animation!.manualTrigger,
           animate: animate,
           from: animation!.from,
+          child: child,
         );
       case InteractableAnimationType.fadeInUp:
         return FadeInUp(
-          child: child,
           duration: animation!.duration,
           delay: animation!.delay,
           controller: controller,
           manualTrigger: animation!.manualTrigger,
           animate: animate,
           from: animation!.from,
+          child: child,
         );
       case InteractableAnimationType.fadeInUpBig:
         return FadeInUpBig(
-          child: child,
           duration: animation!.duration,
           delay: animation!.delay,
           controller: controller,
           manualTrigger: animation!.manualTrigger,
           animate: animate,
           from: animation!.from,
+          child: child,
         );
       case InteractableAnimationType.fadeInLeft:
         return FadeInLeft(
-          child: child,
           duration: animation!.duration,
           delay: animation!.delay,
           controller: controller,
           manualTrigger: animation!.manualTrigger,
           animate: animate,
           from: animation!.from,
+          child: child,
         );
       case InteractableAnimationType.fadeInLeftBig:
         return FadeInLeftBig(
-          child: child,
           duration: animation!.duration,
           delay: animation!.delay,
           controller: controller,
           manualTrigger: animation!.manualTrigger,
           animate: animate,
           from: animation!.from,
+          child: child,
         );
       case InteractableAnimationType.fadeInRight:
         return FadeInRight(
-          child: child,
           duration: animation!.duration,
           delay: animation!.delay,
           controller: controller,
           manualTrigger: animation!.manualTrigger,
           animate: animate,
           from: animation!.from,
+          child: child,
         );
       case InteractableAnimationType.fadeInRightBig:
         return FadeInRightBig(
-          child: child,
           duration: animation!.duration,
           delay: animation!.delay,
           controller: controller,
           manualTrigger: animation!.manualTrigger,
           animate: animate,
           from: animation!.from,
+          child: child,
         );
       case InteractableAnimationType.fadeOut:
         return FadeOut(
-          child: child,
           duration: animation!.duration,
           delay: animation!.delay,
           controller: controller,
           manualTrigger: animation!.manualTrigger,
           animate: animate,
+          child: child,
         );
       case InteractableAnimationType.fadeOutDown:
         return FadeOutDown(
-          child: child,
           duration: animation!.duration,
           delay: animation!.delay,
           controller: controller,
           manualTrigger: animation!.manualTrigger,
           animate: animate,
           from: animation!.from,
+          child: child,
         );
       case InteractableAnimationType.fadeOutDownBig:
         return FadeOutDownBig(
-          child: child,
           duration: animation!.duration,
           delay: animation!.delay,
           controller: controller,
           manualTrigger: animation!.manualTrigger,
           animate: animate,
           from: animation!.from,
+          child: child,
         );
       case InteractableAnimationType.fadeOutUp:
         return FadeOutUp(
-          child: child,
           duration: animation!.duration,
           delay: animation!.delay,
           controller: controller,
           manualTrigger: animation!.manualTrigger,
           animate: animate,
           from: animation!.from,
+          child: child,
         );
       case InteractableAnimationType.fadeOutUpBig:
         return FadeOutUpBig(
-          child: child,
           duration: animation!.duration,
           delay: animation!.delay,
           controller: controller,
           manualTrigger: animation!.manualTrigger,
           animate: animate,
           from: animation!.from,
+          child: child,
         );
       case InteractableAnimationType.fadeOutLeft:
         return FadeOutLeft(
-          child: child,
           duration: animation!.duration,
           delay: animation!.delay,
           controller: controller,
           manualTrigger: animation!.manualTrigger,
           animate: animate,
           from: animation!.from,
+          child: child,
         );
       case InteractableAnimationType.fadeOutLeftBig:
         return FadeOutLeftBig(
-          child: child,
           duration: animation!.duration,
           delay: animation!.delay,
           controller: controller,
           manualTrigger: animation!.manualTrigger,
           animate: animate,
           from: animation!.from,
+          child: child,
         );
       case InteractableAnimationType.fadeOutRight:
         return FadeOutRight(
-          child: child,
           duration: animation!.duration,
           delay: animation!.delay,
           controller: controller,
           manualTrigger: animation!.manualTrigger,
           animate: animate,
           from: animation!.from,
+          child: child,
         );
       case InteractableAnimationType.fadeOutRightBig:
         return FadeOutRightBig(
-          child: child,
           duration: animation!.duration,
           delay: animation!.delay,
           controller: controller,
           manualTrigger: animation!.manualTrigger,
           animate: animate,
           from: animation!.from,
+          child: child,
         );
       case InteractableAnimationType.bounceInDown:
         return BounceInDown(
-          child: child,
           duration: animation!.duration,
           delay: animation!.delay,
           controller: controller,
           manualTrigger: animation!.manualTrigger,
           animate: animate,
           from: animation!.from,
+          child: child,
         );
       case InteractableAnimationType.bounceInUp:
         return BounceInUp(
-          child: child,
           duration: animation!.duration,
           delay: animation!.delay,
           controller: controller,
           manualTrigger: animation!.manualTrigger,
           animate: animate,
           from: animation!.from,
+          child: child,
         );
       case InteractableAnimationType.bounceInLeft:
         return BounceInLeft(
-          child: child,
           duration: animation!.duration,
           delay: animation!.delay,
           controller: controller,
           manualTrigger: animation!.manualTrigger,
           animate: animate,
           from: animation!.from,
+          child: child,
         );
       case InteractableAnimationType.bounceInRight:
         return BounceInRight(
-          child: child,
           duration: animation!.duration,
           delay: animation!.delay,
           controller: controller,
           manualTrigger: animation!.manualTrigger,
           animate: animate,
           from: animation!.from,
+          child: child,
         );
       case InteractableAnimationType.elasticIn:
         return ElasticIn(
-          child: child,
           duration: animation!.duration,
           delay: animation!.delay,
           controller: controller,
           manualTrigger: animation!.manualTrigger,
           animate: animate,
+          child: child,
         );
       case InteractableAnimationType.elasticInDown:
         return ElasticInDown(
-          child: child,
           duration: animation!.duration,
           delay: animation!.delay,
           controller: controller,
           manualTrigger: animation!.manualTrigger,
           animate: animate,
           from: animation!.from,
+          child: child,
         );
       case InteractableAnimationType.elasticInUp:
         return ElasticInUp(
-          child: child,
           duration: animation!.duration,
           delay: animation!.delay,
           controller: controller,
           manualTrigger: animation!.manualTrigger,
           animate: animate,
           from: animation!.from,
+          child: child,
         );
       case InteractableAnimationType.elasticInLeft:
         return ElasticInLeft(
-          child: child,
           duration: animation!.duration,
           delay: animation!.delay,
           controller: controller,
           manualTrigger: animation!.manualTrigger,
           animate: animate,
           from: animation!.from,
+          child: child,
         );
       case InteractableAnimationType.elasticInRight:
         return ElasticInRight(
-          child: child,
           duration: animation!.duration,
           delay: animation!.delay,
           controller: controller,
           manualTrigger: animation!.manualTrigger,
           animate: animate,
           from: animation!.from,
+          child: child,
         );
       case InteractableAnimationType.slideInDown:
         return SlideInDown(
-          child: child,
           duration: animation!.duration,
           delay: animation!.delay,
           controller: controller,
           manualTrigger: animation!.manualTrigger,
           animate: animate,
           from: animation!.from,
+          child: child,
         );
       case InteractableAnimationType.slideInUp:
         return SlideInUp(
-          child: child,
           duration: animation!.duration,
           delay: animation!.delay,
           controller: controller,
           manualTrigger: animation!.manualTrigger,
           animate: animate,
           from: animation!.from,
+          child: child,
         );
       case InteractableAnimationType.slideInLeft:
         return SlideInLeft(
-          child: child,
           duration: animation!.duration,
           delay: animation!.delay,
           controller: controller,
           manualTrigger: animation!.manualTrigger,
           animate: animate,
           from: animation!.from,
+          child: child,
         );
       case InteractableAnimationType.slideInRight:
         return SlideInRight(
-          child: child,
           duration: animation!.duration,
           delay: animation!.delay,
           controller: controller,
           manualTrigger: animation!.manualTrigger,
           animate: animate,
           from: animation!.from,
+          child: child,
         );
       case InteractableAnimationType.flipInX:
         return FlipInX(
-          child: child,
           duration: animation!.duration,
           delay: animation!.delay,
           controller: controller,
           manualTrigger: animation!.manualTrigger,
           animate: animate,
+          child: child,
         );
       case InteractableAnimationType.flipInY:
         return FlipInY(
-          child: child,
           duration: animation!.duration,
           delay: animation!.delay,
           controller: controller,
           manualTrigger: animation!.manualTrigger,
           animate: animate,
+          child: child,
         );
       case InteractableAnimationType.zoomIn:
         return ZoomIn(
-          child: child,
           duration: animation!.duration,
           delay: animation!.delay,
           controller: controller,
           manualTrigger: animation!.manualTrigger,
           animate: animate,
           from: animation!.from,
+          child: child,
         );
       case InteractableAnimationType.zoomOut:
         return ZoomOut(
-          child: child,
           duration: animation!.duration,
           delay: animation!.delay,
           controller: controller,
           manualTrigger: animation!.manualTrigger,
           animate: animate,
           from: animation!.from,
+          child: child,
         );
       case InteractableAnimationType.jelloIn:
         return JelloIn(
-          child: child,
           duration: animation!.duration,
           delay: animation!.delay,
           controller: controller,
           manualTrigger: animation!.manualTrigger,
           animate: animate,
+          child: child,
         );
       case InteractableAnimationType.bounce:
         return Bounce(
-          child: child,
           duration: animation!.duration,
           delay: animation!.delay,
           controller: controller,
@@ -398,76 +397,77 @@ class InteractableAnimationWidget extends StatelessWidget {
           animate: animate,
           from: animation!.from,
           infinite: animation!.infinite,
+          child: child,
         );
       case InteractableAnimationType.flash:
         return Flash(
-          child: child,
           duration: animation!.duration,
           delay: animation!.delay,
           controller: controller,
           manualTrigger: animation!.manualTrigger,
           animate: animate,
           infinite: animation!.infinite,
+          child: child,
         );
       case InteractableAnimationType.pulse:
         return Pulse(
-          child: child,
           duration: animation!.duration,
           delay: animation!.delay,
           controller: controller,
           manualTrigger: animation!.manualTrigger,
           animate: animate,
           infinite: animation!.infinite,
+          child: child,
         );
       case InteractableAnimationType.swing:
         return Swing(
-          child: child,
           duration: animation!.duration,
           delay: animation!.delay,
           controller: controller,
           manualTrigger: animation!.manualTrigger,
           animate: animate,
           infinite: animation!.infinite,
+          child: child,
         );
       case InteractableAnimationType.spin:
         return Spin(
-          child: child,
           duration: animation!.duration,
           delay: animation!.delay,
           controller: controller,
           manualTrigger: animation!.manualTrigger,
           animate: animate,
           infinite: animation!.infinite,
+          child: child,
         );
       case InteractableAnimationType.spinPerfect:
         return SpinPerfect(
-          child: child,
           duration: animation!.duration,
           delay: animation!.delay,
           controller: controller,
           manualTrigger: animation!.manualTrigger,
           animate: animate,
           infinite: animation!.infinite,
+          child: child,
         );
       case InteractableAnimationType.dance:
         return Dance(
-          child: child,
           duration: animation!.duration,
           delay: animation!.delay,
           controller: controller,
           manualTrigger: animation!.manualTrigger,
           animate: animate,
           infinite: animation!.infinite,
+          child: child,
         );
       case InteractableAnimationType.roulette:
         return Roulette(
-          child: child,
           duration: animation!.duration,
           delay: animation!.delay,
           controller: controller,
           manualTrigger: animation!.manualTrigger,
           animate: animate,
           infinite: animation!.infinite,
+          child: child,
         );
       default:
         return child;

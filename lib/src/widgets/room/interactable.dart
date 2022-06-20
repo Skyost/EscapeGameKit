@@ -58,7 +58,7 @@ class _InteractableWidgetState extends State<InteractableWidget> {
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance?.addPostFrameCallback((_) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
       refreshState();
       widget.interactable.addListener(refreshState);
     });
@@ -98,9 +98,9 @@ class _InteractableWidgetState extends State<InteractableWidget> {
           animation: widget.interactable.renderSettings?.enterAnimation,
           child: InteractableAnimationWidget(
             animation: widget.interactable.renderSettings?.hoverAnimation,
-            child: AutoImage.fromRenderSettings(renderSettings: widget.interactable.renderSettings),
             controller: (controller) => tooltipAnimationController = controller,
             animate: false,
+            child: AutoImage.fromRenderSettings(renderSettings: widget.interactable.renderSettings),
           ),
         ),
       ),
@@ -145,7 +145,7 @@ class _InteractableWidgetState extends State<InteractableWidget> {
       opaque: false,
     );
     Overlay.of(context)?.insert(tooltipOverlayEntry!);
-    WidgetsBinding.instance?.addPostFrameCallback((_) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
       tooltipOpacity = 1;
       tooltipOverlayEntry?.markNeedsBuild();
     });

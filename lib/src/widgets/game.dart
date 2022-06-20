@@ -109,7 +109,7 @@ class _EscapeGameWidgetState extends State<EscapeGameWidget> {
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance?.addPostFrameCallback((_) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
       if (widget.autostart && !widget.escapeGame.isStarted) {
         widget.escapeGame.start();
       }
@@ -124,7 +124,7 @@ class _EscapeGameWidgetState extends State<EscapeGameWidget> {
   void didUpdateWidget(covariant EscapeGameWidget oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (oldWidget.escapeGame != widget.escapeGame || oldWidget.escapeGame.currentRoom != widget.escapeGame.currentRoom || oldWidget.escapeGame.openedDialog != widget.escapeGame.openedDialog) {
-      WidgetsBinding.instance?.addPostFrameCallback((_) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
         refreshCurrentRoom();
         refreshDialog();
       });

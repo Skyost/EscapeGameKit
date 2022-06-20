@@ -29,6 +29,14 @@ class _GlitchMessageWidgetState extends State<GlitchMessageWidget> {
   @override
   Widget build(BuildContext context) => MessageWidget(
         messageInfo: widget.escapeGame.messages.glitchMessage,
+        closeButton: TextButton(
+          onPressed: () {
+            if (!hasAudioStarted) {
+              Navigator.pop(context);
+            }
+          },
+          child: Text(MaterialLocalizations.of(context).closeButtonLabel.toUpperCase()),
+        ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisSize: MainAxisSize.min,
@@ -73,14 +81,6 @@ class _GlitchMessageWidgetState extends State<GlitchMessageWidget> {
               ),
             const Text('\n\nHave a nice day.\nH. Delaunay'),
           ],
-        ),
-        closeButton: TextButton(
-          onPressed: () {
-            if (!hasAudioStarted) {
-              Navigator.pop(context);
-            }
-          },
-          child: Text(MaterialLocalizations.of(context).closeButtonLabel.toUpperCase()),
         ),
       );
 }

@@ -52,7 +52,6 @@ class _MessageWidgetState extends State<MessageWidget> {
             barrierDismissible: false,
             builder: (context) => EscapeGameAlertDialog.oneChild(
               title: widget.messageInfo.title,
-              child: widget.child,
               actions: [
                 widget.closeButton ??
                     TextButton(
@@ -60,6 +59,7 @@ class _MessageWidgetState extends State<MessageWidget> {
                       child: Text(MaterialLocalizations.of(context).closeButtonLabel.toUpperCase()),
                     ),
               ],
+              child: widget.child,
             ),
           );
         },

@@ -62,7 +62,7 @@ class _RoomWidgetState extends State<RoomWidget> {
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance?.addPostFrameCallback((_) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
       widget.room.addListener(refreshState);
     });
   }

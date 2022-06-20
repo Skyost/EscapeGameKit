@@ -42,7 +42,7 @@ abstract class InventoryWidgetState<T extends InventoryWidget> extends State<T> 
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance?.addPostFrameCallback((_) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
       refreshObjects();
       widget.escapeGame.addListener(refreshObjects);
     });
