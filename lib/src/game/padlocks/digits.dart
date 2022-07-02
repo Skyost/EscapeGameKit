@@ -1,4 +1,3 @@
-import 'package:escape_game_kit/src/game/padlocks/hint.dart';
 import 'package:escape_game_kit/src/game/padlocks/padlock.dart';
 import 'package:flutter/foundation.dart';
 
