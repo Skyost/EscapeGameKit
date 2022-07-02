@@ -21,18 +21,13 @@ class PositionedRenderSettings extends RenderSettings {
     this.right,
     this.bottom,
     this.left,
-    double? width,
-    double? height,
-    double? rotationAngle,
-    String? asset,
-    bool? isInvisible,
-  }) : super(
-          width: width,
-          height: height,
-          rotationAngle: rotationAngle,
-          asset: asset,
-          isInvisible: isInvisible,
-        );
+    super.width,
+    super.height,
+    super.rotationAngle,
+    super.mirror,
+    super.asset,
+    super.isInvisible,
+  });
 
   @override
   bool operator ==(Object other) {

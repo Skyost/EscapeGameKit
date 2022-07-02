@@ -13,11 +13,9 @@ class MessagesDialog extends StatelessWidget {
 
   /// Creates a new [MessagesDialog] instance.
   const MessagesDialog({
-    Key? key,
+    super.key,
     required this.escapeGame,
-  }) : super(
-          key: key,
-        );
+  });
 
   @override
   Widget build(BuildContext context) => EscapeGameAlertDialog(

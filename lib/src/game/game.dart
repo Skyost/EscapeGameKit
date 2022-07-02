@@ -47,6 +47,16 @@ class EscapeGame with CountdownListener, PropertiesEquatable, ChangeNotifier {
   /// Returns the current room.
   Room get currentRoom => rooms.firstWhere((room) => room.id == _currentRoom);
 
+  /// Returns a room object by its [Room.id].
+  Room? getRoomById (String roomId) {
+    for (Room room in rooms) {
+      if (room.id == roomId) {
+        return room;
+      }
+    }
+    return null;
+  }
+
   /// Changes the current room.
   ActionResult goToRoom(String roomId, {bool notify = true}) {
     currentRoom.removeListener(notifyListeners);

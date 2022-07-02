@@ -51,7 +51,7 @@ class EscapeGameWidget extends StatefulWidget {
 
   /// Creates a new [EscapeGameWidget] instance.
   const EscapeGameWidget({
-    Key? key,
+    super.key,
     required this.escapeGame,
     this.autostart = false,
     this.beforeGameStartBuilder,
@@ -61,9 +61,7 @@ class EscapeGameWidget extends StatefulWidget {
     this.afterGameFinishedBuilder,
     this.onTryToExit,
     this.roomTransitionBuilder = defaultRoomTransitionBuilder,
-  }) : super(
-          key: key,
-        );
+  });
 
   @override
   State<StatefulWidget> createState() => _EscapeGameWidgetState();

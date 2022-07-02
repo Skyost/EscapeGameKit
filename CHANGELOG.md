@@ -1,3 +1,9 @@
+## 0.2.0
+
+* A dialog content can now be anything.
+* Fixed a bug with interactables depth in a room.
+* Various other fixes and improvements.
+
 ## 0.1.1
 
 * Various fixes and improvements for newer versions of Flutter.

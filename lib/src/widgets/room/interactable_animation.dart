@@ -18,14 +18,12 @@ class InteractableAnimationWidget extends StatelessWidget {
 
   /// Creates a new [InteractableAnimationWidget] instance.
   const InteractableAnimationWidget({
-    Key? key,
+    super.key,
     required this.animation,
     required this.child,
     this.controller,
     this.animate = true,
-  }) : super(
-          key: key,
-        );
+  });
 
   @override
   Widget build(BuildContext context) {

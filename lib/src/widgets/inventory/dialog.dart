@@ -9,15 +9,10 @@ import 'package:flutter/material.dart';
 class InventoryDialog extends InventoryWidget {
   /// Creates a new [InventoryDialog] instance.
   const InventoryDialog({
-    Key? key,
-    required EscapeGame escapeGame,
-    EscapeGameObjectWidgetBuilder objectWidgetBuilder =
-        InventoryWidget.defaultObjectWidgetBuilder,
-  }) : super(
-          key: key,
-          escapeGame: escapeGame,
-          objectWidgetBuilder: objectWidgetBuilder,
-        );
+    super.key,
+    required super.escapeGame,
+    super.objectWidgetBuilder = InventoryWidget.defaultObjectWidgetBuilder,
+  });
 
   @override
   State<StatefulWidget> createState() => _InventoryDialogState();
@@ -26,8 +21,7 @@ class InventoryDialog extends InventoryWidget {
   static void openDialog(
     BuildContext context, {
     required EscapeGame escapeGame,
-    EscapeGameObjectWidgetBuilder objectWidgetBuilder =
-        InventoryWidget.defaultObjectWidgetBuilder,
+    EscapeGameObjectWidgetBuilder objectWidgetBuilder = InventoryWidget.defaultObjectWidgetBuilder,
   }) =>
       showDialog(
         context: context,
@@ -59,8 +53,7 @@ class _InventoryDialogState extends InventoryWidgetState<InventoryDialog> {
                   for (EscapeGameObject object in objects)
                     RenderSettingsWidget(
                       renderSettings: object.inventoryRenderSettings,
-                      child: widget.objectWidgetBuilder(
-                          context, widget.escapeGame, object),
+                      child: widget.objectWidgetBuilder(context, widget.escapeGame, object),
                     ),
                 ],
               ),

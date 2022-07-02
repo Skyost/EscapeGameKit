@@ -1,3 +1,4 @@
+import 'package:escape_game_kit/src/game/game.dart';
 import 'package:escape_game_kit/src/game/padlocks/digits.dart';
 import 'package:escape_game_kit/src/game/padlocks/padlock.dart';
 import 'package:escape_game_kit/src/widgets/alert_dialog.dart';
@@ -10,20 +11,16 @@ class DigitsPadlockDialog extends PadlockAlertDialog<DigitsPadlock> {
 
   /// Creates a new [DigitsPadlockDialog] instance.
   DigitsPadlockDialog({
-    Key? key,
-    required DigitsPadlock padlock,
+    super.key,
+    required super.padlock,
     bool? shouldSeparateTextFields,
-  })  : shouldSeparateTextFields = shouldSeparateTextFields ?? (padlock.digits.isNotEmpty && padlock.digits.length <= 4),
-        super(
-          key: key,
-          padlock: padlock,
-        );
+  })  : shouldSeparateTextFields = shouldSeparateTextFields ?? (padlock.digits.isNotEmpty && padlock.digits.length <= 4);
 
   @override
   State<StatefulWidget> createState() => _DigitsPadlockDialogState();
 
   /// The [DigitsPadlockDialog] builder.
-  static DigitsPadlockDialog builder(BuildContext context, Padlock padlock) => DigitsPadlockDialog(
+  static DigitsPadlockDialog builder(BuildContext context, EscapeGame escapeGame, Padlock padlock) => DigitsPadlockDialog(
         padlock: padlock as DigitsPadlock,
       );
 }

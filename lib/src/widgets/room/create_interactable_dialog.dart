@@ -9,11 +9,9 @@ class CreateInteractableDialog extends StatefulWidget {
 
   /// Creates a new [CreateInteractableDialog] instance.
   const CreateInteractableDialog({
-    Key? key,
+    super.key,
     required this.translucentRectangle,
-  }) : super(
-          key: key,
-        );
+  });
 
   @override
   State<StatefulWidget> createState() => _CreateInteractableDialogState();

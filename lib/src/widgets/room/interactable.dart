@@ -33,7 +33,7 @@ class InteractableWidget extends StatefulWidget {
   Future<void> onInteractableTapped(BuildContext context) async {
     ActionResult result = interactable.onTap(escapeGame);
     if (result.state == ActionResultState.needAction && result.object is Padlock) {
-      await (result.object as Padlock).tryUnlockViaDialog(context);
+      await (result.object as Padlock).tryUnlockViaDialog(context, escapeGame);
       if ((result.object as Padlock).isUnlocked) {
         interactable.onTap(escapeGame);
       }

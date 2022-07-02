@@ -1,4 +1,3 @@
-import 'package:escape_game_kit/src/game/game.dart';
 import 'package:escape_game_kit/src/game/inventory/object.dart';
 import 'package:escape_game_kit/src/widgets/inventory/widget.dart';
 import 'package:escape_game_kit/src/widgets/render_settings.dart';
@@ -8,14 +7,10 @@ import 'package:flutter/material.dart';
 class InventoryList extends InventoryWidget {
   /// Creates a new [InventoryList] instance.
   const InventoryList({
-    Key? key,
-    required EscapeGame escapeGame,
-    EscapeGameObjectWidgetBuilder objectWidgetBuilder = InventoryWidget.defaultObjectWidgetBuilder,
-  }) : super(
-          key: key,
-          escapeGame: escapeGame,
-          objectWidgetBuilder: objectWidgetBuilder,
-        );
+    super.key,
+    required super.escapeGame,
+    super.objectWidgetBuilder = InventoryWidget.defaultObjectWidgetBuilder,
+  });
 
   @override
   State<StatefulWidget> createState() => _InventoryListState();

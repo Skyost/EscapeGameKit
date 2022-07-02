@@ -1,3 +1,4 @@
+import 'package:escape_game_kit/src/game/game.dart';
 import 'package:escape_game_kit/src/game/padlocks/credentials.dart';
 import 'package:escape_game_kit/src/game/padlocks/padlock.dart';
 import 'package:escape_game_kit/src/widgets/alert_dialog.dart';
@@ -13,20 +14,17 @@ class CredentialsPadlockDialog extends PadlockAlertDialog<CredentialsPadlock> {
 
   /// Creates a new [CredentialsPadlockDialog] instance.
   const CredentialsPadlockDialog({
-    Key? key,
-    required CredentialsPadlock padlock,
+    super.key,
+    required super.padlock,
     this.usernameText = 'Username',
     this.passwordText = 'Password',
-  }) : super(
-          padlock: padlock,
-          key: key,
-        );
+  });
 
   @override
   State<StatefulWidget> createState() => _CredentialPadlockDialogState();
 
   /// The [CredentialsPadlockDialog] builder.
-  static CredentialsPadlockDialog builder(BuildContext context, Padlock padlock) => CredentialsPadlockDialog(
+  static CredentialsPadlockDialog builder(BuildContext context, EscapeGame escapeGame, Padlock padlock) => CredentialsPadlockDialog(
         padlock: padlock as CredentialsPadlock,
       );
 }

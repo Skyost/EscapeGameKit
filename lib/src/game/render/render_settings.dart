@@ -12,6 +12,9 @@ class RenderSettings with PropertiesEquatable {
   /// The rotation angle.
   final double? rotationAngle;
 
+  /// Whether to mirror the asset.
+  final bool mirror;
+
   /// The asset to display.
   final String? asset;
 
@@ -23,6 +26,7 @@ class RenderSettings with PropertiesEquatable {
     this.width,
     this.height,
     this.rotationAngle,
+    this.mirror = false,
     this.asset,
     bool? isInvisible,
   }) : isInvisible = isInvisible ?? asset == null;

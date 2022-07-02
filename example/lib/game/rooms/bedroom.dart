@@ -5,6 +5,8 @@ import 'package:escape_game_kit_example/game/objects/clover_key.dart';
 import 'package:escape_game_kit_example/game/objects/mouth_key.dart';
 import 'package:escape_game_kit_example/game/padlocks/bruteforce_padlock.dart';
 import 'package:escape_game_kit_example/game/padlocks/computer_padlock.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 /// The bedroom.
 class BedroomRoom extends Room {
@@ -17,86 +19,10 @@ class BedroomRoom extends Room {
   }) : super(
           id: roomId,
           onFirstVisit: (escapeGame) {
-            escapeGame.openDialog(const EscapeGameDialog(message: "<em>Shit, what has just happened ?<br>And above all, where are we !?</em>"));
+            escapeGame.openDialog(const EscapeGameDialog(content: "<em>Shit, what has just happened ?<br>And above all, where are we !?</em>"));
             return const ActionResult.success();
           },
           interactables: [
-            Door(
-              id: 'desk-door',
-              renderSettings: InteractableRenderSettings(
-                asset: 'assets/interactables/arrow.svg',
-                top: 200,
-                left: 20,
-                height: 80,
-                width: 80,
-                rotationAngle: -pi / 2 - 0.2,
-                hoverAnimation: InteractableAnimation(type: InteractableAnimationType.pulse),
-              ),
-              onTap: (escapeGame) {
-                if (!escapeGame.inventory.hasObject(mouthKey)) {
-                  escapeGame.openDialog(const EscapeGameDialog(
-                    title: 'Door locked',
-                    message: "<em>Damn, the desk door is locked, and you don't have the key !</em>",
-                  ));
-                  return const ActionResult.failed();
-                }
-                return const ActionResult.success();
-              },
-              onHover: (escapeGame) => const ActionResult.success(object: InteractableTooltip(text: 'Go to the desk')),
-              roomId: 'desk',
-            ),
-            Door(
-              id: 'living-room-door',
-              renderSettings: InteractableRenderSettings(
-                asset: 'assets/interactables/arrow.svg',
-                top: 200,
-                right: 20,
-                height: 80,
-                width: 80,
-                rotationAngle: pi / 2 + 0.2,
-                hoverAnimation: InteractableAnimation(type: InteractableAnimationType.pulse),
-              ),
-              onTap: (escapeGame) {
-                if (!escapeGame.inventory.hasObject(mouthKey)) {
-                  escapeGame.openDialog(const EscapeGameDialog(
-                    title: 'Door locked',
-                    message: "<em>Damn, the living room door is locked, and you don't have the key !</em>",
-                  ));
-                  return const ActionResult.failed();
-                }
-                return const ActionResult.success();
-              },
-              onHover: (escapeGame) => const ActionResult.success(
-                object: InteractableTooltip(
-                  text: 'Go to the living room',
-                  xShift: -50,
-                ),
-              ),
-              roomId: 'living-room',
-            ),
-            Door(
-              id: 'computer',
-              renderSettings: const InteractableRenderSettings(
-                top: 225,
-                left: 410,
-                height: 60,
-                width: 60,
-              ),
-              roomId: 'bedroom-final',
-              padlock: PadlockSequence(
-                padlocks: [
-                  CredentialsPadlock(
-                    username: 'htam',
-                    password: '146',
-                    caseSensitive: false,
-                    title: 'Login',
-                    unlockMessage: 'Oh no, we need to login !',
-                    failedToUnlockMessage: 'Cannot login... There must be an error somewhere.',
-                  ),
-                  ComputerPadlock(),
-                ],
-              ),
-            ),
             Interactable(
               id: 'mirror',
               renderSettings: const InteractableRenderSettings(
@@ -129,12 +55,30 @@ class BedroomRoom extends Room {
               onPickedUp: (escapeGame) {
                 escapeGame.openDialog(EscapeGameDialog(
                   title: 'Object found !',
-                  imageRenderSettings: RenderSettings(
-                    asset: mouthKey.inventoryRenderSettings?.asset,
-                    width: 100,
-                    height: 100,
+                  content: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 10),
+                        child: RenderSettingsWidget(
+                          renderSettings: RenderSettings(
+                            asset: mouthKey.inventoryRenderSettings!.asset!,
+                            width: 100,
+                            height: 100,
+                          ),
+                          child: SvgPicture.asset(
+                            mouthKey.inventoryRenderSettings!.asset!,
+                            width: 100,
+                            height: 100,
+                          ),
+                        ),
+                      ),
+                      const Text(
+                        'You just found a mouth shaped key !',
+                        style: TextStyle(fontStyle: FontStyle.italic),
+                      )
+                    ],
                   ),
-                  message: '<em>You just found a mouth shaped key !</em>',
                 ));
                 return const ActionResult.success();
               },
@@ -171,11 +115,11 @@ class BedroomRoom extends Room {
               keyId: EightKey.objectId,
               clueDialog: const EscapeGameDialog(
                 title: 'Hint on the password',
-                message: "<em>You have unlocked this chest using the eight shaped key... And there is a message !</em><br><br>Rabbits and chickens are in the garden. We don't know how many there are, but we can count 20 paws and 6 heads.<br><br><strong>The second digit of the computer password is the rabbit count.</strong>",
+                content: "<em>You have unlocked this chest using the eight shaped key... And there is a message !</em><br><br>Rabbits and chickens are in the garden. We don't know how many there are, but we can count 20 paws and 6 heads.<br><br><strong>The second digit of the computer password is the rabbit count.</strong>",
               ),
               noKeyDialog: const EscapeGameDialog(
                 title: 'Locked chest',
-                message: '<em>There seems to be a chest under this bed, but it has been locked with a key, and you don\'t have it...</em>',
+                content: '<em>There seems to be a chest under this bed, but it has been locked with a key, and you don\'t have it...</em>',
               ),
             ),
             Clue.dialog(
@@ -188,7 +132,7 @@ class BedroomRoom extends Room {
               ),
               clueDialog: const EscapeGameDialog(
                 title: 'Hint on a padlock',
-                message: "<em>There seems to be a hint behind this lamp !</em><br><br>I was always forgetting the code of the chest padlock that is hidden in the flower pot in the living room... But now no more worries !<br>To unlock it, we just need to input the number of possible 3-digit code combinations !",
+                content: "<em>There seems to be a hint behind this lamp !</em><br><br>I was always forgetting the code of the chest padlock that is hidden in the flower pot in the living room... But now no more worries !<br>To unlock it, we just need to input the number of possible 3-digit code combinations !",
               ),
             ),
             Interactable(
@@ -200,6 +144,82 @@ class BedroomRoom extends Room {
                 width: 31,
               ),
               onHover: (escapeGame) => const ActionResult.success(object: InteractableTooltip(text: 'Some candles are lighting up the room.')),
+            ),
+            Door(
+              id: 'desk-door',
+              renderSettings: InteractableRenderSettings(
+                asset: 'assets/interactables/arrow.svg',
+                top: 200,
+                left: 20,
+                height: 80,
+                width: 80,
+                rotationAngle: -pi / 2 - 0.2,
+                hoverAnimation: InteractableAnimation(type: InteractableAnimationType.pulse),
+              ),
+              onTap: (escapeGame) {
+                if (!escapeGame.inventory.hasObject(mouthKey)) {
+                  escapeGame.openDialog(const EscapeGameDialog(
+                    title: 'Door locked',
+                    content: "<em>Damn, the desk door is locked, and you don't have the key !</em>",
+                  ));
+                  return const ActionResult.failed();
+                }
+                return const ActionResult.success();
+              },
+              onHover: (escapeGame) => const ActionResult.success(object: InteractableTooltip(text: 'Go to the desk')),
+              roomId: 'desk',
+            ),
+            Door(
+              id: 'living-room-door',
+              renderSettings: InteractableRenderSettings(
+                asset: 'assets/interactables/arrow.svg',
+                top: 200,
+                right: 20,
+                height: 80,
+                width: 80,
+                rotationAngle: pi / 2 + 0.2,
+                hoverAnimation: InteractableAnimation(type: InteractableAnimationType.pulse),
+              ),
+              onTap: (escapeGame) {
+                if (!escapeGame.inventory.hasObject(mouthKey)) {
+                  escapeGame.openDialog(const EscapeGameDialog(
+                    title: 'Door locked',
+                    content: "<em>Damn, the living room door is locked, and you don't have the key !</em>",
+                  ));
+                  return const ActionResult.failed();
+                }
+                return const ActionResult.success();
+              },
+              onHover: (escapeGame) => const ActionResult.success(
+                object: InteractableTooltip(
+                  text: 'Go to the living room',
+                  xShift: -50,
+                ),
+              ),
+              roomId: 'living-room',
+            ),
+            Door(
+              id: 'computer',
+              renderSettings: const InteractableRenderSettings(
+                top: 225,
+                left: 410,
+                height: 60,
+                width: 60,
+              ),
+              roomId: 'bedroom-final',
+              padlock: PadlockSequence(
+                padlocks: [
+                  CredentialsPadlock(
+                    username: 'htam',
+                    password: '146',
+                    caseSensitive: false,
+                    title: 'Login',
+                    unlockMessage: 'Oh no, we need to login !',
+                    failedToUnlockMessage: 'Cannot login... There must be an error somewhere.',
+                  ),
+                  ComputerPadlock(),
+                ],
+              ),
             ),
           ],
         );

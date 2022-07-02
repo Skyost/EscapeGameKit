@@ -1,7 +1,6 @@
 import 'package:escape_game_kit/src/game/dialog.dart';
 import 'package:escape_game_kit/src/game/padlocks/padlock.dart';
-import 'package:escape_game_kit/src/utils/auto_image.dart';
-import 'package:escape_game_kit/src/widgets/render_settings.dart';
+import 'package:escape_game_kit/src/utils/widget_factory_with_svg.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_widget_from_html_core/flutter_widget_from_html_core.dart';
 
@@ -36,7 +35,7 @@ class EscapeGameAlertDialog extends StatelessWidget {
 
   /// Creates a new [EscapeGameAlertDialog] instance.
   const EscapeGameAlertDialog({
-    Key? key,
+    super.key,
     this.title,
     this.empty,
     this.backgroundColor,
@@ -45,9 +44,7 @@ class EscapeGameAlertDialog extends StatelessWidget {
     this.actions,
     this.bottom,
     this.scrollController,
-  }) : super(
-          key: key,
-        );
+  });
 
   /// Creates a new [EscapeGameAlertDialog] instance with only one [child].
   EscapeGameAlertDialog.oneChild({
@@ -74,23 +71,15 @@ class EscapeGameAlertDialog extends StatelessWidget {
   EscapeGameAlertDialog.fromEscapeGameDialog({
     Key? key,
     required EscapeGameDialog escapeGameDialog,
-  }) : this(
+  }) : this.oneChild(
           key: key,
           title: escapeGameDialog.title,
-          children: [
-            if (escapeGameDialog.imageRenderSettings?.asset != null)
-              Padding(
-                padding: const EdgeInsets.only(bottom: 10),
-                child: RenderSettingsWidget(
-                  renderSettings: escapeGameDialog.imageRenderSettings,
-                  child: AutoImage.fromRenderSettings(
-                    renderSettings: escapeGameDialog.imageRenderSettings,
-                    defaultAssetPath: escapeGameDialog.imageRenderSettings!.asset!,
-                  ),
+          child: escapeGameDialog.content is Widget
+              ? escapeGameDialog.content
+              : HtmlWidget(
+                  '<div align="center">${escapeGameDialog.content}</div>',
+                  factoryBuilder: () => WidgetFactoryWithSVG(),
                 ),
-              ),
-            HtmlWidget('<div align="center">${escapeGameDialog.message}</div>'),
-          ],
           actions: [
             const EscapeGameAlertDialogCloseButton(cancel: false),
           ],
@@ -160,11 +149,9 @@ class EscapeGameAlertDialogOkButton<T> extends StatelessWidget {
 
   /// Creates a new [EscapeGameAlertDialogOkButton] instance.
   const EscapeGameAlertDialogOkButton({
-    Key? key,
+    super.key,
     this.onPressed,
-  }) : super(
-          key: key,
-        );
+  });
 
   @override
   Widget build(BuildContext context) => TextButton(
@@ -180,11 +167,9 @@ class EscapeGameAlertDialogCloseButton extends StatelessWidget {
 
   /// Creates a new [EscapeGameAlertDialogCloseButton] instance.
   const EscapeGameAlertDialogCloseButton({
-    Key? key,
+    super.key,
     this.cancel = true,
-  }) : super(
-          key: key,
-        );
+  });
 
   @override
   Widget build(BuildContext context) => TextButton(
@@ -202,11 +187,9 @@ abstract class PadlockAlertDialog<T extends Padlock> extends StatefulWidget {
 
   /// Creates a new [PadlockAlertDialog] instance.
   const PadlockAlertDialog({
-    Key? key,
+    super.key,
     required this.padlock,
-  }) : super(
-          key: key,
-        );
+  });
 }
 
 /// Base state for a [PadlockAlertDialog] widget.
@@ -221,9 +204,9 @@ abstract class PadlockAlertDialogState<T extends PadlockAlertDialog> extends Sta
         actions: buildActions(context),
         children: [
           if (widget.padlock.unlockMessage != null)
-            Text(
-              widget.padlock.unlockMessage!,
-              textAlign: TextAlign.center,
+            HtmlWidget(
+              '<div align="center">${widget.padlock.unlockMessage!}</div>',
+              factoryBuilder: () => WidgetFactoryWithSVG(),
             ),
           ...buildBody(context),
         ],
@@ -235,14 +218,14 @@ abstract class PadlockAlertDialogState<T extends PadlockAlertDialog> extends Sta
   /// Creates the hint button.
   Widget createHintButton(BuildContext context) => TextButton(
         onPressed: showHintDialog,
-        child: const Text('HINT'),
+        child: Text(widget.padlock.hint!.title.toUpperCase()),
       );
 
   /// Builds the dialog actions.
   List<Widget> buildActions(BuildContext context) => [
-        if (widget.padlock.hint != null && widget.padlock.hint!.minimumTriesBeforeShowing <= tryCount) createHintButton(context),
         EscapeGameAlertDialogOkButton(onPressed: tryUnlock),
         const EscapeGameAlertDialogCloseButton(),
+        if (widget.padlock.hint != null && widget.padlock.hint!.minimumTriesBeforeShowing <= tryCount) createHintButton(context),
       ];
 
   /// Builds the dialog bottom widget.
@@ -252,13 +235,14 @@ abstract class PadlockAlertDialogState<T extends PadlockAlertDialog> extends Sta
   dynamic getCode();
 
   /// Shows the hint dialog.
-  void showHintDialog({String dialogTitle = 'Hint'}) {
+  void showHintDialog({String? dialogTitle}) {
     showDialog(
       context: context,
       builder: (context) => EscapeGameAlertDialog.oneChild(
-        title: dialogTitle,
+        title: dialogTitle ?? widget.padlock.hint!.title,
         child: Text(
           widget.padlock.hint!.text,
+          textAlign: TextAlign.center,
           style: const TextStyle(
             fontStyle: FontStyle.italic,
           ),
@@ -294,13 +278,11 @@ class EscapeGameAlertDialogPadlockNewTry extends StatelessWidget {
 
   /// Creates a new [EscapeGameAlertDialogPadlockNewTry] instance.
   const EscapeGameAlertDialogPadlockNewTry({
-    Key? key,
+    super.key,
     this.padlock,
     this.textStyle = const TextStyle(fontWeight: FontWeight.bold, color: Colors.red),
     this.textAlign = TextAlign.center,
-  }) : super(
-          key: key,
-        );
+  });
 
   @override
   Widget build(BuildContext context) => padlock?.failedToUnlockMessage == null

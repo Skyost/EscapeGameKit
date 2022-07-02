@@ -21,18 +21,15 @@ class CaesarPadlock extends ObjectEqualPadlock<String> {
 class CaesarPadlockDialog extends PadlockAlertDialog<CaesarPadlock> {
   /// Creates a new [CaesarPadlockDialog] instance.
   const CaesarPadlockDialog({
-    Key? key,
-    required CaesarPadlock padlock,
-  }) : super(
-          key: key,
-          padlock: padlock,
-        );
+    super.key,
+    required super.padlock,
+  });
 
   @override
   State<StatefulWidget> createState() => _CaesarPadlockDialogState();
 
   /// The [CaesarPadlockDialog] builder.
-  static CaesarPadlockDialog builder(BuildContext context, Padlock padlock) => CaesarPadlockDialog(
+  static CaesarPadlockDialog builder(BuildContext context, EscapeGame escapeGame, Padlock padlock) => CaesarPadlockDialog(
         padlock: padlock as CaesarPadlock,
       );
 }

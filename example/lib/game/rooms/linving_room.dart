@@ -2,6 +2,8 @@ import 'package:escape_game_kit/escape_game_kit.dart';
 import 'package:escape_game_kit_example/game/objects/bookshelf_key.dart';
 import 'package:escape_game_kit_example/game/objects/clover_key.dart';
 import 'package:escape_game_kit_example/game/padlocks/caesar_padlock.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 /// The living room.
 class LinvingRoomRoom extends Room {
@@ -46,12 +48,30 @@ class LinvingRoomRoom extends Room {
               onPickedUp: (escapeGame) {
                 escapeGame.openDialog(EscapeGameDialog(
                   title: 'Object found !',
-                  imageRenderSettings: RenderSettings(
-                    asset: eightKey.inventoryRenderSettings?.asset,
-                    width: 100,
-                    height: 100,
+                  content: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 10),
+                        child: RenderSettingsWidget(
+                          renderSettings: RenderSettings(
+                            asset: eightKey.inventoryRenderSettings!.asset!,
+                            width: 100,
+                            height: 100,
+                          ),
+                          child: SvgPicture.asset(
+                            eightKey.inventoryRenderSettings!.asset!,
+                            width: 100,
+                            height: 100,
+                          ),
+                        ),
+                      ),
+                      const Text(
+                        'You just found an height shaped key !',
+                        style: TextStyle(fontStyle: FontStyle.italic),
+                      )
+                    ],
                   ),
-                  message: '<em>You just found an height shaped key !</em>',
                 ));
                 return const ActionResult.success();
               },
@@ -74,12 +94,30 @@ class LinvingRoomRoom extends Room {
               onPickedUp: (escapeGame) {
                 escapeGame.openDialog(EscapeGameDialog(
                   title: 'Object found !',
-                  imageRenderSettings: RenderSettings(
-                    asset: cloverKey.inventoryRenderSettings?.asset,
-                    width: 100,
-                    height: 100,
+                  content: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 10),
+                        child: RenderSettingsWidget(
+                          renderSettings: RenderSettings(
+                            asset: cloverKey.inventoryRenderSettings!.asset!,
+                            width: 100,
+                            height: 100,
+                          ),
+                          child: SvgPicture.asset(
+                            cloverKey.inventoryRenderSettings!.asset!,
+                            width: 100,
+                            height: 100,
+                          ),
+                        ),
+                      ),
+                      const Text(
+                        'You just found an clover shaped key !',
+                        style: TextStyle(fontStyle: FontStyle.italic),
+                      )
+                    ],
                   ),
-                  message: '<em>You just found a clover shaped key !</em>',
                 ));
                 return const ActionResult.success();
               },
@@ -126,21 +164,6 @@ class LinvingRoomRoom extends Room {
               onHover: (escapeGame) => const ActionResult.success(object: InteractableTooltip(text: 'Careful, it\'s hot !')),
             ),
             Interactable(
-              id: 'flowerpot',
-              renderSettings: const InteractableRenderSettings(
-                top: 272,
-                left: 855,
-                height: 93,
-                width: 41,
-              ),
-              onHover: (escapeGame) => const ActionResult.success(
-                object: InteractableTooltip(
-                  text: "It's just a flower pot like any other...",
-                  xShift: -200,
-                ),
-              ),
-            ),
-            Interactable(
               id: 'chair-1',
               renderSettings: const InteractableRenderSettings(
                 top: 246,
@@ -171,7 +194,7 @@ class LinvingRoomRoom extends Room {
               padlock: CaesarPadlock(),
               clueDialog: const EscapeGameDialog(
                 title: 'Hint on the password',
-                message: "<em>An hint is behind the pillow !</em><br><br>In a pond not far from here, I noticed that the number of water lilies doubles every night... At first there is 1, then 2 the next day, then 4 the day after, etc. so much so that the pond is covered with water lilies in just 7 days !<br><br><strong>The third and last digit of the computer password is the number of days it takes for the pond to be covered if at the beginning there are not 1, but 2 water lilies.</strong>",
+                content: "<em>An hint is behind the pillow !</em><br><br>In a pond not far from here, I noticed that the number of water lilies doubles every night... At first there is 1, then 2 the next day, then 4 the day after, etc. so much so that the pond is covered with water lilies in just 7 days !<br><br><strong>The third and last digit of the computer password is the number of days it takes for the pond to be covered if at the beginning there are not 1, but 2 water lilies.</strong>",
               ),
             ),
             Interactable(
@@ -239,7 +262,22 @@ class LinvingRoomRoom extends Room {
               ),
               clueDialog: const EscapeGameDialog(
                 title: "Hint on the username",
-                message: "<em>There's a message under the couch !</em><br><br>I always forget my username to login to my computer... But I know it's the name of my favorite school subject backwards !",
+                content: "<em>There's a message under the couch !</em><br><br>I always forget my username to login to my computer... But I know it's the name of my favorite school subject backwards !",
+              ),
+            ),
+            Interactable(
+              id: 'flowerpot',
+              renderSettings: const InteractableRenderSettings(
+                top: 272,
+                left: 855,
+                height: 93,
+                width: 41,
+              ),
+              onHover: (escapeGame) => const ActionResult.success(
+                object: InteractableTooltip(
+                  text: "It's just a flower pot like any other...",
+                  xShift: -200,
+                ),
               ),
             ),
           ],

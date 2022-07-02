@@ -49,16 +49,14 @@ class AudioPlayer extends StatefulWidget {
   const AudioPlayer(
     this.asset, {
     this.autoplay = false,
-    Key? key,
+    super.key,
     this.loop = false,
     this.muted = false,
     this.preload = true,
     this.pause,
     this.play,
     this.seek,
-  }) : super(
-          key: key,
-        );
+  });
 
   @override
   State<AudioPlayer> createState() => _AudioPlayerState();
@@ -165,14 +163,12 @@ class PlayButton extends StatelessWidget {
 
   /// Creates a new [PlayButton] instance.
   const PlayButton({
-    Key? key,
+    super.key,
     required this.pause,
     required this.play,
     required this.size,
     required this.stream,
-  }) : super(
-          key: key,
-        );
+  });
 
   @override
   Widget build(BuildContext context) => StreamBuilder<bool>(
@@ -204,14 +200,12 @@ class _PositionText extends StatelessWidget {
 
   /// Creates a new [_PositionText] instance.
   const _PositionText({
-    Key? key,
+    super.key,
     required this.durationStream,
     required this.isNarrow,
     required this.positionStream,
     required this.size,
-  }) : super(
-          key: key,
-        );
+  });
 
   @override
   Widget build(BuildContext _) => StreamBuilder<Duration?>(
@@ -263,14 +257,12 @@ class _PositionSlider extends StatelessWidget {
 
   /// Creates a new [_PositionSlider] instance.
   const _PositionSlider({
-    Key? key,
+    super.key,
     required this.durationStream,
     required this.positionStream,
     required this.seek,
     required this.size,
-  }) : super(
-          key: key,
-        );
+  });
 
   @override
   Widget build(BuildContext context) => StreamBuilder<Duration?>(

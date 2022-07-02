@@ -150,11 +150,11 @@ class CountdownWidget extends StatefulWidget {
 
   /// Creates a new countdown widget instance.
   const CountdownWidget({
-    Key? key,
+    super.key,
     required this.countdown,
     this.textStyle,
     this.textAlign,
-  }) : super(key: key);
+  });
 
   @override
   State<StatefulWidget> createState() => _CountdownWidgetState();

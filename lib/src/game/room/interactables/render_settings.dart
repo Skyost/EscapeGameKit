@@ -12,28 +12,19 @@ class InteractableRenderSettings extends PositionedRenderSettings {
 
   /// Creates a new [InteractableRenderSettings] instance.
   const InteractableRenderSettings({
-    double? top,
-    double? right,
-    double? bottom,
-    double? left,
-    double? width,
-    double? height,
-    double? rotationAngle,
-    String? asset,
-    bool? isInvisible,
+    super.top,
+    super.right,
+    super.bottom,
+    super.left,
+    super.width,
+    super.height,
+    super.rotationAngle,
+    super.mirror,
+    super.asset,
+    super.isInvisible,
     this.hoverAnimation,
     this.enterAnimation,
-  }) : super(
-          top: top,
-          right: right,
-          bottom: bottom,
-          left: left,
-          width: width,
-          height: height,
-          rotationAngle: rotationAngle,
-          asset: asset,
-          isInvisible: isInvisible,
-        );
+  });
 
   @override
   bool operator ==(Object other) {

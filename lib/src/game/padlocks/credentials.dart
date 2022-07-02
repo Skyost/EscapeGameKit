@@ -1,4 +1,3 @@
-import 'package:escape_game_kit/src/game/padlocks/hint.dart';
 import 'package:escape_game_kit/src/game/padlocks/padlock.dart';
 import 'package:flutter/foundation.dart';
 
@@ -18,16 +17,12 @@ class CredentialsPadlock extends ListEqualPadlock<String> {
     required this.username,
     required this.password,
     this.caseSensitive = true,
-    String? title = kDefaultPadlockTitle,
-    String? unlockMessage = kDefaultPadlockUnlockMessage,
-    String? failedToUnlockMessage = kDefaultFailedToUnlockMessage,
-    PadlockHint? hint,
+    super.title = kDefaultPadlockTitle,
+    super.unlockMessage = kDefaultPadlockUnlockMessage,
+    super.failedToUnlockMessage = kDefaultFailedToUnlockMessage,
+    super.hint,
   }) : super(
           validList: caseSensitive ? [username, password] : [username.toLowerCase(), password.toLowerCase()],
-          title: title,
-          unlockMessage: unlockMessage,
-          failedToUnlockMessage: failedToUnlockMessage,
-          hint: hint,
         );
 
   @override

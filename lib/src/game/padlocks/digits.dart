@@ -10,16 +10,12 @@ class DigitsPadlock extends ObjectEqualPadlock<String> {
   /// Creates a new [CredentialsPadlock] instance.
   DigitsPadlock({
     required this.digits,
-    String? title = kDefaultPadlockTitle,
-    String? unlockMessage = kDefaultPadlockUnlockMessage,
-    String? failedToUnlockMessage = kDefaultFailedToUnlockMessage,
-    PadlockHint? hint,
+    super.title = kDefaultPadlockTitle,
+    super.unlockMessage = kDefaultPadlockUnlockMessage,
+    super.failedToUnlockMessage = kDefaultFailedToUnlockMessage,
+    super.hint,
   }) : super(
           validObject: digits,
-          title: title,
-          unlockMessage: unlockMessage,
-          failedToUnlockMessage: failedToUnlockMessage,
-          hint: hint,
         );
 
   @override

@@ -44,7 +44,7 @@ class DeskRoom extends Room {
               padlock: QrPadlock(),
               clueDialog: const EscapeGameDialog(
                 title: 'Hint on a padlock',
-                message: "<em>So we're stuck in 1980 !? But how to get out of here ?<br>Here, there's another message in the chest...</em><br><br><strong>1! = 1 ; 2! = 2 ; 3! = 6 ; 4! = 24 ; 5! = <em>?</em></strong>",
+                content: "<em>So we're stuck in 1980 !? But how to get out of here ?<br>Here, there's another message in the chest...</em><br><br><strong>1! = 1 ; 2! = 2 ; 3! = 6 ; 4! = 24 ; 5! = <em>?</em></strong>",
               ),
             ),
             Clue.dialog(
@@ -58,11 +58,11 @@ class DeskRoom extends Room {
               keyId: CloverKey.objectId,
               clueDialog: const EscapeGameDialog(
                 title: 'Hint on the command',
-                message: '<em>You have unlocked this bookshelf thanks to the clover shaped key... And there is a computer manual inside !</em><br><br>To restart a computer, use the following command. <p style="text-align: left; background-color: black; color: white; font-family: SourceCodePro; padding: 8px 4px;">reboot now</p>',
+                content: '<em>You have unlocked this bookshelf thanks to the clover shaped key... And there is a computer manual inside !</em><br><br>To restart a computer, use the following command. <p style="text-align: left; background-color: black; color: white; font-family: SourceCodePro; padding: 8px 4px;">reboot now</p>',
               ),
               noKeyDialog: const EscapeGameDialog(
                 title: 'Locked bookshelf',
-                message: "<em>The bookshelf has been locked with a key, and you don't have it.</em>",
+                content: "<em>The bookshelf has been locked with a key, and you don't have it.</em>",
               ),
             ),
             Clue.dialog(
@@ -75,10 +75,10 @@ class DeskRoom extends Room {
               ),
               clueDialog: const EscapeGameDialog(
                 title: 'Hint on the password',
-                message:
+                content:
                     "<em>There is a message...</em><br><br>I don't usually write down my passwords on paper.... So I only noted hints, and on several papers hidden all over the house !<br>Here's the first hint<br><br>Aladdin and Aladde rub the lamp. The genie appears and asks them to make a wish. Aladdin asks <q>I want a penny... But it has to double every day for 30 days !</q>. Aladde retorts <q>Hehe, I want 1 million pounds now!</q><br><br><strong>The first digit of the computer password is pronounced in french like the last two letters of the richest person's name after 30 days.</strong>",
               ),
-              noKeyDialog: const EscapeGameDialog(message: '<em>This draw has been locked with a key, and you don\'t have it.</em>'),
+              noKeyDialog: const EscapeGameDialog(content: '<em>This draw has been locked with a key, and you don\'t have it.</em>'),
             ),
             Interactable(
               id: 'books-1',

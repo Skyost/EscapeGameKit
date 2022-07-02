@@ -15,7 +15,7 @@ class Room with PropertiesEquatable, ChangeNotifier {
   final RenderSettings? renderSettings;
 
   /// The room interactables.
-  final HashSet<Interactable> _interactables;
+  final List<Interactable> _interactables;
 
   /// Triggered when this room is visited for the first time.
   final Action<EscapeGameDialog>? onFirstVisit;
@@ -29,10 +29,10 @@ class Room with PropertiesEquatable, ChangeNotifier {
     this.renderSettings,
     Iterable<Interactable>? interactables,
     this.onFirstVisit,
-  }) : _interactables = HashSet.from(interactables ?? <Interactable>{});
+  }) : _interactables = List.from(interactables ?? <Interactable>[]);
 
   /// Returns the room interactables.
-  HashSet<Interactable> get interactables => HashSet.of(_interactables);
+  List<Interactable> get interactables => List.of(_interactables);
 
   /// Returns an interactable object by its [Interactable.id].
   Interactable? getInteractableById(String id) {
@@ -46,11 +46,10 @@ class Room with PropertiesEquatable, ChangeNotifier {
 
   /// Adds an [Interactable] to the [interactables] list.
   void addInteractable(Interactable interactable, {bool notify = true}) {
-    if (_interactables.add(interactable)) {
-      interactable.addListener(notifyListeners);
-      if (notify) {
-        notifyListeners();
-      }
+    _interactables.add(interactable);
+    interactable.addListener(notifyListeners);
+    if (notify) {
+      notifyListeners();
     }
   }
 

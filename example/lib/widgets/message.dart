@@ -15,13 +15,11 @@ class MessageWidget extends StatefulWidget {
 
   /// Creates a new [MessageWidget] instance.
   const MessageWidget({
-    Key? key,
+    super.key,
     required this.messageInfo,
     required this.child,
     this.closeButton,
-  }) : super(
-          key: key,
-        );
+  });
 
   @override
   State<StatefulWidget> createState() => _MessageWidgetState();
@@ -73,13 +71,11 @@ class _MessageWidgetState extends State<MessageWidget> {
 class TextMessageWidget extends MessageWidget {
   /// Creates a new [TextMessageWidget] instance.
   TextMessageWidget({
-    Key? key,
+    super.key,
     required TextMessageInfo messageInfo,
-    Widget? closeButton,
+    super.closeButton,
   }) : super(
-          key: key,
           messageInfo: messageInfo,
           child: Text(messageInfo.text),
-          closeButton: closeButton,
         );
 }

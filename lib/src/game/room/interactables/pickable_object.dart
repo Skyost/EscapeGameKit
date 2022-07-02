@@ -17,7 +17,7 @@ class PickableObject extends LockedInteractable {
   /// Whether to remove this interactable after being picked up.
   final bool removeAfterPickedUp;
 
-  /// Give an [InteractableTooltip] in order to replace this [Clue] when found (if [removeAfterPickedUp] is `true`).
+  /// Give an [InteractableTooltip] in order to replace this [PickableObject] when found (if [removeAfterPickedUp] is `true`).
   final InteractableTooltip? removedTooltip;
 
   /// Creates a new [PickableObject] instance.
@@ -26,15 +26,12 @@ class PickableObject extends LockedInteractable {
     this.onPickedUp,
     this.removeAfterPickedUp = true,
     this.removedTooltip,
-    Padlock? padlock,
+    super.padlock,
     String? id,
-    InteractableRenderSettings? renderSettings,
-    Action<InteractableTooltip>? onHover,
+    super.renderSettings,
+    super.onHover,
   }) : super(
-          padlock: padlock,
           id: id ?? object.id,
-          renderSettings: renderSettings,
-          onHover: onHover,
         );
 
   @override
@@ -48,7 +45,19 @@ class PickableObject extends LockedInteractable {
         if (removedTooltip != null) {
           escapeGame.currentRoom.addInteractable(Interactable(
             id: '$id-picked-up',
-            renderSettings: renderSettings,
+            renderSettings: InteractableRenderSettings(
+              top: renderSettings?.top,
+              right: renderSettings?.right,
+              bottom: renderSettings?.bottom,
+              left: renderSettings?.left,
+              width: renderSettings?.width,
+              height: renderSettings?.height,
+              rotationAngle: renderSettings?.rotationAngle,
+              mirror: renderSettings?.mirror ?? false,
+              isInvisible: renderSettings?.isInvisible,
+              hoverAnimation: renderSettings?.hoverAnimation,
+              enterAnimation: renderSettings?.enterAnimation,
+            ),
             onHover: (escapeGame) => ActionResult.success(object: removedTooltip!),
           ));
         }

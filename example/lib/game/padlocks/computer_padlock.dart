@@ -18,18 +18,15 @@ class ComputerPadlock extends ObjectEqualPadlock<String> {
 class ComputerPadlockDialog extends PadlockAlertDialog<ComputerPadlock> {
   /// Creates a new [ComputerPadlockDialog] instance.
   const ComputerPadlockDialog({
-    Key? key,
-    required ComputerPadlock padlock,
-  }) : super(
-          key: key,
-          padlock: padlock,
-        );
+    super.key,
+    required super.padlock,
+  });
 
   @override
   State<StatefulWidget> createState() => _ComputerPadlockkDialogState();
 
   /// The [ComputerPadlockDialog] builder.
-  static ComputerPadlockDialog builder(BuildContext context, Padlock padlock) => ComputerPadlockDialog(
+  static ComputerPadlockDialog builder(BuildContext context, EscapeGame escapeGame, Padlock padlock) => ComputerPadlockDialog(
         padlock: padlock as ComputerPadlock,
       );
 }

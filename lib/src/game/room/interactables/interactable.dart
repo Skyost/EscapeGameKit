@@ -11,6 +11,12 @@ typedef Action<T> = ActionResult<T> Function(EscapeGame escapeGame);
 
 /// Represents an in-game displayed object that is interactable.
 class Interactable with PropertiesEquatable, ChangeNotifier {
+  /// The default action when tapped.
+  static ActionResult _defaultOnTap (escapeGame) => const ActionResult.success();
+
+  /// The default action when hovered.
+  static ActionResult<InteractableTooltip> _defaultOnHover (escapeGame) => const ActionResult.success();
+
   /// The interactable identifier.
   final String id;
 
@@ -18,10 +24,10 @@ class Interactable with PropertiesEquatable, ChangeNotifier {
   InteractableRenderSettings? _renderSettings;
 
   /// The triggered action when the player taps on this interactable.
-  final Action? _onTap;
+  final Action _onTap;
 
   /// The triggered action when the player hovers this interactable.
-  final Action<InteractableTooltip>? _onHover;
+  final Action<InteractableTooltip> _onHover;
 
   /// Whether this interactable is destroyed.
   bool _isDestroyed = false;
@@ -30,21 +36,17 @@ class Interactable with PropertiesEquatable, ChangeNotifier {
   Interactable({
     required this.id,
     InteractableRenderSettings? renderSettings,
-    Action? onTap,
-    Action<InteractableTooltip>? onHover,
+    Action onTap = _defaultOnTap,
+    Action<InteractableTooltip> onHover = _defaultOnHover,
   })  : _renderSettings = renderSettings,
         _onTap = onTap,
         _onHover = onHover;
 
   /// Should be called when the user taps on this interactable.
-  ActionResult onTap(EscapeGame escapeGame) => _onTap == null ? const ActionResult.success() : _onTap!(escapeGame);
+  ActionResult onTap(EscapeGame escapeGame) => _onTap(escapeGame);
 
   /// Should be called when the user hovers this interactable.
-  ActionResult<InteractableTooltip> onHover(EscapeGame escapeGame) => _onHover == null
-      ? const ActionResult.success(
-          object: null,
-        )
-      : _onHover!(escapeGame);
+  ActionResult<InteractableTooltip> onHover(EscapeGame escapeGame) => _onHover(escapeGame);
 
   /// Returns this instance render settings.
   InteractableRenderSettings? get renderSettings => _renderSettings;
@@ -81,16 +83,11 @@ class LockedInteractable extends Interactable {
   /// Creates a new [LockedInteractable] instance.
   LockedInteractable({
     this.padlock,
-    required String id,
-    InteractableRenderSettings? renderSettings,
-    Action? onTap,
-    Action<InteractableTooltip>? onHover,
-  }) : super(
-          id: id,
-          renderSettings: renderSettings,
-          onTap: onTap,
-          onHover: onHover,
-        );
+    required super.id,
+    super.renderSettings,
+    super.onTap,
+    super.onHover,
+  });
 
   @override
   ActionResult onTap(EscapeGame escapeGame) {

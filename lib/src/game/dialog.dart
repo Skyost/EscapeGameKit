@@ -1,26 +1,21 @@
-import 'package:escape_game_kit/src/game/render/render_settings.dart';
 import 'package:escape_game_kit/src/utils/properties_equatable.dart';
-import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 
 /// Represents an in-game dialog.
-class EscapeGameDialog with PropertiesEquatable {
+class EscapeGameDialog<T> with PropertiesEquatable {
   /// The dialog title.
   final String? title;
 
-  /// The dialog image render settings. Pass `null` to display no image.
-  final RenderSettings? imageRenderSettings;
-
-  /// The dialog message.
-  final String message;
+  /// The dialog content.
+  final T content;
 
   /// Creates a new [EscapeGameDialog] instance.
   const EscapeGameDialog({
     this.title,
-    this.imageRenderSettings,
-    required this.message,
+    required this.content,
   });
 
   @override
   @protected
-  List<Object?> get props => [title, imageRenderSettings, message];
+  List<Object?> get props => [title, content];
 }

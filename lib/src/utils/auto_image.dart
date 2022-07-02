@@ -15,13 +15,11 @@ class AutoImage extends StatelessWidget {
 
   /// Creates a new [AutoImage] instance.
   const AutoImage({
-    Key? key,
+    super.key,
     required this.asset,
     required this.width,
     required this.height,
-  }) : super(
-          key: key,
-        );
+  });
 
   /// Creates a new [AutoImage] instance from the specified [renderSettings].
   AutoImage.fromRenderSettings({

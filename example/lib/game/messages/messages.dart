@@ -77,15 +77,10 @@ class TextMessageInfo extends MessageInfo {
 
   /// Creates a new [TextMessageInfo] instance.
   TextMessageInfo({
-    required String author,
-    required String title,
-    required DateTime date,
-    bool unread = false,
+    required super.author,
+    required super.title,
+    required super.date,
+    super.unread = false,
     required this.text,
-  }) : super(
-          author: author,
-          title: title,
-          date: date,
-          unread: unread,
-        );
+  });
 }

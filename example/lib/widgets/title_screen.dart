@@ -8,11 +8,9 @@ class TitleScreen extends StatelessWidget {
 
   /// Creates a new [TitleScreen] instance.
   const TitleScreen({
-    Key? key,
+    super.key,
     required this.child,
-  }) : super(
-          key: key,
-        );
+  });
 
   @override
   Widget build(BuildContext context) => Stack(

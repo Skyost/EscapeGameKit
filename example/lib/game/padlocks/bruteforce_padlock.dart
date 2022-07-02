@@ -22,18 +22,15 @@ class BruteforcePadlock extends ObjectEqualPadlock<String> {
 class BruteforcePadlockDialog extends PadlockAlertDialog<BruteforcePadlock> {
   /// Creates a new [BruteforcePadlockDialog] instance.
   const BruteforcePadlockDialog({
-    Key? key,
-    required BruteforcePadlock padlock,
-  }) : super(
-          key: key,
-          padlock: padlock,
-        );
+    super.key,
+    required super.padlock,
+  });
 
   @override
   State<StatefulWidget> createState() => _BruteforcePadlockDialogState();
 
   /// The [BruteforcePadlockDialog] builder.
-  static BruteforcePadlockDialog builder(BuildContext context, Padlock padlock) => BruteforcePadlockDialog(
+  static BruteforcePadlockDialog builder(BuildContext context, EscapeGame escapeGame, Padlock padlock) => BruteforcePadlockDialog(
         padlock: padlock as BruteforcePadlock,
       );
 }

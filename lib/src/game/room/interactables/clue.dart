@@ -8,6 +8,9 @@ import 'package:escape_game_kit/src/game/room/interactables/tooltip.dart';
 
 /// A [LockedInteractable] that is meant to be a clue.
 class Clue extends LockedInteractable {
+  /// The default action when hovered.
+  static ActionResult<InteractableTooltip> _defaultOnHover (escapeGame) => const ActionResult.success();
+
   /// If this [Interactable] should be found only when the user has a specific key, provides its id here.
   String? keyId;
 
@@ -25,27 +28,22 @@ class Clue extends LockedInteractable {
 
   /// Creates a new [Clue] instance.
   Clue({
-    required String id,
-    InteractableRenderSettings? renderSettings,
-    Action<InteractableTooltip>? onHover,
-    Padlock? padlock,
+    required super.id,
+    super.renderSettings,
+    super.onHover,
+    super.padlock,
     this.keyId,
     this.onCantUnlock,
     this.onFound,
     this.removeAfterFound = false,
     this.removedTooltip,
-  }) : super(
-          id: id,
-          padlock: padlock,
-          renderSettings: renderSettings,
-          onHover: onHover,
-        );
+  });
 
   /// Creates a new [Clue] instance by providing some dialogs.
   Clue.dialog({
     required String id,
     InteractableRenderSettings? renderSettings,
-    Action<InteractableTooltip>? onHover,
+    Action<InteractableTooltip> onHover = _defaultOnHover,
     Padlock? padlock,
     String? keyId,
     EscapeGameDialog? noKeyDialog,

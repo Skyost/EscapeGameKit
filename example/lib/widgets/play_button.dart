@@ -8,11 +8,9 @@ class PlayButton extends StatelessWidget {
 
   /// Creates a new [PlayButton] instance.
   const PlayButton({
-    Key? key,
+    super.key,
     required this.escapeGame,
-  }) : super(
-          key: key,
-        );
+  });
 
   @override
   Widget build(BuildContext context) => ElevatedButton.icon(

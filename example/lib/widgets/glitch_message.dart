@@ -11,11 +11,9 @@ class GlitchMessageWidget extends StatefulWidget {
 
   /// Creates a new [GlitchMessageWidget] instance.
   const GlitchMessageWidget({
-    Key? key,
+    super.key,
     required this.escapeGame,
-  }) : super(
-          key: key,
-        );
+  });
 
   @override
   State<StatefulWidget> createState() => _GlitchMessageWidgetState();

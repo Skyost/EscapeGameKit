@@ -14,7 +14,7 @@ class BedroomPresentRoom extends Room {
       : super(
           id: roomId,
           onFirstVisit: (escapeGame) {
-            escapeGame.openDialog(const EscapeGameDialog(message: '<em>Ah, finished !<br>Your day is over and you have finally come home from school !</em>'));
+            escapeGame.openDialog(const EscapeGameDialog(content: '<em>Ah, finished !<br>Your day is over and you have finally come home from school !</em>'));
             return const ActionResult.success();
           },
           interactables: [
@@ -76,7 +76,7 @@ class BedroomPresentRoom extends Room {
               onTap: (escapeGame) {
                 escapeGame.openDialog(const EscapeGameDialog(
                   title: 'Things to do',
-                  message: "An exam is scheduled for tomorrow, I should <strong>above all</strong> not forget to check my messages once I come back from school !!",
+                  content: "An exam is scheduled for tomorrow, I should <strong>above all</strong> not forget to check my messages once I come back from school !!",
                 ));
                 return const ActionResult.success();
               },
@@ -121,7 +121,7 @@ class BedroomPresentRoom extends Room {
               ),
               onHover: (escapeGame) => const ActionResult.success(
                 object: InteractableTooltip(
-                  text: "It's a picture of younger Mila Kunis.",
+                  text: "It's a picture of young Mila Kunis.",
                   xShift: -120,
                 ),
               ),
@@ -219,7 +219,7 @@ class BedroomPresentRoom extends Room {
                 height: 26,
                 width: 76,
               ),
-              onHover: (escapeGame) => const ActionResult.success(object: InteractableTooltip(text: 'Some bass !')),
+              onHover: (escapeGame) => const ActionResult.success(object: InteractableTooltip(text: 'Some basses !')),
             ),
             Interactable(
               id: 'nightstand',

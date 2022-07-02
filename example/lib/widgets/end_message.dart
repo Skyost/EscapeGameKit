@@ -4,10 +4,8 @@ import 'package:flutter/material.dart';
 class EndMessage extends StatelessWidget {
   /// Creates a new [EndMessage] instance.
   const EndMessage({
-    Key? key,
-  }) : super(
-          key: key,
-        );
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) => Container(

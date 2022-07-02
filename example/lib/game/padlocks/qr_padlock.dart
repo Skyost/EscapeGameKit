@@ -26,18 +26,15 @@ class QrPadlock extends ObjectEqualPadlock<String> {
 class QrPadlockDialog extends PadlockAlertDialog<QrPadlock> {
   /// Creates a new [QrPadlockDialog] instance.
   const QrPadlockDialog({
-    Key? key,
-    required QrPadlock padlock,
-  }) : super(
-          key: key,
-          padlock: padlock,
-        );
+    super.key,
+    required super.padlock,
+  });
 
   @override
   State<StatefulWidget> createState() => _QrPadlockDialogState();
 
   /// The [QrPadlockDialog] builder.
-  static QrPadlockDialog builder(BuildContext context, Padlock padlock) => QrPadlockDialog(
+  static QrPadlockDialog builder(BuildContext context, EscapeGame escapeGame, Padlock padlock) => QrPadlockDialog(
         padlock: padlock as QrPadlock,
       );
 }

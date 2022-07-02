@@ -16,13 +16,11 @@ class RenderSettingsWidget extends StatelessWidget {
 
   /// Creates a new [RenderSettingsWidget] instance.
   const RenderSettingsWidget({
-    Key? key,
+    super.key,
     this.renderSettings,
     required this.child,
     this.invisibleBackground = kDebugMode ? const Color(0x4DE91E63) : null,
-  }) : super(
-          key: key,
-        );
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -34,6 +32,13 @@ class RenderSettingsWidget extends StatelessWidget {
     if (renderSettings!.rotationAngle != null) {
       child = Transform.rotate(
         angle: renderSettings!.rotationAngle!,
+        child: child,
+      );
+    }
+
+    if (renderSettings!.mirror) {
+      child = Transform.scale(
+        scaleX: -1,
         child: child,
       );
     }

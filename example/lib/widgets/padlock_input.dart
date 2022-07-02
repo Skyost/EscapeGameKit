@@ -10,12 +10,10 @@ class PadlockInputWidget extends StatelessWidget {
 
   /// Creates a new [PadlockInputWidget] instance.
   const PadlockInputWidget({
-    Key? key,
+    super.key,
     this.controller,
     this.tryUnlock,
-  }) : super(
-          key: key,
-        );
+  });
 
   @override
   Widget build(BuildContext context) => TextField(

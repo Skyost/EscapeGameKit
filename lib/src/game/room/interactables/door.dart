@@ -14,17 +14,13 @@ class Door extends LockedInteractable {
   /// Creates a new [Door] instance.
   Door({
     required this.roomId,
-    Padlock? padlock,
-    required String id,
-    InteractableRenderSettings? renderSettings,
-    Action? onTap,
-    Action<InteractableTooltip>? onHover,
+    super.padlock,
+    String? id,
+    super.renderSettings,
+    super.onTap,
+    super.onHover,
   }) : super(
-          padlock: padlock,
-          id: id,
-          renderSettings: renderSettings,
-          onTap: onTap,
-          onHover: onHover,
+          id: id ?? roomId,
         );
 
   @override

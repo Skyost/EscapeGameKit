@@ -15,7 +15,7 @@ class BedroomFinalRoom extends Room {
           id: roomId,
           renderSettings: const RenderSettings(asset: 'assets/backgrounds/bedroom-present.png'),
           onFirstVisit: (escapeGame) {
-            escapeGame.openDialog(const EscapeGameDialog(message: "<em>Wow... I think we're back...<br>But what was that ??</em>"));
+            escapeGame.openDialog(const EscapeGameDialog(content: "<em>Wow... I think we're back...<br>But what was that ??</em>"));
             return const ActionResult.success();
           },
           interactables: [

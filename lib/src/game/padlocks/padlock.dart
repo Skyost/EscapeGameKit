@@ -101,16 +101,12 @@ abstract class ListEqualPadlock<T> extends ObjectEqualPadlock<List<T>> {
   /// Creates a new [ListEqualPadlock] instance.
   ListEqualPadlock({
     required List<T> validList,
-    String? title = kDefaultPadlockTitle,
-    String? unlockMessage = kDefaultPadlockUnlockMessage,
-    String? failedToUnlockMessage = kDefaultFailedToUnlockMessage,
-    PadlockHint? hint,
+    super.title = kDefaultPadlockTitle,
+    super.unlockMessage = kDefaultPadlockUnlockMessage,
+    super.failedToUnlockMessage = kDefaultFailedToUnlockMessage,
+    super.hint,
   }) : super(
           validObject: validList,
-          title: title,
-          unlockMessage: unlockMessage,
-          failedToUnlockMessage: failedToUnlockMessage,
-          hint: hint,
         );
 
   @override

@@ -1,3 +1,4 @@
+import 'package:escape_game_kit/src/game/game.dart';
 import 'package:escape_game_kit/src/game/padlocks/padlock.dart';
 import 'package:escape_game_kit/src/game/padlocks/pattern.dart';
 import 'package:escape_game_kit/src/widgets/alert_dialog.dart';
@@ -23,23 +24,20 @@ class PatternPadlockDialog extends PadlockAlertDialog<PatternPadlock> {
 
   /// Creates a new [PatternPadlockDialog] instance.
   const PatternPadlockDialog({
-    Key? key,
-    required PatternPadlock padlock,
+    super.key,
+    required super.padlock,
     this.relativePadding = 0.5,
     this.selectedColor,
     this.notSelectedColor = Colors.black45,
     this.showInput = true,
     this.fillPoints = false,
-  }) : super(
-          key: key,
-          padlock: padlock,
-        );
+  });
 
   @override
   State<StatefulWidget> createState() => _PatternPadlockDialogState();
 
   /// The [PatternPadlockDialog] builder.
-  static PatternPadlockDialog builder(BuildContext context, Padlock padlock) => PatternPadlockDialog(
+  static PatternPadlockDialog builder(BuildContext context, EscapeGame escapeGame, Padlock padlock) => PatternPadlockDialog(
         padlock: padlock as PatternPadlock,
       );
 }

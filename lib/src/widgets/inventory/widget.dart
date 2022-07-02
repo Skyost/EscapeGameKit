@@ -17,12 +17,10 @@ abstract class InventoryWidget extends StatefulWidget {
 
   /// Creates a new [InventoryWidget] instance.
   const InventoryWidget({
-    Key? key,
+    super.key,
     required this.escapeGame,
     this.objectWidgetBuilder = defaultObjectWidgetBuilder,
-  }) : super(
-          key: key,
-        );
+  });
 
   /// The default [EscapeGameObject] widget builder.
   static Widget defaultObjectWidgetBuilder(BuildContext context, EscapeGame escapeGame, EscapeGameObject object) => Tooltip(

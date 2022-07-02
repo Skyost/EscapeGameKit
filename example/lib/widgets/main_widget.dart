@@ -16,11 +16,9 @@ class MainWidget extends StatefulWidget {
 
   /// Creates a new [MainWidget] instance.
   const MainWidget({
-    Key? key,
+    super.key,
     required this.escapeGame,
-  }) : super(
-          key: key,
-        );
+  });
 
   @override
   State<StatefulWidget> createState() => _MainWidgetState();
