@@ -1,5 +1,3 @@
-import 'dart:collection';
-
 import 'package:escape_game_kit/src/game/dialog.dart';
 import 'package:escape_game_kit/src/game/render/render_settings.dart';
 import 'package:escape_game_kit/src/game/room/interactables/interactable.dart';

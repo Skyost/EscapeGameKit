@@ -200,7 +200,6 @@ class _PositionText extends StatelessWidget {
 
   /// Creates a new [_PositionText] instance.
   const _PositionText({
-    super.key,
     required this.durationStream,
     required this.isNarrow,
     required this.positionStream,
@@ -257,7 +256,6 @@ class _PositionSlider extends StatelessWidget {
 
   /// Creates a new [_PositionSlider] instance.
   const _PositionSlider({
-    super.key,
     required this.durationStream,
     required this.positionStream,
     required this.seek,
