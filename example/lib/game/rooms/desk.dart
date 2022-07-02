@@ -25,12 +25,7 @@ class DeskRoom extends Room {
                 rotationAngle: pi / 2 + 0.2,
                 hoverAnimation: InteractableAnimation(type: InteractableAnimationType.pulse),
               ),
-              onHover: (escapeGame) => const ActionResult.success(
-                object: InteractableTooltip(
-                  text: 'Go to the bedroom',
-                  xShift: -50,
-                ),
-              ),
+              onHover: (escapeGame) => const ActionResult.success(object: InteractableTooltip(text: 'Go to the bedroom')),
               roomId: 'bedroom',
             ),
             Clue.dialog(
@@ -44,7 +39,8 @@ class DeskRoom extends Room {
               padlock: QrPadlock(),
               clueDialog: const EscapeGameDialog(
                 title: 'Hint on a padlock',
-                content: "<em>So we're stuck in 1980 !? But how to get out of here ?<br>Here, there's another message in the chest...</em><br><br><strong>1! = 1 ; 2! = 2 ; 3! = 6 ; 4! = 24 ; 5! = <em>?</em></strong>",
+                content:
+                    "<em>So we're stuck in 1980 !? But how to get out of here ?<br>Here, there's another message in the chest...</em><br><br><strong>1! = 1 ; 2! = 2 ; 3! = 6 ; 4! = 24 ; 5! = <em>?</em></strong>",
               ),
             ),
             Clue.dialog(
@@ -58,7 +54,8 @@ class DeskRoom extends Room {
               keyId: CloverKey.objectId,
               clueDialog: const EscapeGameDialog(
                 title: 'Hint on the command',
-                content: '<em>You have unlocked this bookshelf thanks to the clover shaped key... And there is a computer manual inside !</em><br><br>To restart a computer, use the following command. <p style="text-align: left; background-color: black; color: white; font-family: SourceCodePro; padding: 8px 4px;">reboot now</p>',
+                content:
+                    '<em>You have unlocked this bookshelf thanks to the clover shaped key... And there is a computer manual inside !</em><br><br>To restart a computer, use the following command. <p style="text-align: left; background-color: black; color: white; font-family: SourceCodePro; padding: 8px 4px;">reboot now</p>',
               ),
               noKeyDialog: const EscapeGameDialog(
                 title: 'Locked bookshelf',
@@ -138,12 +135,7 @@ class DeskRoom extends Room {
                 height: 207,
                 width: 100,
               ),
-              onHover: (escapeGame) => const ActionResult.success(
-                object: InteractableTooltip(
-                  text: 'This is an office chair !',
-                  xShift: -100,
-                ),
-              ),
+              onHover: (escapeGame) => const ActionResult.success(object: InteractableTooltip(text: 'This is an office chair !')),
             ),
             Interactable(
               id: 'inkwell',
@@ -163,12 +155,7 @@ class DeskRoom extends Room {
                 height: 22,
                 width: 634,
               ),
-              onHover: (escapeGame) => const ActionResult.success(
-                object: InteractableTooltip(
-                  text: 'The moonlight is reflected on the ground.',
-                  yShift: -20,
-                ),
-              ),
+              onHover: (escapeGame) => const ActionResult.success(object: InteractableTooltip(text: 'The moonlight is reflected on the ground.')),
             ),
           ],
         );

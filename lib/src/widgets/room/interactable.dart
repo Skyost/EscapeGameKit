@@ -66,17 +66,16 @@ class _InteractableWidgetState extends State<InteractableWidget> {
 
   @override
   Widget build(BuildContext context) {
-    Widget result;
     if (widget.interactable.isDestroyed) {
-      result = const SizedBox.shrink();
+      return const SizedBox.shrink();
     }
 
     InteractableTooltip? tooltip = widget.interactable.onHover(widget.escapeGame).object;
-    result = MouseRegion(
+    return MouseRegion(
       cursor: SystemMouseCursors.click,
       onEnter: (event) {
         if (tooltip != null) {
-          showTooltip(event, tooltip);
+          showTooltip(context, event, tooltip);
         }
         tooltipAnimationController?.forward(from: widget.interactable.renderSettings?.hoverAnimation?.from);
       },
@@ -105,8 +104,6 @@ class _InteractableWidgetState extends State<InteractableWidget> {
         ),
       ),
     );
-
-    return result;
   }
 
   @override
@@ -120,28 +117,47 @@ class _InteractableWidgetState extends State<InteractableWidget> {
   }
 
   /// Shows the specified [tooltip].
-  void showTooltip(PointerEvent event, InteractableTooltip tooltip) {
+  void showTooltip(BuildContext context, PointerEvent event, InteractableTooltip tooltip) {
+    Size size = MediaQuery.of(context).size;
     updateTooltipPosition(event);
     tooltipOverlayEntry = OverlayEntry(
-      builder: (context) => Positioned(
-        top: tooltip.calculateY(mousePosition!),
-        left: tooltip.calculateX(mousePosition!),
-        child: AnimatedOpacity(
-          opacity: tooltipOpacity,
-          duration: const Duration(milliseconds: 200),
-          child: IgnorePointer(
-            ignoring: true,
-            child: Container(
-              color: Colors.black54,
-              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
-              child: Text(
-                tooltip.text,
-                style: Theme.of(context).textTheme.bodyText2!.copyWith(color: Colors.white),
+      builder: (context) {
+        double? top;
+        double? right;
+        double? bottom;
+        double? left;
+        if (mousePosition!.dy > size.height / 2) {
+          bottom = size.height - tooltip.calculateY(mousePosition!, true);
+        } else {
+          top = tooltip.calculateY(mousePosition!, false);
+        }
+        if (mousePosition!.dx > size.width / 2) {
+          right = size.width - tooltip.calculateX(mousePosition!, true);
+        } else {
+          left = tooltip.calculateX(mousePosition!, false);
+        }
+        return Positioned(
+          top: top,
+          right: right,
+          bottom: bottom,
+          left: left,
+          child: AnimatedOpacity(
+            opacity: tooltipOpacity,
+            duration: const Duration(milliseconds: 200),
+            child: IgnorePointer(
+              ignoring: true,
+              child: Container(
+                color: Colors.black54,
+                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+                child: Text(
+                  tooltip.text,
+                  style: Theme.of(context).textTheme.bodyText2!.copyWith(color: Colors.white),
+                ),
               ),
             ),
           ),
-        ),
-      ),
+        );
+      },
       opaque: false,
     );
     Overlay.of(context)?.insert(tooltipOverlayEntry!);

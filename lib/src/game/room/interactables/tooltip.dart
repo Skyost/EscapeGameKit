@@ -20,10 +20,10 @@ class InteractableTooltip with PropertiesEquatable {
   });
 
   /// Calculates the `x` coordinate according to the provided [mousePosition].
-  double calculateX(Offset mousePosition) => mousePosition.dx + xShift;
+  double calculateX(Offset mousePosition, bool fromRight) => mousePosition.dx + (fromRight ? -xShift : xShift);
 
   /// Calculates the `y` coordinate according to the provided [mousePosition].
-  double calculateY(Offset mousePosition) => mousePosition.dy + yShift;
+  double calculateY(Offset mousePosition, bool fromBottom) => mousePosition.dy + (fromBottom ? -yShift : yShift);
 
   @override
   @protected

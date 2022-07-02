@@ -115,7 +115,8 @@ class BedroomRoom extends Room {
               keyId: EightKey.objectId,
               clueDialog: const EscapeGameDialog(
                 title: 'Hint on the password',
-                content: "<em>You have unlocked this chest using the eight shaped key... And there is a message !</em><br><br>Rabbits and chickens are in the garden. We don't know how many there are, but we can count 20 paws and 6 heads.<br><br><strong>The second digit of the computer password is the rabbit count.</strong>",
+                content:
+                    "<em>You have unlocked this chest using the eight shaped key... And there is a message !</em><br><br>Rabbits and chickens are in the garden. We don't know how many there are, but we can count 20 paws and 6 heads.<br><br><strong>The second digit of the computer password is the rabbit count.</strong>",
               ),
               noKeyDialog: const EscapeGameDialog(
                 title: 'Locked chest',
@@ -132,7 +133,8 @@ class BedroomRoom extends Room {
               ),
               clueDialog: const EscapeGameDialog(
                 title: 'Hint on a padlock',
-                content: "<em>There seems to be a hint behind this lamp !</em><br><br>I was always forgetting the code of the chest padlock that is hidden in the flower pot in the living room... But now no more worries !<br>To unlock it, we just need to input the number of possible 3-digit code combinations !",
+                content:
+                    "<em>There seems to be a hint behind this lamp !</em><br><br>I was always forgetting the code of the chest padlock that is hidden in the flower pot in the living room... But now no more worries !<br>To unlock it, we just need to input the number of possible 3-digit code combinations !",
               ),
             ),
             Interactable(
@@ -190,12 +192,7 @@ class BedroomRoom extends Room {
                 }
                 return const ActionResult.success();
               },
-              onHover: (escapeGame) => const ActionResult.success(
-                object: InteractableTooltip(
-                  text: 'Go to the living room',
-                  xShift: -50,
-                ),
-              ),
+              onHover: (escapeGame) => const ActionResult.success(object: InteractableTooltip(text: 'Go to the living room')),
               roomId: 'living-room',
             ),
             Door(

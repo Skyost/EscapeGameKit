@@ -120,10 +120,7 @@ class BedroomPresentRoom extends Room {
                 width: 67,
               ),
               onHover: (escapeGame) => const ActionResult.success(
-                object: InteractableTooltip(
-                  text: "It's a picture of young Mila Kunis.",
-                  xShift: -120,
-                ),
+                object: InteractableTooltip(text: "It's a picture of young Mila Kunis."),
               ),
             ),
             Interactable(
@@ -174,12 +171,7 @@ class BedroomPresentRoom extends Room {
                 height: 81,
                 width: 53,
               ),
-              onHover: (escapeGame) => const ActionResult.success(
-                object: InteractableTooltip(
-                  text: 'A HiFi system that looks really modern !',
-                  xShift: -240,
-                ),
-              ),
+              onHover: (escapeGame) => const ActionResult.success(object: InteractableTooltip(text: 'A HiFi system that looks really modern !')),
             ),
             Interactable(
               id: 'outlet',
@@ -249,12 +241,7 @@ class BedroomPresentRoom extends Room {
                 height: 20,
                 width: 38,
               ),
-              onHover: (escapeGame) => const ActionResult.success(
-                object: InteractableTooltip(
-                  text: 'These are not math books !',
-                  xShift: -240,
-                ),
-              ),
+              onHover: (escapeGame) => const ActionResult.success(object: InteractableTooltip(text: 'These are not math books !')),
             ),
             Interactable(
               id: 'desktop-computer',

@@ -194,7 +194,8 @@ class LinvingRoomRoom extends Room {
               padlock: CaesarPadlock(),
               clueDialog: const EscapeGameDialog(
                 title: 'Hint on the password',
-                content: "<em>An hint is behind the pillow !</em><br><br>In a pond not far from here, I noticed that the number of water lilies doubles every night... At first there is 1, then 2 the next day, then 4 the day after, etc. so much so that the pond is covered with water lilies in just 7 days !<br><br><strong>The third and last digit of the computer password is the number of days it takes for the pond to be covered if at the beginning there are not 1, but 2 water lilies.</strong>",
+                content:
+                    "<em>An hint is behind the pillow !</em><br><br>In a pond not far from here, I noticed that the number of water lilies doubles every night... At first there is 1, then 2 the next day, then 4 the day after, etc. so much so that the pond is covered with water lilies in just 7 days !<br><br><strong>The third and last digit of the computer password is the number of days it takes for the pond to be covered if at the beginning there are not 1, but 2 water lilies.</strong>",
               ),
             ),
             Interactable(
@@ -215,12 +216,7 @@ class LinvingRoomRoom extends Room {
                 height: 228,
                 width: 89,
               ),
-              onHover: (escapeGame) => const ActionResult.success(
-                object: InteractableTooltip(
-                  text: 'It is still dark outside.',
-                  xShift: -160,
-                ),
-              ),
+              onHover: (escapeGame) => const ActionResult.success(object: InteractableTooltip(text: 'It is still dark outside.')),
             ),
             Interactable(
               id: 'table',
@@ -262,7 +258,8 @@ class LinvingRoomRoom extends Room {
               ),
               clueDialog: const EscapeGameDialog(
                 title: "Hint on the username",
-                content: "<em>There's a message under the couch !</em><br><br>I always forget my username to login to my computer... But I know it's the name of my favorite school subject backwards !",
+                content:
+                    "<em>There's a message under the couch !</em><br><br>I always forget my username to login to my computer... But I know it's the name of my favorite school subject backwards !",
               ),
             ),
             Interactable(
@@ -273,12 +270,7 @@ class LinvingRoomRoom extends Room {
                 height: 93,
                 width: 41,
               ),
-              onHover: (escapeGame) => const ActionResult.success(
-                object: InteractableTooltip(
-                  text: "It's just a flower pot like any other...",
-                  xShift: -200,
-                ),
-              ),
+              onHover: (escapeGame) => const ActionResult.success(object: InteractableTooltip(text: "It's just a flower pot like any other...", xShift: -200)),
             ),
           ],
         );

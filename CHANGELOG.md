@@ -1,6 +1,7 @@
 ## 0.2.0
 
 * A dialog content can now be anything.
+* Improved tooltips positioning.
 * Fixed a bug with interactables depth in a room.
 * Various other fixes and improvements.
 
