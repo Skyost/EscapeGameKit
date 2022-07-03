@@ -159,15 +159,13 @@ class _EscapeGameWidgetState extends State<EscapeGameWidget> {
       );
     } else if (currentRoom != null) {
       child = Container(
+        key: ValueKey('container-room-${currentRoom!.id}'),
         alignment: Alignment.center,
         color: widget.backgroundColor,
         child: Stack(
-          key: ValueKey('stack-room-${currentRoom!.id}'),
           children: [
             createBaseSizeWidget(
-              child: roomTransition.createAnimatedSwitch(
-                child: widget.roomWidgetBuilder(context, widget.escapeGame, currentRoom!),
-              ),
+              child: widget.roomWidgetBuilder(context, widget.escapeGame, currentRoom!),
             ),
             if (widget.escapeGame.inventory.renderSettings != null)
               RenderSettingsWidget(
@@ -188,7 +186,9 @@ class _EscapeGameWidgetState extends State<EscapeGameWidget> {
 
     return WillPopScope(
       onWillPop: widget.onTryToExit == null ? null : () => widget.onTryToExit!(widget.escapeGame),
-      child: child,
+      child: roomTransition.createAnimatedSwitch(
+        child: child,
+      ),
     );
   }
 
