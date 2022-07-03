@@ -56,7 +56,7 @@ class _MainWidgetState extends State<MainWidget> {
         title: 'ERROR 1980',
         theme: ThemeData(
           primarySwatch: Colors.indigo,
-          scrollbarTheme: const ScrollbarThemeData(isAlwaysShown: true),
+          scrollbarTheme: ScrollbarThemeData(thumbVisibility: MaterialStateProperty.all(true)),
         ),
         locale: const Locale('en'),
         localizationsDelegates: const [
@@ -66,6 +66,7 @@ class _MainWidgetState extends State<MainWidget> {
         ],
         supportedLocales: const [Locale('en')],
         home: EscapeGameWidget(
+          baseSize: const Size(975.2, 392.0),
           beforeGameStartBuilder: (context, escapeGame) => TitleScreen(
             child: PlayButton(
               escapeGame: escapeGame,

@@ -14,7 +14,7 @@ class BedroomPresentRoom extends Room {
       : super(
           id: roomId,
           onFirstVisit: (escapeGame) {
-            escapeGame.openDialog(const EscapeGameDialog(content: '<em>Ah, finished !<br>Your day is over and you have finally come home from school !</em>'));
+            escapeGame.showDialog(const EscapeGameDialog(content: '<em>Ah, finished !<br>Your day is over and you have finally come home from school !</em>'));
             return const ActionResult.success();
           },
           interactables: [
@@ -74,7 +74,7 @@ class BedroomPresentRoom extends Room {
                 width: 60,
               ),
               onTap: (escapeGame) {
-                escapeGame.openDialog(const EscapeGameDialog(
+                escapeGame.showDialog(const EscapeGameDialog(
                   title: 'Things to do',
                   content: "An exam is scheduled for tomorrow, I should <strong>above all</strong> not forget to check my messages once I come back from school !!",
                 ));

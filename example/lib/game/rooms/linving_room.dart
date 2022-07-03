@@ -46,7 +46,7 @@ class LinvingRoomRoom extends Room {
                 digits: '120',
               ),
               onPickedUp: (escapeGame) {
-                escapeGame.openDialog(EscapeGameDialog(
+                escapeGame.showDialog(EscapeGameDialog(
                   title: 'Object found !',
                   content: Column(
                     mainAxisSize: MainAxisSize.min,
@@ -92,7 +92,7 @@ class LinvingRoomRoom extends Room {
                 digits: '1000',
               ),
               onPickedUp: (escapeGame) {
-                escapeGame.openDialog(EscapeGameDialog(
+                escapeGame.showDialog(EscapeGameDialog(
                   title: 'Object found !',
                   content: Column(
                     mainAxisSize: MainAxisSize.min,

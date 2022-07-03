@@ -37,9 +37,6 @@ need to work on before release :
 * **Better support of Android and iOS platforms**.
   The plugin is still untested on these platforms, but it should perfectly work. The only problem
   we may encounter is with tooltips.
-* **Add fullscreen / custom window size support**. It should be possible using
-  [`Transform.scale`](https://api.flutter.dev/flutter/widgets/Transform/Transform.scale.html) or
-  something like that.
 
 ## Contributions
 

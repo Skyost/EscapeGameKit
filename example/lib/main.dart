@@ -28,8 +28,8 @@ Future<void> adjustWindowSize() async {
     Size size = const Size(990, 430);
     await windowManager.setSize(size);
     await windowManager.setMinimumSize(size);
-    await windowManager.setMaximumSize(size);
-    await windowManager.setResizable(false);
+    // await windowManager.setMaximumSize(size);
+    // await windowManager.setResizable(false);
     await windowManager.center();
     await windowManager.show();
   });

@@ -19,7 +19,7 @@ class BedroomRoom extends Room {
   }) : super(
           id: roomId,
           onFirstVisit: (escapeGame) {
-            escapeGame.openDialog(const EscapeGameDialog(content: "<em>Shit, what has just happened ?<br>And above all, where are we !?</em>"));
+            escapeGame.showDialog(const EscapeGameDialog(content: "<em>Shit, what has just happened ?<br>And above all, where are we !?</em>"));
             return const ActionResult.success();
           },
           interactables: [
@@ -53,7 +53,7 @@ class BedroomRoom extends Room {
               ),
               padlock: BruteforcePadlock(),
               onPickedUp: (escapeGame) {
-                escapeGame.openDialog(EscapeGameDialog(
+                escapeGame.showDialog(EscapeGameDialog(
                   title: 'Object found !',
                   content: Column(
                     mainAxisSize: MainAxisSize.min,
@@ -160,7 +160,7 @@ class BedroomRoom extends Room {
               ),
               onTap: (escapeGame) {
                 if (!escapeGame.inventory.hasObject(mouthKey)) {
-                  escapeGame.openDialog(const EscapeGameDialog(
+                  escapeGame.showDialog(const EscapeGameDialog(
                     title: 'Door locked',
                     content: "<em>Damn, the desk door is locked, and you don't have the key !</em>",
                   ));
@@ -184,7 +184,7 @@ class BedroomRoom extends Room {
               ),
               onTap: (escapeGame) {
                 if (!escapeGame.inventory.hasObject(mouthKey)) {
-                  escapeGame.openDialog(const EscapeGameDialog(
+                  escapeGame.showDialog(const EscapeGameDialog(
                     title: 'Door locked',
                     content: "<em>Damn, the living room door is locked, and you don't have the key !</em>",
                   ));

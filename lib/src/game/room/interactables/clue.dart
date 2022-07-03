@@ -58,13 +58,13 @@ class Clue extends LockedInteractable {
           keyId: keyId,
           onCantUnlock: (escapeGame) {
             if (noKeyDialog != null) {
-              escapeGame.openDialog(noKeyDialog);
+              escapeGame.showDialog(noKeyDialog);
             }
             return const ActionResult.failed();
           },
           onFound: (escapeGame) {
             if (clueDialog != null) {
-              escapeGame.openDialog(clueDialog);
+              escapeGame.showDialog(clueDialog);
             }
             return const ActionResult.success();
           },

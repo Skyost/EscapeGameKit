@@ -1,3 +1,8 @@
+## 0.3.0
+
+* Now supports resizing.
+* Renamed some methods in order to improve consistency with Flutter.
+
 ## 0.2.0
 
 * A dialog content can now be anything.

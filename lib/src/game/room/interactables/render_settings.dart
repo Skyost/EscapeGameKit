@@ -45,7 +45,7 @@ class InteractableRenderSettings extends PositionedRenderSettings {
   }
 
   @override
-  int get hashCode => Object.hash(width, height, rotationAngle, asset, isInvisible, hoverAnimation, enterAnimation);
+  List<Object?> get props => [...super.props, hoverAnimation, enterAnimation];
 }
 
 /// Represents an interactable animation.

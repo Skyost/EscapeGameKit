@@ -1,6 +1,5 @@
 import 'package:escape_game_kit/src/game/inventory/object.dart';
 import 'package:escape_game_kit/src/widgets/inventory/widget.dart';
-import 'package:escape_game_kit/src/widgets/render_settings.dart';
 import 'package:flutter/material.dart';
 
 /// Allows to display the inventory in a list.
@@ -28,10 +27,7 @@ class _InventoryListState extends InventoryWidgetState<InventoryList> {
               textAlign: TextAlign.center,
             ),
           for (EscapeGameObject object in objects) //
-            RenderSettingsWidget(
-              renderSettings: object.inventoryRenderSettings,
-              child: widget.objectWidgetBuilder(context, widget.escapeGame, object),
-            ),
+            widget.objectWidgetBuilder(context, widget.escapeGame, object),
         ],
       );
 }

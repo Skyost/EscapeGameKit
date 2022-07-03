@@ -87,7 +87,7 @@ class EscapeGame with CountdownListener, PropertiesEquatable, ChangeNotifier {
   bool get isDialogOpened => _dialog != null;
 
   /// Opens the specified dialog.
-  void openDialog(EscapeGameDialog dialog, {bool notify = true}) {
+  void showDialog(EscapeGameDialog dialog, {bool notify = true}) {
     _dialog = dialog;
     if (notify) {
       notifyListeners();
@@ -95,7 +95,7 @@ class EscapeGame with CountdownListener, PropertiesEquatable, ChangeNotifier {
   }
 
   /// Closes the currently opened dialog.
-  void closeDialog({bool notify = true}) {
+  void dismissDialog({bool notify = true}) {
     _dialog = null;
     if (notify) {
       notifyListeners();

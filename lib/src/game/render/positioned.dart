@@ -49,5 +49,5 @@ class PositionedRenderSettings extends RenderSettings {
 
   @override
   @protected
-  List<Object?> get props => [...super.props, width, height, rotationAngle, asset, isInvisible];
+  List<Object?> get props => [...super.props, top, right, bottom, left];
 }

@@ -2,7 +2,6 @@ import 'package:escape_game_kit/src/game/game.dart';
 import 'package:escape_game_kit/src/game/inventory/object.dart';
 import 'package:escape_game_kit/src/widgets/alert_dialog.dart';
 import 'package:escape_game_kit/src/widgets/inventory/widget.dart';
-import 'package:escape_game_kit/src/widgets/render_settings.dart';
 import 'package:flutter/material.dart';
 
 /// Allows to display the inventory in a dialog.
@@ -50,11 +49,8 @@ class _InventoryDialogState extends InventoryWidgetState<InventoryDialog> {
                 runSpacing: 10,
                 spacing: 10,
                 children: [
-                  for (EscapeGameObject object in objects)
-                    RenderSettingsWidget(
-                      renderSettings: object.inventoryRenderSettings,
-                      child: widget.objectWidgetBuilder(context, widget.escapeGame, object),
-                    ),
+                  for (EscapeGameObject object in objects) //
+                    widget.objectWidgetBuilder(context, widget.escapeGame, object)
                 ],
               ),
       );

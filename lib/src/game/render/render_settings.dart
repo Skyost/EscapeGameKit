@@ -33,5 +33,5 @@ class RenderSettings with PropertiesEquatable {
 
   @override
   @protected
-  List<Object?> get props => [width, height, rotationAngle, asset, isInvisible];
+  List<Object?> get props => [width, height, rotationAngle, mirror, asset, isInvisible];
 }

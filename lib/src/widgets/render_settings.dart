@@ -64,10 +64,10 @@ class RenderSettingsWidget extends StatelessWidget {
 
     if (renderSettings is PositionedRenderSettings) {
       return Positioned(
-        top: renderSettings is PositionedRenderSettings ? (renderSettings as PositionedRenderSettings).top : 0,
-        right: renderSettings is PositionedRenderSettings ? (renderSettings as PositionedRenderSettings).right : null,
-        bottom: renderSettings is PositionedRenderSettings ? (renderSettings as PositionedRenderSettings).bottom : null,
-        left: renderSettings is PositionedRenderSettings ? (renderSettings as PositionedRenderSettings).left : 0,
+        top: (renderSettings as PositionedRenderSettings).top,
+        right: (renderSettings as PositionedRenderSettings).right,
+        bottom: (renderSettings as PositionedRenderSettings).bottom,
+        left: (renderSettings as PositionedRenderSettings).left,
         width: renderSettings!.width,
         height: renderSettings!.height,
         child: child,

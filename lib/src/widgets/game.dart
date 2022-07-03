@@ -1,6 +1,7 @@
 import 'package:escape_game_kit/src/game/game.dart';
 import 'package:escape_game_kit/src/game/room/room.dart';
 import 'package:escape_game_kit/src/utils/countdown.dart';
+import 'package:escape_game_kit/src/utils/scaling_box.dart';
 import 'package:escape_game_kit/src/widgets/alert_dialog.dart';
 import 'package:escape_game_kit/src/widgets/inventory/button.dart';
 import 'package:escape_game_kit/src/widgets/render_settings.dart';
@@ -28,6 +29,12 @@ class EscapeGameWidget extends StatefulWidget {
   /// Whether to start automatically the game.
   final bool autostart;
 
+  /// The base size of the game.
+  final Size? baseSize;
+
+  /// The background color.
+  final Color? backgroundColor;
+
   /// Builds the widget that is rendered before the game start.
   final GameWidgetBuilder? beforeGameStartBuilder;
 
@@ -54,6 +61,8 @@ class EscapeGameWidget extends StatefulWidget {
     super.key,
     required this.escapeGame,
     this.autostart = false,
+    this.baseSize,
+    this.backgroundColor,
     this.beforeGameStartBuilder,
     this.roomWidgetBuilder = defaultRoomWidgetBuilder,
     this.inventoryWidgetBuilder = defaultInventoryWidgetBuilder,
@@ -133,36 +142,53 @@ class _EscapeGameWidgetState extends State<EscapeGameWidget> {
   Widget build(BuildContext context) {
     Widget child;
     if (!widget.escapeGame.isStarted && widget.beforeGameStartBuilder != null) {
-      child = widget.beforeGameStartBuilder!(context, widget.escapeGame);
+      child = Container(
+        alignment: Alignment.center,
+        color: widget.backgroundColor,
+        child: createBaseSizeWidget(
+          child: widget.beforeGameStartBuilder!(context, widget.escapeGame),
+        ),
+      );
     } else if (widget.escapeGame.isFinished && widget.afterGameFinishedBuilder != null) {
-      child = widget.afterGameFinishedBuilder!(context, widget.escapeGame);
+      child = Container(
+        alignment: Alignment.center,
+        color: widget.backgroundColor,
+        child: createBaseSizeWidget(
+          child: widget.afterGameFinishedBuilder!(context, widget.escapeGame),
+        ),
+      );
     } else if (currentRoom != null) {
-      child = widget.roomWidgetBuilder(context, widget.escapeGame, currentRoom!);
-
-      if (widget.escapeGame.inventory.renderSettings != null) {
-        child = Stack(
+      child = Container(
+        alignment: Alignment.center,
+        color: widget.backgroundColor,
+        child: Stack(
           key: ValueKey('stack-room-${currentRoom!.id}'),
           children: [
-            child,
-            RenderSettingsWidget(
-              renderSettings: widget.escapeGame.inventory.renderSettings,
-              child: widget.inventoryWidgetBuilder(context, widget.escapeGame),
+            createBaseSizeWidget(
+              child: roomTransition.createAnimatedSwitch(
+                child: widget.roomWidgetBuilder(context, widget.escapeGame, currentRoom!),
+              ),
             ),
+            if (widget.escapeGame.inventory.renderSettings != null)
+              RenderSettingsWidget(
+                renderSettings: widget.escapeGame.inventory.renderSettings,
+                child: widget.inventoryWidgetBuilder(context, widget.escapeGame),
+              ),
             if (widget.escapeGame.countdown != null)
               RenderSettingsWidget(
                 renderSettings: widget.escapeGame.countdown!.renderSettings,
                 child: widget.countdownWidgetBuilder(context, widget.escapeGame),
               ),
           ],
-        );
-      }
+        ),
+      );
     } else {
       child = const SizedBox.shrink();
     }
 
     return WillPopScope(
       onWillPop: widget.onTryToExit == null ? null : () => widget.onTryToExit!(widget.escapeGame),
-      child: roomTransition.createAnimatedSwitch(child: child),
+      child: child,
     );
   }
 
@@ -173,6 +199,14 @@ class _EscapeGameWidgetState extends State<EscapeGameWidget> {
     super.dispose();
   }
 
+  /// Creates the base sized widget.
+  Widget createBaseSizeWidget({required Widget child}) => widget.baseSize == null
+      ? child
+      : ScalingBox(
+          baseSize: widget.baseSize!,
+          child: child,
+        );
+
   /// Refreshes the current dialog.
   Future<void> refreshDialog() async {
     if (mounted && widget.escapeGame.isDialogOpened && !isDialogOpened) {
@@ -182,7 +216,7 @@ class _EscapeGameWidgetState extends State<EscapeGameWidget> {
         builder: (context) => EscapeGameAlertDialog.fromEscapeGameDialog(escapeGameDialog: widget.escapeGame.openedDialog!),
       );
       isDialogOpened = false;
-      widget.escapeGame.closeDialog();
+      widget.escapeGame.dismissDialog();
     }
   }
 
