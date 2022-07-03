@@ -7,8 +7,8 @@ const RESOURCES = {
 "canvaskit/profiling/canvaskit.js": "ae2949af4efc61d28a4a80fffa1db900",
 "canvaskit/profiling/canvaskit.wasm": "95e736ab31147d1b2c7b25f11d4c32cd",
 "canvaskit/canvaskit.wasm": "4b83d89d9fecbea8ca46f2f760c5a9ba",
-"index.html": "8447c558d2cede86446e9aabd59b1d77",
-"/": "8447c558d2cede86446e9aabd59b1d77",
+"index.html": "c22b687a1f9a640c2a0217169ad037c3",
+"/": "c22b687a1f9a640c2a0217169ad037c3",
 "flutter.js": "eb2682e33f25cd8f1fc59011497c35f8",
 "icons/android/android-launchericon-512-512.png": "62fec5c1279812d76cfa1bf40999c61f",
 "icons/android/android-launchericon-144-144.png": "9f1d48c11153f26b182bf30a770661ff",
@@ -151,7 +151,7 @@ const RESOURCES = {
 "assets/packages/window_manager/images/ic_chrome_minimize.png": "4282cd84cb36edf2efb950ad9269ca62",
 "assets/NOTICES": "a721a385102a47e662c877077d58e346",
 "game.html": "a936f37c219cf960f1d6d5dd91843b0d",
-"main.dart.js": "e2182438e2b1ada1d909f90b61bcc4c3"
+"main.dart.js": "d7a0f2c7d5ba7f4f3846a6292acd4965"
 };
 
 // The application shell files that are downloaded before a service worker can
