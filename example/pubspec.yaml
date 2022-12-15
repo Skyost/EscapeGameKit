@@ -13,11 +13,11 @@ dependencies:
     sdk: flutter
   flutter_localizations:
     sdk: flutter
-  just_audio: ^0.9.27
-  just_audio_libwinmedia: ^0.0.4
   qr_flutter: ^4.0.0
-  url_launcher: ^6.1.4
-  window_manager: ^0.2.5
+  url_launcher: ^6.1.7
+  window_manager: ^0.2.8
+  just_audio: ^0.9.30
+  just_audio_windows: ^0.2.0
 
 dev_dependencies:
   flutter_test:

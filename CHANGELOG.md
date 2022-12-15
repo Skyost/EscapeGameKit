@@ -1,3 +1,7 @@
+## 0.3.0+2
+
+* Various updates and fixes.
+
 ## 0.3.0+1
 
 * Fixed a bug with rooms transitions.

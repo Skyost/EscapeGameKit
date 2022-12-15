@@ -98,21 +98,21 @@ class _RoomWidgetState extends State<RoomWidget> {
               child: Listener(
                 behavior: HitTestBehavior.translucent,
                 onPointerDown: (details) {
-                  if (translucentRectangle == null || !translucentRectangle!.contains(details.position)) {
+                  if (translucentRectangle == null || !translucentRectangle!.contains(details.localPosition)) {
                     setState(() {
-                      firstCorner = details.position;
+                      firstCorner = details.localPosition;
                       secondCorner = null;
                     });
                   }
                 },
                 onPointerMove: (details) {
                   if (firstCorner != null) {
-                    setState(() => secondCorner = details.position);
+                    setState(() => secondCorner = details.localPosition);
                   }
                 },
                 onPointerUp: (details) {
-                  if (translucentRectangle == null || !translucentRectangle!.contains(details.position)) {
-                    setState(() => secondCorner = details.position);
+                  if (translucentRectangle == null || !translucentRectangle!.contains(details.localPosition)) {
+                    setState(() => secondCorner = details.localPosition);
                   }
                 },
               ),
