@@ -4,15 +4,15 @@ version: 0.3.0+2
 homepage: https://github.com/Skyost/EscapeGameKit
 
 environment:
-  sdk: '>=2.17.0 <3.0.0'
+  sdk: '>=2.18.6 <3.0.0'
 
 dependencies:
   flutter:
     sdk: flutter
-  animate_do: '>=2.0.0 <3.0.0'
+  animate_do: '>=3.0.0 <4.0.0'
   flutter_svg: '>=1.0.0 <2.0.0'
-  flutter_widget_from_html_core: '>=0.8.0 <0.9.0'
-  fwfh_svg: '>=0.7.0 <0.9.0'
+  flutter_widget_from_html_core: '>=0.9.0 <1.0.0'
+  fwfh_svg: '>=0.7.0 <1.0.0'
 
 dev_dependencies:
   flutter_lints: '>=2.0.0 <3.0.0'
