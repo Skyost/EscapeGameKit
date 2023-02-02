@@ -30,6 +30,9 @@ extension PadlockDialogs on Padlock {
     if (this is PadlockSequence) {
       Padlock? firstLocked = (this as PadlockSequence).firstLocked;
       while (firstLocked != null) {
+        if (!context.mounted) {
+          return;
+        }
         await firstLocked.tryUnlockViaDialog(context, escapeGame);
         tryUnlock(null);
         Padlock? newFirstLocked = (this as PadlockSequence).firstLocked;
@@ -39,15 +42,17 @@ extension PadlockDialogs on Padlock {
         firstLocked = newFirstLocked;
       }
     }
-    await showDialog(
-      context: context,
-      builder: (context) =>
-          _buildPadlockDialog(context, escapeGame, this) ??
-          EscapeGameAlertDialog.oneChild(
-            actions: const [EscapeGameAlertDialogCloseButton(cancel: false)],
-            child: Text('Dialog not found for padlock type "${runtimeType.toString()}".'),
-          ),
-    );
+    if (context.mounted) {
+      await showDialog(
+        context: context,
+        builder: (context) =>
+        _buildPadlockDialog(context, escapeGame, this) ??
+            EscapeGameAlertDialog.oneChild(
+              actions: const [EscapeGameAlertDialogCloseButton(cancel: false)],
+              child: Text('Dialog not found for padlock type "${runtimeType.toString()}".'),
+            ),
+      );
+    }
   }
 
   /// Builds a padlock for the specified [padlock].
