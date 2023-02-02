@@ -1,3 +1,4 @@
+import 'package:escape_game_kit/src/utils/debounce.dart';
 import 'package:escape_game_kit/src/widgets/alert_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -27,6 +28,9 @@ class CreateInteractableDialog extends StatefulWidget {
 
 /// The [CreateInteractableDialog] state.
 class _CreateInteractableDialogState extends State<CreateInteractableDialog> {
+  /// The initial copy button text.
+  static const String copyToClipboard = 'COPY TO CLIPBOARD';
+
   /// The id text editing controller.
   TextEditingController idController = TextEditingController();
 
@@ -35,6 +39,9 @@ class _CreateInteractableDialogState extends State<CreateInteractableDialog> {
 
   /// The code text editing controller.
   TextEditingController codeController = TextEditingController();
+
+  /// The copy button text.
+  String copyText = copyToClipboard;
 
   @override
   void initState() {
@@ -53,11 +60,14 @@ class _CreateInteractableDialogState extends State<CreateInteractableDialog> {
           TextButton(
             onPressed: () {
               Clipboard.setData(ClipboardData(text: codeController.text));
-              ScaffoldMessenger.maybeOf(context)?.showSnackBar(const SnackBar(
-                content: Text('Done !'),
-              ));
+              setState(() => copyText = 'COPIED');
+              Debouncer.debounce('interactable-creator-copy-button', const Duration(seconds: 1), () {
+                if (mounted) {
+                  setState(() => copyText = copyToClipboard);
+                }
+              });
             },
-            child: const Text('COPY TO CLIPBOARD'),
+            child: Text(copyText),
           ),
           const EscapeGameAlertDialogCloseButton(cancel: false),
         ],

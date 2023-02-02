@@ -1,3 +1,8 @@
+## 0.3.1
+
+* Updated dependencies.
+* Fixed a bug in the Interactable creator.
+
 ## 0.3.0+2
 
 * Various updates and fixes.
