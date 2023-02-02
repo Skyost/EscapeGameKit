@@ -20,28 +20,28 @@ mixin SvgFactory on WidgetFactory {
   Widget? buildImageWidget(BuildMetadata meta, ImageSource src) {
     final url = src.url;
 
-    BytesLoader? bytesLoader;
+    SvgLoader? svgLoader;
     if (url.startsWith('data:image/svg+xml')) {
-      bytesLoader = imageSvgFromDataUri(url);
+      svgLoader = imageSvgFromDataUri(url);
     } else if (Uri.tryParse(url)?.path.toLowerCase().endsWith('.svg') == true) {
       if (url.startsWith('asset:')) {
-        bytesLoader = imageSvgFromAsset(url);
+        svgLoader = imageSvgFromAsset(url);
       } else if (url.startsWith('file:')) {
-        bytesLoader = imageSvgFromFileUri(url);
+        svgLoader = imageSvgFromFileUri(url);
       } else {
-        bytesLoader = imageSvgFromNetwork(url);
+        svgLoader = imageSvgFromNetwork(url);
       }
     }
 
-    if (bytesLoader == null) {
+    if (svgLoader == null) {
       return super.buildImageWidget(meta, src);
     }
 
-    return _buildSvgPicture(meta, src, bytesLoader);
+    return _buildSvgPicture(meta, src, svgLoader);
   }
 
-  /// Returns an [AssetBytesLoader].
-  BytesLoader? imageSvgFromAsset(String url) {
+  /// Returns an [SvgAssetLoader].
+  SvgLoader? imageSvgFromAsset(String url) {
     final uri = Uri.parse(url);
     final assetName = uri.path;
     if (assetName.isEmpty) {
@@ -54,8 +54,8 @@ mixin SvgFactory on WidgetFactory {
     );
   }
 
-  /// Returns a [MemoryPicture].
-  BytesLoader? imageSvgFromDataUri(String dataUri) {
+  /// Returns a [SvgBytesLoader].
+  SvgLoader? imageSvgFromDataUri(String dataUri) {
     final bytes = bytesFromDataUri(dataUri);
     if (bytes == null) {
       return null;
@@ -64,18 +64,18 @@ mixin SvgFactory on WidgetFactory {
     return SvgBytesLoader(bytes);
   }
 
-  /// Returns a [FilePicture].
-  BytesLoader? imageSvgFromFileUri(String url) {
+  /// Returns a [SvgFileLoader].
+  SvgLoader? imageSvgFromFileUri(String url) {
     final filePath = Uri.parse(url).toFilePath();
     if (filePath.isEmpty) {
       return null;
     }
 
-    return filePicture(filePath);
+    return svgFileLoader(filePath);
   }
 
-  /// Returns a [NetworkPicture].
-  BytesLoader? imageSvgFromNetwork(String url) {
+  /// Returns a [SvgNetworkLoader].
+  SvgLoader? imageSvgFromNetwork(String url) {
     if (url.isEmpty) {
       return null;
     }
@@ -89,8 +89,8 @@ mixin SvgFactory on WidgetFactory {
       case 'svg':
         _tagSvg ??= BuildOp(
           onWidgets: (meta, widgets) {
-            final bytesLoader = SvgStringLoader(meta.element.outerHtml);
-            return [_buildSvgPicture(meta, const ImageSource(''), bytesLoader)];
+            final svgLoader = SvgStringLoader(meta.element.outerHtml);
+            return [_buildSvgPicture(meta, const ImageSource(''), svgLoader)];
           },
         );
         meta.register(_tagSvg!);
@@ -103,13 +103,13 @@ mixin SvgFactory on WidgetFactory {
   Widget _buildSvgPicture(
     BuildMetadata meta,
     ImageSource src,
-    BytesLoader bytesLoader,
+    SvgLoader svgLoader,
   ) {
     final image = src.image;
     final semanticLabel = image?.alt ?? image?.title;
 
     return SvgPicture(
-      bytesLoader,
+      svgLoader,
       allowDrawingOutsideViewBox: svgAllowDrawingOutsideViewBox,
       excludeFromSemantics: semanticLabel == null,
       fit: BoxFit.fill,

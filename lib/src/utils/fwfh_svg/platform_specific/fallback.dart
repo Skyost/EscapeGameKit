@@ -1,6 +1,6 @@
 import 'package:flutter_svg/flutter_svg.dart';
 
-BytesLoader? filePicture(
+SvgLoader? svgFileLoader(
     String path,
     ) =>
     null;
