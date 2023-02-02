@@ -151,7 +151,7 @@ class _InteractableWidgetState extends State<InteractableWidget> {
                 padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
                 child: Text(
                   tooltip.text,
-                  style: Theme.of(context).textTheme.bodyText2!.copyWith(color: Colors.white),
+                  style: Theme.of(context).textTheme.bodyMedium!.copyWith(color: Colors.white),
                 ),
               ),
             ),
@@ -160,7 +160,7 @@ class _InteractableWidgetState extends State<InteractableWidget> {
       },
       opaque: false,
     );
-    Overlay.of(context)?.insert(tooltipOverlayEntry!);
+    Overlay.of(context).insert(tooltipOverlayEntry!);
     WidgetsBinding.instance.addPostFrameCallback((_) {
       tooltipOpacity = 1;
       tooltipOverlayEntry?.markNeedsBuild();

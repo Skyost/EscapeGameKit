@@ -16,7 +16,7 @@ class EndMessage extends StatelessWidget {
           children: [
             Text(
               'CONGRATULATIONS !',
-              style: Theme.of(context).textTheme.headline1?.copyWith(
+              style: Theme.of(context).textTheme.displayLarge?.copyWith(
                     fontWeight: FontWeight.bold,
                     fontSize: 20,
                     color: Colors.white,
@@ -25,7 +25,7 @@ class EndMessage extends StatelessWidget {
             ),
             Text(
               'Well done, you got back to ${DateTime.now().year} with success !',
-              style: Theme.of(context).textTheme.bodyText2?.copyWith(
+              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                     color: Colors.white,
                   ),
               textAlign: TextAlign.center,
