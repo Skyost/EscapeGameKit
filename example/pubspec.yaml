@@ -14,9 +14,9 @@ dependencies:
   flutter_localizations:
     sdk: flutter
   qr_flutter: ^4.0.0
-  url_launcher: ^6.1.7
-  window_manager: ^0.2.8
-  just_audio: ^0.9.30
+  url_launcher: ^6.1.8
+  window_manager: ^0.3.0
+  just_audio: ^0.9.31
   just_audio_windows: ^0.2.0
 
 dev_dependencies:

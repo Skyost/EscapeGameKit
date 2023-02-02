@@ -4,7 +4,6 @@ import 'package:escape_game_kit_example/widgets/play_button.dart';
 import 'package:escape_game_kit_example/widgets/title_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 /// Allows to build dialogs from outside a widget.
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
@@ -46,7 +45,7 @@ class _MainWidgetState extends State<MainWidget> {
       'assets/padlocks/caesar-1.svg',
       'assets/padlocks/caesar-2.svg',
     ]) {
-      precachePicture(ExactAssetPicture(SvgPicture.svgStringDecoderBuilder, asset), context);
+      // precachePicture(ExactAssetPicture(SvgPicture.svgStringDecoderBuilder, asset), context);
     }
   }
 
