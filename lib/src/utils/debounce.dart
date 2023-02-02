@@ -1,6 +1,6 @@
 import 'dart:async';
 
-/// Thanks to the [easy_debounce](https://pub.dev/packages/easy_debounce) library.
+/// Thanks to the [`easy_debounce`](https://pub.dev/packages/easy_debounce) library.
 
 /// A void callback, i.e. (){}, so we don't need to import e.g. `dart.ui`
 /// just for the VoidCallback type definition.
@@ -14,7 +14,7 @@ class _DebounceOperation {
 
 /// A static class for handling method call debouncing.
 class Debouncer {
-  static Map<String, _DebounceOperation> _operations = {};
+  static final Map<String, _DebounceOperation> _operations = {};
 
   /// Will delay the execution of [onExecute] with the given [duration]. If another call to
   /// debounce() with the same [tag] happens within this duration, the first call will be
