@@ -1,6 +1,6 @@
 name: escape_game_kit
 description: EscapeGameKit is a package, entirely built using Flutter, that helps creating escape games.
-version: 0.3.1
+version: 0.3.2
 homepage: https://github.com/Skyost/EscapeGameKit
 
 environment:
@@ -12,6 +12,7 @@ dependencies:
   animate_do: '>=3.0.0 <4.0.0'
   flutter_svg: '>=2.0.0 <3.0.0'
   flutter_widget_from_html_core: '>=0.9.0 <1.0.0'
+  fwfh_svg: '>=0.8.0 <1.0.0'
 
 dev_dependencies:
   flutter_lints: '>=2.0.0 <3.0.0'

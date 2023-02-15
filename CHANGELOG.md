@@ -1,3 +1,8 @@
+## 0.3.2
+
+* Removed the internal implementation of `fwfh_svg`.
+* Updated dependencies.
+
 ## 0.3.1
 
 * Updated dependencies.
