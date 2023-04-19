@@ -19,6 +19,7 @@ class ComputerPadlockDialog extends PadlockAlertDialog<ComputerPadlock> {
   /// Creates a new [ComputerPadlockDialog] instance.
   const ComputerPadlockDialog({
     super.key,
+    required super.escapeGame,
     required super.padlock,
   });
 
@@ -27,6 +28,7 @@ class ComputerPadlockDialog extends PadlockAlertDialog<ComputerPadlock> {
 
   /// The [ComputerPadlockDialog] builder.
   static ComputerPadlockDialog builder(BuildContext context, EscapeGame escapeGame, Padlock padlock) => ComputerPadlockDialog(
+        escapeGame: escapeGame,
         padlock: padlock as ComputerPadlock,
       );
 }

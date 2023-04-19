@@ -22,6 +22,7 @@ class CaesarPadlockDialog extends PadlockAlertDialog<CaesarPadlock> {
   /// Creates a new [CaesarPadlockDialog] instance.
   const CaesarPadlockDialog({
     super.key,
+    required super.escapeGame,
     required super.padlock,
   });
 
@@ -30,6 +31,7 @@ class CaesarPadlockDialog extends PadlockAlertDialog<CaesarPadlock> {
 
   /// The [CaesarPadlockDialog] builder.
   static CaesarPadlockDialog builder(BuildContext context, EscapeGame escapeGame, Padlock padlock) => CaesarPadlockDialog(
+        escapeGame: escapeGame,
         padlock: padlock as CaesarPadlock,
       );
 }

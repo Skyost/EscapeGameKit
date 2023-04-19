@@ -27,6 +27,7 @@ class QrPadlockDialog extends PadlockAlertDialog<QrPadlock> {
   /// Creates a new [QrPadlockDialog] instance.
   const QrPadlockDialog({
     super.key,
+    required super.escapeGame,
     required super.padlock,
   });
 
@@ -35,6 +36,7 @@ class QrPadlockDialog extends PadlockAlertDialog<QrPadlock> {
 
   /// The [QrPadlockDialog] builder.
   static QrPadlockDialog builder(BuildContext context, EscapeGame escapeGame, Padlock padlock) => QrPadlockDialog(
+        escapeGame: escapeGame,
         padlock: padlock as QrPadlock,
       );
 }

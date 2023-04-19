@@ -23,6 +23,7 @@ class BruteforcePadlockDialog extends PadlockAlertDialog<BruteforcePadlock> {
   /// Creates a new [BruteforcePadlockDialog] instance.
   const BruteforcePadlockDialog({
     super.key,
+    required super.escapeGame,
     required super.padlock,
   });
 
@@ -31,6 +32,7 @@ class BruteforcePadlockDialog extends PadlockAlertDialog<BruteforcePadlock> {
 
   /// The [BruteforcePadlockDialog] builder.
   static BruteforcePadlockDialog builder(BuildContext context, EscapeGame escapeGame, Padlock padlock) => BruteforcePadlockDialog(
+        escapeGame: escapeGame,
         padlock: padlock as BruteforcePadlock,
       );
 }
