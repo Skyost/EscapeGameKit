@@ -1,3 +1,4 @@
+import 'package:escape_game_kit/src/game/game.dart';
 import 'package:escape_game_kit/src/game/padlocks/hint.dart';
 import 'package:escape_game_kit/src/utils/properties_equatable.dart';
 import 'package:flutter/foundation.dart';
@@ -10,6 +11,9 @@ const String kDefaultPadlockUnlockMessage = 'Try to unlock this padlock !';
 
 /// The text displayed by default in padlock dialogs when the user failed to unlock a padlock.
 const String kDefaultFailedToUnlockMessage = 'Oops, looks like you have to try again !';
+
+/// The hint builder type.
+typedef HintBuilder = PadlockHint? Function(EscapeGame escapeGame, Padlock padlock, int tryCount);
 
 /// Represents an in-game padlock that should be unlocked in order for the user to complete an action.
 abstract class Padlock<C> with PropertiesEquatable {
@@ -26,14 +30,14 @@ abstract class Padlock<C> with PropertiesEquatable {
   final String? failedToUnlockMessage;
 
   /// The padlock hint.
-  final PadlockHint? hint;
+  final HintBuilder? hintBuilder;
 
   /// Creates a new [Padlock] instance.
   Padlock({
     this.title = kDefaultPadlockTitle,
     this.unlockMessage = kDefaultPadlockUnlockMessage,
     this.failedToUnlockMessage = kDefaultFailedToUnlockMessage,
-    this.hint,
+    this.hintBuilder,
   });
 
   /// Tries to unlock the current padlock with the specified [code].
@@ -66,17 +70,11 @@ abstract class ObjectEqualPadlock<T> extends Padlock<T> {
   /// Creates a new [ObjectEqualPadlock] instance.
   ObjectEqualPadlock({
     T? validObject,
-    String? title = kDefaultPadlockTitle,
-    String? unlockMessage = kDefaultPadlockUnlockMessage,
-    String? failedToUnlockMessage = kDefaultFailedToUnlockMessage,
-    PadlockHint? hint,
-  })  : _validObject = validObject,
-        super(
-          title: title,
-          unlockMessage: unlockMessage,
-          failedToUnlockMessage: failedToUnlockMessage,
-          hint: hint,
-        );
+    super.title,
+    super.unlockMessage,
+    super.failedToUnlockMessage,
+    super.hintBuilder,
+  })  : _validObject = validObject;
 
   /// Returns whether the given object is valid.
   @protected
@@ -101,10 +99,10 @@ abstract class ListEqualPadlock<T> extends ObjectEqualPadlock<List<T>> {
   /// Creates a new [ListEqualPadlock] instance.
   ListEqualPadlock({
     required List<T> validList,
-    super.title = kDefaultPadlockTitle,
-    super.unlockMessage = kDefaultPadlockUnlockMessage,
-    super.failedToUnlockMessage = kDefaultFailedToUnlockMessage,
-    super.hint,
+    super.title,
+    super.unlockMessage,
+    super.failedToUnlockMessage,
+    super.hintBuilder,
   }) : super(
           validObject: validList,
         );

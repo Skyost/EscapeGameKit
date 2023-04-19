@@ -15,6 +15,7 @@ class CredentialsPadlockDialog extends PadlockAlertDialog<CredentialsPadlock> {
   /// Creates a new [CredentialsPadlockDialog] instance.
   const CredentialsPadlockDialog({
     super.key,
+    required super.escapeGame,
     required super.padlock,
     this.usernameText = 'Username',
     this.passwordText = 'Password',
@@ -25,6 +26,7 @@ class CredentialsPadlockDialog extends PadlockAlertDialog<CredentialsPadlock> {
 
   /// The [CredentialsPadlockDialog] builder.
   static CredentialsPadlockDialog builder(BuildContext context, EscapeGame escapeGame, Padlock padlock) => CredentialsPadlockDialog(
+        escapeGame: escapeGame,
         padlock: padlock as CredentialsPadlock,
       );
 }

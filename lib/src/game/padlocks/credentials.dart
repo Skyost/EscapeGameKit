@@ -20,7 +20,7 @@ class CredentialsPadlock extends ListEqualPadlock<String> {
     super.title = kDefaultPadlockTitle,
     super.unlockMessage = kDefaultPadlockUnlockMessage,
     super.failedToUnlockMessage = kDefaultFailedToUnlockMessage,
-    super.hint,
+    super.hintBuilder,
   }) : super(
           validList: caseSensitive ? [username, password] : [username.toLowerCase(), password.toLowerCase()],
         );

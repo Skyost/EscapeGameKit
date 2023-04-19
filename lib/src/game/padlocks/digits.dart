@@ -12,7 +12,7 @@ class DigitsPadlock extends ObjectEqualPadlock<String> {
     super.title = kDefaultPadlockTitle,
     super.unlockMessage = kDefaultPadlockUnlockMessage,
     super.failedToUnlockMessage = kDefaultFailedToUnlockMessage,
-    super.hint,
+    super.hintBuilder,
   }) : super(
           validObject: digits,
         );

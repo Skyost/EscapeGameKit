@@ -1,3 +1,6 @@
+## 0.4.0
+* Padlock now can have multiple hints based on the current game state.
+
 ## 0.3.2
 
 * Removed the internal implementation of `fwfh_svg`.

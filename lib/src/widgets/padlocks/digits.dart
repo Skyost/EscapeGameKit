@@ -12,15 +12,17 @@ class DigitsPadlockDialog extends PadlockAlertDialog<DigitsPadlock> {
   /// Creates a new [DigitsPadlockDialog] instance.
   DigitsPadlockDialog({
     super.key,
+    required super.escapeGame,
     required super.padlock,
     bool? shouldSeparateTextFields,
-  })  : shouldSeparateTextFields = shouldSeparateTextFields ?? (padlock.digits.isNotEmpty && padlock.digits.length <= 4);
+  }) : shouldSeparateTextFields = shouldSeparateTextFields ?? (padlock.digits.isNotEmpty && padlock.digits.length <= 4);
 
   @override
   State<StatefulWidget> createState() => _DigitsPadlockDialogState();
 
   /// The [DigitsPadlockDialog] builder.
   static DigitsPadlockDialog builder(BuildContext context, EscapeGame escapeGame, Padlock padlock) => DigitsPadlockDialog(
+        escapeGame: escapeGame,
         padlock: padlock as DigitsPadlock,
       );
 }

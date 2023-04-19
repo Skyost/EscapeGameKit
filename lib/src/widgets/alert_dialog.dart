@@ -1,4 +1,6 @@
 import 'package:escape_game_kit/src/game/dialog.dart';
+import 'package:escape_game_kit/src/game/game.dart';
+import 'package:escape_game_kit/src/game/padlocks/hint.dart';
 import 'package:escape_game_kit/src/game/padlocks/padlock.dart';
 import 'package:escape_game_kit/src/utils/widget_factory_with_svg.dart';
 import 'package:flutter/material.dart';
@@ -182,12 +184,16 @@ class EscapeGameAlertDialogCloseButton extends StatelessWidget {
 
 /// Allows to easily create dialogs to unlock padlocks.
 abstract class PadlockAlertDialog<T extends Padlock> extends StatefulWidget {
+  /// The escape game instance.
+  final EscapeGame escapeGame;
+
   /// The padlock.
   final T padlock;
 
   /// Creates a new [PadlockAlertDialog] instance.
   const PadlockAlertDialog({
     super.key,
+    required this.escapeGame,
     required this.padlock,
   });
 }
@@ -216,17 +222,21 @@ abstract class PadlockAlertDialogState<T extends PadlockAlertDialog> extends Sta
   List<Widget> buildBody(BuildContext context);
 
   /// Creates the hint button.
-  Widget createHintButton(BuildContext context) => TextButton(
-        onPressed: showHintDialog,
-        child: Text(widget.padlock.hint!.title.toUpperCase()),
+  Widget createHintButton(BuildContext context, PadlockHint hint) => TextButton(
+        onPressed: () => showHintDialog(hint),
+        child: Text(hint.title.toUpperCase()),
       );
 
   /// Builds the dialog actions.
-  List<Widget> buildActions(BuildContext context) => [
-        EscapeGameAlertDialogOkButton(onPressed: tryUnlock),
-        const EscapeGameAlertDialogCloseButton(),
-        if (widget.padlock.hint != null && widget.padlock.hint!.minimumTriesBeforeShowing <= tryCount) createHintButton(context),
-      ];
+  List<Widget> buildActions(BuildContext context) {
+    PadlockHint? hint = widget.padlock.hintBuilder?.call(widget.escapeGame, widget.padlock, tryCount);
+    return [
+      EscapeGameAlertDialogOkButton(onPressed: tryUnlock),
+      const EscapeGameAlertDialogCloseButton(),
+      if (hint != null)
+        createHintButton(context, hint),
+    ];
+  }
 
   /// Builds the dialog bottom widget.
   Widget? buildBottom(BuildContext context) => isFirstTry ? null : EscapeGameAlertDialogPadlockNewTry(padlock: widget.padlock);
@@ -235,13 +245,13 @@ abstract class PadlockAlertDialogState<T extends PadlockAlertDialog> extends Sta
   dynamic getCode();
 
   /// Shows the hint dialog.
-  void showHintDialog({String? dialogTitle}) {
+  void showHintDialog(PadlockHint hint, {String? dialogTitle}) {
     showDialog(
       context: context,
       builder: (context) => EscapeGameAlertDialog.oneChild(
-        title: dialogTitle ?? widget.padlock.hint!.title,
+        title: dialogTitle ?? hint.title,
         child: Text(
-          widget.padlock.hint!.text,
+          hint.text,
           textAlign: TextAlign.center,
           style: const TextStyle(
             fontStyle: FontStyle.italic,

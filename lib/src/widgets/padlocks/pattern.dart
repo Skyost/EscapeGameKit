@@ -25,6 +25,7 @@ class PatternPadlockDialog extends PadlockAlertDialog<PatternPadlock> {
   /// Creates a new [PatternPadlockDialog] instance.
   const PatternPadlockDialog({
     super.key,
+    required super.escapeGame,
     required super.padlock,
     this.relativePadding = 0.5,
     this.selectedColor,
@@ -38,6 +39,7 @@ class PatternPadlockDialog extends PadlockAlertDialog<PatternPadlock> {
 
   /// The [PatternPadlockDialog] builder.
   static PatternPadlockDialog builder(BuildContext context, EscapeGame escapeGame, Padlock padlock) => PatternPadlockDialog(
+        escapeGame: escapeGame,
         padlock: padlock as PatternPadlock,
       );
 }

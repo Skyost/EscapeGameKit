@@ -14,7 +14,7 @@ class PatternPadlock extends ListEqualPadlock<PatternCoordinate> {
     super.title = kDefaultPadlockTitle,
     super.unlockMessage = kDefaultPadlockUnlockMessage,
     super.failedToUnlockMessage = kDefaultFailedToUnlockMessage,
-    super.hint,
+    super.hintBuilder,
   }) : super(
           validList: validPattern,
         );
