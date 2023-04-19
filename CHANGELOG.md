@@ -1,5 +1,8 @@
 ## 0.4.0
+
 * Padlock now can have multiple hints based on the current game state.
+* Fixed a bug with pattern padlocks.
+* Updated dependencies.
 
 ## 0.3.2
 

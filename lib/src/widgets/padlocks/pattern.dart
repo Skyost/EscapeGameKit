@@ -53,20 +53,6 @@ class _PatternPadlockDialogState extends PadlockAlertDialogState<PatternPadlockD
   List<int> codes = [];
 
   @override
-  Widget build(BuildContext context) => EscapeGameAlertDialog(
-        title: widget.padlock.title,
-        bottom: isFirstTry ? null : EscapeGameAlertDialogPadlockNewTry(padlock: widget.padlock),
-        actions: const [EscapeGameAlertDialogCloseButton()],
-        children: [
-          if (widget.padlock.unlockMessage != null)
-            Text(
-              widget.padlock.unlockMessage!,
-              textAlign: TextAlign.center,
-            ),
-        ],
-      );
-
-  @override
   List<Widget> buildBody(BuildContext context) => [
         Center(
           child: GestureDetector(
@@ -176,7 +162,7 @@ class _PatternPainter extends CustomPainter {
   });
 
   /// Returns the total dots count.
-  int get total => dimension ^ 2;
+  int get total => dimension * dimension;
 
   /// Returns the column count.
   int get columns => dimension;
@@ -204,7 +190,7 @@ class _PatternPainter extends CustomPainter {
       drawCircle(canvas, offset, radiusOut, color);
 
       Path pathGesture = getCirclePath(offset, radiusOut);
-      if (pathGesture.contains(offset)) {
+      if (this.offset != null && pathGesture.contains(this.offset!)) {
         onSelect(i);
       }
     }
