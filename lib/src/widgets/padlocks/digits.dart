@@ -14,8 +14,8 @@ class DigitsPadlockDialog extends PadlockAlertDialog<DigitsPadlock> {
     super.key,
     required super.escapeGame,
     required super.padlock,
-    bool? shouldSeparateTextFields,
-  }) : shouldSeparateTextFields = shouldSeparateTextFields ?? (padlock.digits.isNotEmpty && padlock.digits.length <= 4);
+    this.shouldSeparateTextFields = true,
+  });
 
   @override
   State<StatefulWidget> createState() => _DigitsPadlockDialogState();
@@ -85,7 +85,7 @@ class _DigitsPadlockDialogState extends PadlockAlertDialogState<DigitsPadlockDia
             controller: controllers.first,
             textAlign: TextAlign.center,
             style: const TextStyle(fontSize: 20),
-            maxLength: 1,
+            maxLength: widget.padlock.digits.length,
             decoration: const InputDecoration(counterText: ''),
             onSubmitted: (value) => tryUnlock(),
             autofocus: true,

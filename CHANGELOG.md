@@ -1,3 +1,7 @@
+## 0.4.0+1
+
+* Fixed a bug with digits padlocks.
+
 ## 0.4.0
 
 * Padlock now can have multiple hints based on the current game state.
