@@ -6,11 +6,11 @@ EscapeGameKit is a package, entirely built using Flutter, that helps creating
 It is better suited for web and desktop platforms (Windows, Linux, macOS) but can totally
 be used on mobile platforms as well !
 
-## Example
+## Examples
 
 You'll find an example in the [`example`](https://github.com/Skyost/EscapeGameKit/tree/master/example)
 directory. It's a little escape game called _ERROR 1980_ that I've created for my students. I've translated
-it into English, so that you can try it [here](https://skyost.github.io/EscapeGameKit/game.html).
+it into English, so that you can try it [here](https://skyost.github.io/EscapeGameKit/).
 
 <img src="https://github.com/Skyost/EscapeGameKit/raw/master/example/screenshots/screenshot-1.png" width="30%"> <img src="https://github.com/Skyost/EscapeGameKit/raw/master/example/screenshots/screenshot-2.png" width="30%"> <img src="https://github.com/Skyost/EscapeGameKit/raw/master/example/screenshots/screenshot-5.png" width="30%">
 
@@ -22,6 +22,13 @@ it into English, so that you can try it [here](https://skyost.github.io/EscapeGa
   <img src="https://github.com/Skyost/EscapeGameKit/raw/master/example/screenshots/screenshot-6.png" width="30%">
   <img src="https://github.com/Skyost/EscapeGameKit/raw/master/example/screenshots/screenshot-7.png" width="30%">
 </details>
+
+Here's what I've created using this package :
+
+* [Voyage à Cendlard](https://skyost.github.io/VoyageACendlard/).
+* [Murder Mystery](https://skyost.github.io/MurderMystery/).
+
+Please note that these escape games are in french.
 
 ## Getting started
 
