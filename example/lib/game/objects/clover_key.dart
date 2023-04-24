@@ -5,13 +5,16 @@ class EightKey extends EscapeGameObject {
   /// This object id.
   static const String objectId = 'eight-key';
 
+  /// The object asset.
+  static const String asset = 'assets/objects/$objectId.svg';
+
   /// Creates a new eight key instance.
   const EightKey()
       : super(
           id: objectId,
           name: 'Eight shaped key',
           inventoryRenderSettings: const RenderSettings(
-            asset: 'assets/objects/eight-key.svg',
+            asset: asset,
             height: 40,
           ),
         );

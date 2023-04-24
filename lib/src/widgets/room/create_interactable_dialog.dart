@@ -123,7 +123,7 @@ class _CreateInteractableDialogState extends State<CreateInteractableDialog> {
   }
 
   /// Returns the tooltip code.
-  String get tooltipCode => tooltipController.text.isEmpty ? '' : "\n  onHover: (escapeGame) => const ActionResult.success(object: InteractableTooltip(text: ${buildDartString(tooltipController)})),";
+  String get tooltipCode => tooltipController.text.isEmpty ? '' : '\n  onHover: (escapeGame) => const ActionResult.success(object: InteractableTooltip(text: ${buildDartString(tooltipController)})),';
 
   /// Builds a Dart string, already escaped.
   String buildDartString(TextEditingController controller) => "'${controller.text.replaceAll("'", "\\'")}'";

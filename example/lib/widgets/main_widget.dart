@@ -37,16 +37,16 @@ class _MainWidgetState extends State<MainWidget> {
     ]) {
       precacheImage(AssetImage(asset), context);
     }
-    for (String asset in [
-      'assets/interactables/arrow.svg',
-      'assets/objects/eight-key.svg',
-      'assets/objects/clover-key.svg',
-      'assets/objects/mouth-key.svg',
-      'assets/padlocks/caesar-1.svg',
-      'assets/padlocks/caesar-2.svg',
-    ]) {
-      // precachePicture(ExactAssetPicture(SvgPicture.svgStringDecoderBuilder, asset), context);
-    }
+    // for (String asset in [
+    //   'assets/interactables/arrow.svg',
+    //   'assets/objects/eight-key.svg',
+    //   'assets/objects/clover-key.svg',
+    //   'assets/objects/mouth-key.svg',
+    //   'assets/padlocks/caesar-1.svg',
+    //   'assets/padlocks/caesar-2.svg',
+    // ]) {
+    //   precachePicture(ExactAssetPicture(SvgPicture.svgStringDecoderBuilder, asset), context);
+    // }
   }
 
   @override

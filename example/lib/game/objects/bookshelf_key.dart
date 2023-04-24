@@ -5,13 +5,16 @@ class CloverKey extends EscapeGameObject {
   /// This object id.
   static const String objectId = 'clover-key';
 
+  /// The object asset.
+  static const String asset = 'assets/objects/$objectId.svg';
+
   /// Creates a new clover key instance.
   const CloverKey()
       : super(
           id: objectId,
           name: 'Clover shaped key',
           inventoryRenderSettings: const RenderSettings(
-            asset: 'assets/objects/clover-key.svg',
+            asset: asset,
             height: 40,
           ),
         );

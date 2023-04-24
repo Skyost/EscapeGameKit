@@ -5,13 +5,16 @@ class MouthKey extends EscapeGameObject {
   /// This object id.
   static const String objectId = 'mouth-key';
 
+  /// The object asset.
+  static const String asset = 'assets/objects/$objectId.svg';
+
   /// Creates a new mouth key instance.
   const MouthKey()
       : super(
           id: objectId,
           name: 'Mouth shaped key',
           inventoryRenderSettings: const RenderSettings(
-            asset: 'assets/objects/mouth-key.svg',
+            asset: asset,
             height: 40,
           ),
         );

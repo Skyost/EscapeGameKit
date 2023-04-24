@@ -2,8 +2,7 @@ import 'package:escape_game_kit/escape_game_kit.dart';
 import 'package:escape_game_kit_example/game/objects/bookshelf_key.dart';
 import 'package:escape_game_kit_example/game/objects/clover_key.dart';
 import 'package:escape_game_kit_example/game/padlocks/caesar_padlock.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:escape_game_kit_example/widgets/object_found_dialog_content.dart';
 
 /// The living room.
 class LinvingRoomRoom extends Room {
@@ -11,10 +10,8 @@ class LinvingRoomRoom extends Room {
   static const String roomId = 'living-room';
 
   /// Creates a new [LinvingRoomRoom] instance.
-  LinvingRoomRoom({
-    EscapeGameObject cloverKey = const CloverKey(),
-    EscapeGameObject eightKey = const EightKey(),
-  }) : super(
+  LinvingRoomRoom()
+      : super(
           id: roomId,
           interactables: [
             Door(
@@ -38,7 +35,7 @@ class LinvingRoomRoom extends Room {
                 height: 38,
                 width: 38,
               ),
-              object: eightKey,
+              object: const EightKey(),
               padlock: DigitsPadlock(
                 title: 'Padlock',
                 unlockMessage: 'This cupboard is protected by a code padlock !\nThere must be a hint somewhere.',
@@ -46,31 +43,11 @@ class LinvingRoomRoom extends Room {
                 digits: '120',
               ),
               onPickedUp: (escapeGame) {
-                escapeGame.showDialog(EscapeGameDialog(
+                escapeGame.showDialog(const EscapeGameDialog(
                   title: 'Object found !',
-                  content: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(bottom: 10),
-                        child: RenderSettingsWidget(
-                          renderSettings: RenderSettings(
-                            asset: eightKey.inventoryRenderSettings!.asset!,
-                            width: 100,
-                            height: 100,
-                          ),
-                          child: SvgPicture.asset(
-                            eightKey.inventoryRenderSettings!.asset!,
-                            width: 100,
-                            height: 100,
-                          ),
-                        ),
-                      ),
-                      const Text(
-                        'You just found an height shaped key !',
-                        style: TextStyle(fontStyle: FontStyle.italic),
-                      )
-                    ],
+                  content: ObjectFoundDialogContent(
+                    asset: EightKey.asset,
+                    message: '<em>You just found a <strong>eight shaped key</strong> !</em>',
                   ),
                 ));
                 return const ActionResult.success();
@@ -84,7 +61,7 @@ class LinvingRoomRoom extends Room {
                 height: 109,
                 width: 50,
               ),
-              object: cloverKey,
+              object: const CloverKey(),
               padlock: DigitsPadlock(
                 title: 'Padlock',
                 unlockMessage: 'There is a chest in this flowerpot... But it is protected by a code padlock !\nThere must be a hint somewhere.',
@@ -92,31 +69,11 @@ class LinvingRoomRoom extends Room {
                 digits: '1000',
               ),
               onPickedUp: (escapeGame) {
-                escapeGame.showDialog(EscapeGameDialog(
+                escapeGame.showDialog(const EscapeGameDialog(
                   title: 'Object found !',
-                  content: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(bottom: 10),
-                        child: RenderSettingsWidget(
-                          renderSettings: RenderSettings(
-                            asset: cloverKey.inventoryRenderSettings!.asset!,
-                            width: 100,
-                            height: 100,
-                          ),
-                          child: SvgPicture.asset(
-                            cloverKey.inventoryRenderSettings!.asset!,
-                            width: 100,
-                            height: 100,
-                          ),
-                        ),
-                      ),
-                      const Text(
-                        'You just found an clover shaped key !',
-                        style: TextStyle(fontStyle: FontStyle.italic),
-                      )
-                    ],
+                  content: ObjectFoundDialogContent(
+                    asset: CloverKey.asset,
+                    message: '<em>You just found a <strong>clover shaped key</strong> !</em>',
                   ),
                 ));
                 return const ActionResult.success();

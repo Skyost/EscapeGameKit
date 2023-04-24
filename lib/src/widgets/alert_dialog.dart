@@ -80,7 +80,7 @@ class EscapeGameAlertDialog extends StatelessWidget {
               ? escapeGameDialog.content
               : HtmlWidget(
                   '<div align="center">${escapeGameDialog.content}</div>',
-                  factoryBuilder: () => WidgetFactoryWithSVG(),
+                  factoryBuilder: WidgetFactoryWithSVG.new,
                 ),
           actions: [
             const EscapeGameAlertDialogCloseButton(cancel: false),
@@ -212,7 +212,7 @@ abstract class PadlockAlertDialogState<T extends PadlockAlertDialog> extends Sta
           if (widget.padlock.unlockMessage != null)
             HtmlWidget(
               '<div align="center">${widget.padlock.unlockMessage!}</div>',
-              factoryBuilder: () => WidgetFactoryWithSVG(),
+              factoryBuilder: WidgetFactoryWithSVG.new,
             ),
           ...buildBody(context),
         ],

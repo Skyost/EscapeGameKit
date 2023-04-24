@@ -50,23 +50,27 @@ class _GlitchMessageWidgetState extends State<GlitchMessageWidget> {
                     setState(() => hasAudioStarted = true);
                     player.play();
                     await Future.delayed(const Duration(seconds: 4));
-                    showDialog(
-                      context: context,
-                      barrierDismissible: false,
-                      builder: (context) => AlertDialog(
-                        backgroundColor: Colors.black,
-                        contentPadding: EdgeInsets.zero,
-                        shape: const RoundedRectangleBorder(),
-                        content: Image.asset(
-                          'assets/glitch/image.webp',
-                          width: MediaQuery.of(context).size.width,
+                    if (context.mounted) {
+                      showDialog(
+                        context: context,
+                        barrierDismissible: false,
+                        builder: (context) => AlertDialog(
+                          backgroundColor: Colors.black,
+                          contentPadding: EdgeInsets.zero,
+                          shape: const RoundedRectangleBorder(),
+                          content: Image.asset(
+                            'assets/glitch/image.webp',
+                            width: MediaQuery.of(context).size.width,
+                          ),
                         ),
-                      ),
-                    );
+                      );
+                    }
                     await Future.delayed(const Duration(seconds: 8));
-                    Navigator.pop(context);
-                    Navigator.pop(context);
-                    Navigator.pop(context);
+                    if (context.mounted) {
+                      Navigator.pop(context);
+                      Navigator.pop(context);
+                      Navigator.pop(context);
+                    }
                     widget.escapeGame.goToRoom('bedroom');
                   },
                   seek: (player, duration) {},

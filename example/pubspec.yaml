@@ -18,6 +18,9 @@ dependencies:
   window_manager: ^0.3.2
   just_audio: ^0.9.32
   just_audio_windows: ^0.2.0
+  flutter_svg: ^2.0.5
+  flutter_widget_from_html_core: ^0.10.0
+  animate_do: ^3.0.2
 
 dev_dependencies:
   flutter_test:

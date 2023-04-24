@@ -8,7 +8,10 @@ import 'package:escape_game_kit/src/widgets/room/interactable.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
+/// Allows to build the background widget.
 typedef BackgroundWidgetBuilder = Widget Function(BuildContext context, EscapeGame escapeGame, Room room);
+
+/// Allows to build the interactable widget.
 typedef InteractableWidgetBuilder = Widget Function(BuildContext context, EscapeGame escapeGame, Room room, Interactable interactable);
 
 /// Allows to render a [Room].
@@ -59,6 +62,9 @@ class _RoomWidgetState extends State<RoomWidget> {
   /// The second corner of the translucent rectangle.
   Offset? secondCorner;
 
+  /// Whether the user is currently creating the translucent rectangle.
+  bool isCreatingTranslucentRectangle = false;
+
   @override
   void initState() {
     super.initState();
@@ -85,11 +91,15 @@ class _RoomWidgetState extends State<RoomWidget> {
           if (translucentRectangle != null)
             Positioned.fromRect(
               rect: translucentRectangle!,
-              child: Tooltip(
-                message: 'Top: ${translucentRectangle!.top.round()} ; left: ${translucentRectangle!.left.round()}.\nWidth: ${translucentRectangle!.width.round()} ; height : ${translucentRectangle!.height.round()}.',
-                child: GestureDetector(
-                  onTap: () => CreateInteractableDialog.openDialog(context, translucentRectangle: translucentRectangle!),
-                  child: Container(color: Colors.teal.withOpacity(0.5)),
+              child: MouseRegion(
+                cursor: SystemMouseCursors.click,
+                child: Tooltip(
+                  message:
+                      'Top: ${translucentRectangle!.top.round()} ; left: ${translucentRectangle!.left.round()}.\nWidth: ${translucentRectangle!.width.round()} ; height : ${translucentRectangle!.height.round()}.',
+                  child: GestureDetector(
+                    onTap: () => CreateInteractableDialog.openDialog(context, translucentRectangle: translucentRectangle!),
+                    child: Container(color: Colors.teal.withOpacity(0.5)),
+                  ),
                 ),
               ),
             ),
@@ -102,17 +112,21 @@ class _RoomWidgetState extends State<RoomWidget> {
                     setState(() {
                       firstCorner = details.localPosition;
                       secondCorner = null;
+                      isCreatingTranslucentRectangle = true;
                     });
                   }
                 },
                 onPointerMove: (details) {
-                  if (firstCorner != null) {
+                  if (firstCorner != null && isCreatingTranslucentRectangle) {
                     setState(() => secondCorner = details.localPosition);
                   }
                 },
                 onPointerUp: (details) {
                   if (translucentRectangle == null || !translucentRectangle!.contains(details.localPosition)) {
-                    setState(() => secondCorner = details.localPosition);
+                    setState(() {
+                      secondCorner = details.localPosition;
+                      isCreatingTranslucentRectangle = false;
+                    });
                   }
                 },
               ),

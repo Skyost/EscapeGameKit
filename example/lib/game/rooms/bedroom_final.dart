@@ -29,11 +29,13 @@ class BedroomFinalRoom extends Room {
               ),
               onTap: (escapeGame) {
                 (escapeGame as Error1980EscapeGame).messages.endMessage.date = DateTime.now();
-                showDialog(
-                  barrierColor: Colors.black,
-                  context: navigatorKey.currentContext!,
-                  builder: (context) => MessagesDialog(escapeGame: escapeGame),
-                );
+                if (navigatorKey.currentContext?.mounted ?? false) {
+                  showDialog(
+                    barrierColor: Colors.black,
+                    context: navigatorKey.currentContext!,
+                    builder: (context) => MessagesDialog(escapeGame: escapeGame),
+                  );
+                }
                 return const ActionResult.success();
               },
             ),

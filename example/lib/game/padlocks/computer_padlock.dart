@@ -147,23 +147,27 @@ class _ComputerPadlockkDialogState extends State<ComputerPadlockDialog> {
   Future<void> onSuccess() async {
     audioPlayer.play();
     await Future.delayed(const Duration(seconds: 2));
-    showDialog(
-      context: context,
-      barrierDismissible: false,
-      barrierColor: Colors.black,
-      builder: (context) => AlertDialog(
-        backgroundColor: Colors.black,
-        contentPadding: EdgeInsets.zero,
-        shape: const RoundedRectangleBorder(),
-        content: Image.asset(
-          'assets/glitch/image.webp',
-          width: MediaQuery.of(context).size.width,
+    if (context.mounted) {
+      showDialog(
+        context: context,
+        barrierDismissible: false,
+        barrierColor: Colors.black,
+        builder: (context) => AlertDialog(
+          backgroundColor: Colors.black,
+          contentPadding: EdgeInsets.zero,
+          shape: const RoundedRectangleBorder(),
+          content: Image.asset(
+            'assets/glitch/image.webp',
+            width: MediaQuery.of(context).size.width,
+          ),
         ),
-      ),
-    );
+      );
+    }
     await Future.delayed(const Duration(seconds: 7));
     hasSucceeded = false;
-    Navigator.pop(context);
-    Navigator.pop(context);
+    if (context.mounted) {
+      Navigator.pop(context);
+      Navigator.pop(context);
+    }
   }
 }

@@ -5,8 +5,7 @@ import 'package:escape_game_kit_example/game/objects/clover_key.dart';
 import 'package:escape_game_kit_example/game/objects/mouth_key.dart';
 import 'package:escape_game_kit_example/game/padlocks/bruteforce_padlock.dart';
 import 'package:escape_game_kit_example/game/padlocks/computer_padlock.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:escape_game_kit_example/widgets/object_found_dialog_content.dart';
 
 /// The bedroom.
 class BedroomRoom extends Room {
@@ -14,9 +13,8 @@ class BedroomRoom extends Room {
   static const String roomId = 'bedroom';
 
   /// Creates a new [BedroomRoom] instance.
-  BedroomRoom({
-    EscapeGameObject mouthKey = const MouthKey(),
-  }) : super(
+  BedroomRoom()
+      : super(
           id: roomId,
           onFirstVisit: (escapeGame) {
             escapeGame.showDialog(const EscapeGameDialog(content: "<em>Shit, what has just happened ?<br>And above all, where are we !?</em>"));
@@ -44,7 +42,7 @@ class BedroomRoom extends Room {
               onHover: (escapeGame) => const ActionResult.success(object: InteractableTooltip(text: "There's nothing in the first two draws.")),
             ),
             PickableObject(
-              object: mouthKey,
+              object: const MouthKey(),
               renderSettings: const InteractableRenderSettings(
                 top: 320,
                 left: 250,
@@ -53,31 +51,11 @@ class BedroomRoom extends Room {
               ),
               padlock: BruteforcePadlock(),
               onPickedUp: (escapeGame) {
-                escapeGame.showDialog(EscapeGameDialog(
+                escapeGame.showDialog(const EscapeGameDialog(
                   title: 'Object found !',
-                  content: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(bottom: 10),
-                        child: RenderSettingsWidget(
-                          renderSettings: RenderSettings(
-                            asset: mouthKey.inventoryRenderSettings!.asset!,
-                            width: 100,
-                            height: 100,
-                          ),
-                          child: SvgPicture.asset(
-                            mouthKey.inventoryRenderSettings!.asset!,
-                            width: 100,
-                            height: 100,
-                          ),
-                        ),
-                      ),
-                      const Text(
-                        'You just found a mouth shaped key !',
-                        style: TextStyle(fontStyle: FontStyle.italic),
-                      )
-                    ],
+                  content: ObjectFoundDialogContent(
+                    asset: MouthKey.asset,
+                    message: '<em>You just found a <strong>mouth shaped key</strong> !</em>',
                   ),
                 ));
                 return const ActionResult.success();
@@ -159,7 +137,7 @@ class BedroomRoom extends Room {
                 hoverAnimation: InteractableAnimation(type: InteractableAnimationType.pulse),
               ),
               onTap: (escapeGame) {
-                if (!escapeGame.inventory.hasObject(mouthKey)) {
+                if (!escapeGame.inventory.hasObjectId(MouthKey.objectId)) {
                   escapeGame.showDialog(const EscapeGameDialog(
                     title: 'Door locked',
                     content: "<em>Damn, the desk door is locked, and you don't have the key !</em>",
@@ -183,7 +161,7 @@ class BedroomRoom extends Room {
                 hoverAnimation: InteractableAnimation(type: InteractableAnimationType.pulse),
               ),
               onTap: (escapeGame) {
-                if (!escapeGame.inventory.hasObject(mouthKey)) {
+                if (!escapeGame.inventory.hasObjectId(MouthKey.objectId)) {
                   escapeGame.showDialog(const EscapeGameDialog(
                     title: 'Door locked',
                     content: "<em>Damn, the living room door is locked, and you don't have the key !</em>",

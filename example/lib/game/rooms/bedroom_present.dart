@@ -27,11 +27,13 @@ class BedroomPresentRoom extends Room {
                 width: 55,
               ),
               onTap: (escapeGame) {
-                showDialog(
-                  barrierColor: Colors.black,
-                  context: navigatorKey.currentContext!,
-                  builder: (context) => MessagesDialog(escapeGame: escapeGame as Error1980EscapeGame),
-                );
+                if (navigatorKey.currentContext?.mounted ?? false) {
+                  showDialog(
+                    barrierColor: Colors.black,
+                    context: navigatorKey.currentContext!,
+                    builder: (context) => MessagesDialog(escapeGame: escapeGame as Error1980EscapeGame),
+                  );
+                }
                 return const ActionResult.success();
               },
             ),

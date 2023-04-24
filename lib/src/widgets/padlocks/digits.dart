@@ -10,7 +10,7 @@ class DigitsPadlockDialog extends PadlockAlertDialog<DigitsPadlock> {
   final bool shouldSeparateTextFields;
 
   /// Creates a new [DigitsPadlockDialog] instance.
-  DigitsPadlockDialog({
+  const DigitsPadlockDialog({
     super.key,
     required super.escapeGame,
     required super.padlock,
