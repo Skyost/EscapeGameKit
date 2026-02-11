@@ -30,8 +30,8 @@ class PickableObject extends LockedInteractable {
     super.renderSettings,
     super.onHover,
   }) : super(
-          id: id ?? object.id,
-        );
+         id: id ?? object.id,
+       );
 
   @override
   ActionResult onTap(EscapeGame escapeGame) {
@@ -42,23 +42,25 @@ class PickableObject extends LockedInteractable {
       if (removeAfterPickedUp) {
         escapeGame.currentRoom.removeInteractable(this);
         if (removedTooltip != null) {
-          escapeGame.currentRoom.addInteractable(Interactable(
-            id: '$id-picked-up',
-            renderSettings: InteractableRenderSettings(
-              top: renderSettings?.top,
-              right: renderSettings?.right,
-              bottom: renderSettings?.bottom,
-              left: renderSettings?.left,
-              width: renderSettings?.width,
-              height: renderSettings?.height,
-              rotationAngle: renderSettings?.rotationAngle,
-              mirror: renderSettings?.mirror ?? false,
-              isInvisible: renderSettings?.isInvisible,
-              hoverAnimation: renderSettings?.hoverAnimation,
-              enterAnimation: renderSettings?.enterAnimation,
+          escapeGame.currentRoom.addInteractable(
+            Interactable(
+              id: '$id-picked-up',
+              renderSettings: InteractableRenderSettings(
+                top: renderSettings?.top,
+                right: renderSettings?.right,
+                bottom: renderSettings?.bottom,
+                left: renderSettings?.left,
+                width: renderSettings?.width,
+                height: renderSettings?.height,
+                rotationAngle: renderSettings?.rotationAngle,
+                mirror: renderSettings?.mirror ?? false,
+                isInvisible: renderSettings?.isInvisible,
+                hoverAnimation: renderSettings?.hoverAnimation,
+                enterAnimation: renderSettings?.enterAnimation,
+              ),
+              onHover: (escapeGame) => ActionResult.success(object: removedTooltip!),
             ),
-            onHover: (escapeGame) => ActionResult.success(object: removedTooltip!),
-          ));
+          );
         }
       }
       return result;

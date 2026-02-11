@@ -59,80 +59,84 @@ class EscapeGameAlertDialog extends StatelessWidget {
     Widget? bottom,
     ScrollController? scrollController,
   }) : this(
-          key: key,
-          title: title,
-          backgroundColor: backgroundColor,
-          contentPadding: contentPadding,
-          children: [child],
-          actions: actions,
-          bottom: bottom,
-          scrollController: scrollController,
-        );
+         key: key,
+         title: title,
+         backgroundColor: backgroundColor,
+         contentPadding: contentPadding,
+         children: [child],
+         actions: actions,
+         bottom: bottom,
+         scrollController: scrollController,
+       );
 
   /// Creates a new [EscapeGameAlertDialog] instance from the specified [escapeGameDialog].
   EscapeGameAlertDialog.fromEscapeGameDialog({
     Key? key,
     required EscapeGameDialog escapeGameDialog,
   }) : this.oneChild(
-          key: key,
-          title: escapeGameDialog.title,
-          child: escapeGameDialog.content is Widget
-              ? escapeGameDialog.content
-              : HtmlWidget(
-                  '<div align="center">${escapeGameDialog.content}</div>',
-                  factoryBuilder: WidgetFactoryWithSVG.new,
-                ),
-          actions: [
-            const EscapeGameAlertDialogCloseButton(cancel: false),
-          ],
-        );
+         key: key,
+         title: escapeGameDialog.title,
+         child: escapeGameDialog.content is Widget
+             ? escapeGameDialog.content
+             : HtmlWidget(
+                 '<div style="text-align: center;">${escapeGameDialog.content}</div>',
+                 factoryBuilder: WidgetFactoryWithSVG.new,
+               ),
+         actions: [
+           const EscapeGameAlertDialogCloseButton(cancel: false),
+         ],
+       );
 
   @override
   Widget build(BuildContext context) => AlertDialog(
-        titlePadding: EdgeInsets.zero,
-        shape: const RoundedRectangleBorder(),
-        backgroundColor: backgroundColor,
-        contentPadding: children.isEmpty ? contentPadding : EdgeInsets.zero,
-        title: title == null
-            ? null
-            : Container(
-                color: Theme.of(context).primaryColorDark,
-                width: double.infinity,
-                padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-                child: Text(
-                  title!,
-                  textAlign: TextAlign.center,
-                  style: const TextStyle(color: Colors.white),
-                ),
-              ),
-        content: SizedBox(
-          width: MediaQuery.of(context).size.width,
-          child: _createChildWidget(context),
-        ),
-        actions: actions,
-      );
+    titlePadding: EdgeInsets.zero,
+    shape: const RoundedRectangleBorder(),
+    backgroundColor: backgroundColor,
+    contentPadding: children.isEmpty ? contentPadding : EdgeInsets.zero,
+    title: title == null
+        ? null
+        : Container(
+            color: Theme.of(context).colorScheme.primary,
+            width: double.infinity,
+            padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+            child: Text(
+              title!,
+              textAlign: TextAlign.center,
+              style: TextStyle(color: Theme.of(context).colorScheme.onPrimary),
+            ),
+          ),
+    content: SizedBox(
+      width: MediaQuery.sizeOf(context).width,
+      child: _createChildWidget(context),
+    ),
+    actions: actions,
+  );
 
   /// Creates the child widget.
   Widget _createChildWidget(BuildContext context) {
     List<Widget> children = [];
     if (this.children.isEmpty && empty != null) {
-      children.add(Padding(
-        padding: const EdgeInsets.only(bottom: 20),
-        child: Text(
-          empty!,
-          style: const TextStyle(fontStyle: FontStyle.italic),
-          textAlign: TextAlign.center,
+      children.add(
+        Padding(
+          padding: const EdgeInsets.only(bottom: 20),
+          child: Text(
+            empty!,
+            style: const TextStyle(fontStyle: FontStyle.italic),
+            textAlign: TextAlign.center,
+          ),
         ),
-      ));
+      );
     }
 
     children.addAll(this.children);
 
     if (bottom != null) {
-      children.add(Padding(
-        padding: const EdgeInsets.only(top: 10),
-        child: bottom!,
-      ));
+      children.add(
+        Padding(
+          padding: const EdgeInsets.only(top: 10),
+          child: bottom!,
+        ),
+      );
     }
 
     return ListView(
@@ -157,9 +161,9 @@ class EscapeGameAlertDialogOkButton<T> extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => TextButton(
-        onPressed: onPressed,
-        child: Text(MaterialLocalizations.of(context).okButtonLabel.toUpperCase()),
-      );
+    onPressed: onPressed,
+    child: Text(MaterialLocalizations.of(context).okButtonLabel.toUpperCase()),
+  );
 }
 
 /// Allows to create a _Close_ button easily.
@@ -175,11 +179,11 @@ class EscapeGameAlertDialogCloseButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => TextButton(
-        onPressed: () => Navigator.pop(context),
-        child: Text(
-          (cancel ? MaterialLocalizations.of(context).cancelButtonLabel : MaterialLocalizations.of(context).closeButtonLabel).toUpperCase(),
-        ),
-      );
+    onPressed: () => Navigator.pop(context),
+    child: Text(
+      (cancel ? MaterialLocalizations.of(context).cancelButtonLabel : MaterialLocalizations.of(context).closeButtonLabel).toUpperCase(),
+    ),
+  );
 }
 
 /// Allows to easily create dialogs to unlock padlocks.
@@ -205,27 +209,27 @@ abstract class PadlockAlertDialogState<T extends PadlockAlertDialog> extends Sta
 
   @override
   Widget build(BuildContext context) => EscapeGameAlertDialog(
-        title: widget.padlock.title,
-        bottom: buildBottom(context),
-        actions: buildActions(context),
-        children: [
-          if (widget.padlock.unlockMessage != null)
-            HtmlWidget(
-              '<div align="center">${widget.padlock.unlockMessage!}</div>',
-              factoryBuilder: WidgetFactoryWithSVG.new,
-            ),
-          ...buildBody(context),
-        ],
-      );
+    title: widget.padlock.title,
+    bottom: buildBottom(context),
+    actions: buildActions(context),
+    children: [
+      if (widget.padlock.unlockMessage != null)
+        HtmlWidget(
+          '<div style="text-align: center;">${widget.padlock.unlockMessage!}</div>',
+          factoryBuilder: WidgetFactoryWithSVG.new,
+        ),
+      ...buildBody(context),
+    ],
+  );
 
   /// Builds the dialog body.
   List<Widget> buildBody(BuildContext context);
 
   /// Creates the hint button.
   Widget createHintButton(BuildContext context, PadlockHint hint) => TextButton(
-        onPressed: () => showHintDialog(hint),
-        child: Text(hint.title.toUpperCase()),
-      );
+    onPressed: () => showHintDialog(hint),
+    child: Text(hint.title.toUpperCase()),
+  );
 
   /// Builds the dialog actions.
   List<Widget> buildActions(BuildContext context) {
@@ -233,8 +237,7 @@ abstract class PadlockAlertDialogState<T extends PadlockAlertDialog> extends Sta
     return [
       EscapeGameAlertDialogOkButton(onPressed: tryUnlock),
       const EscapeGameAlertDialogCloseButton(),
-      if (hint != null)
-        createHintButton(context, hint),
+      if (hint != null) createHintButton(context, hint),
     ];
   }
 

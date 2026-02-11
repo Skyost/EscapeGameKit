@@ -25,15 +25,15 @@ abstract class InventoryWidget extends StatefulWidget {
 
   /// The default [EscapeGameObject] widget builder.
   static Widget defaultObjectWidgetBuilder(BuildContext context, EscapeGame escapeGame, EscapeGameObject object) => RenderSettingsWidget(
+    renderSettings: object.inventoryRenderSettings,
+    child: Tooltip(
+      message: object.name,
+      child: AutoImage.fromRenderSettings(
         renderSettings: object.inventoryRenderSettings,
-        child: Tooltip(
-          message: object.name,
-          child: AutoImage.fromRenderSettings(
-            renderSettings: object.inventoryRenderSettings,
-            defaultAssetPath: object.defaultAssetPath,
-          ),
-        ),
-      );
+        defaultAssetPath: object.defaultAssetPath,
+      ),
+    ),
+  );
 }
 
 /// Base class that allows to create the state of a widget that display an [Inventory].

@@ -37,10 +37,10 @@ class EscapeGame with CountdownListener, PropertiesEquatable, ChangeNotifier {
     Iterable<Room>? rooms,
     String? firstRoomId,
     this.countdown,
-  })  : assert(rooms != null && rooms.isNotEmpty),
-        rooms = HashSet.from(rooms!),
-        inventory = inventory ?? Inventory(),
-        _currentRoom = firstRoomId ?? rooms.first.id {
+  }) : assert(rooms != null && rooms.isNotEmpty),
+       rooms = HashSet.from(rooms!),
+       inventory = inventory ?? Inventory(),
+       _currentRoom = firstRoomId ?? rooms.first.id {
     this.inventory.addListener(notifyListeners);
   }
 
@@ -48,7 +48,7 @@ class EscapeGame with CountdownListener, PropertiesEquatable, ChangeNotifier {
   Room get currentRoom => rooms.firstWhere((room) => room.id == _currentRoom);
 
   /// Returns a room object by its [Room.id].
-  Room? getRoomById (String roomId) {
+  Room? getRoomById(String roomId) {
     for (Room room in rooms) {
       if (room.id == roomId) {
         return room;

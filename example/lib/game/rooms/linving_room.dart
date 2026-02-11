@@ -16,7 +16,7 @@ class LinvingRoomRoom extends Room {
           interactables: [
             Door(
               id: 'bedroom-door',
-              renderSettings: InteractableRenderSettings(
+              renderSettings: const InteractableRenderSettings(
                 asset: 'assets/interactables/arrow.svg',
                 top: 100,
                 left: 20,
@@ -39,7 +39,7 @@ class LinvingRoomRoom extends Room {
               padlock: DigitsPadlock(
                 title: 'Padlock',
                 unlockMessage: 'This cupboard is protected by a code padlock !\nThere must be a hint somewhere.',
-                failedToUnlockMessage: "Goddamn, this is not working...",
+                failedToUnlockMessage: 'Goddamn, this is not working...',
                 digits: '120',
               ),
               onPickedUp: (escapeGame) {
@@ -152,7 +152,7 @@ class LinvingRoomRoom extends Room {
               clueDialog: const EscapeGameDialog(
                 title: 'Hint on the password',
                 content:
-                    "<em>An hint is behind the pillow !</em><br><br>In a pond not far from here, I noticed that the number of water lilies doubles every night... At first there is 1, then 2 the next day, then 4 the day after, etc. so much so that the pond is covered with water lilies in just 7 days !<br><br><strong>The third and last digit of the computer password is the number of days it takes for the pond to be covered if at the beginning there are not 1, but 2 water lilies.</strong>",
+                    '<em>An hint is behind the pillow !</em><br><br>In a pond not far from here, I noticed that the number of water lilies doubles every night... At first there is 1, then 2 the next day, then 4 the day after, etc. so much so that the pond is covered with water lilies in just 7 days !<br><br><strong>The third and last digit of the computer password is the number of days it takes for the pond to be covered if at the beginning there are not 1, but 2 water lilies.</strong>',
               ),
             ),
             Interactable(
@@ -214,7 +214,7 @@ class LinvingRoomRoom extends Room {
                 width: 190,
               ),
               clueDialog: const EscapeGameDialog(
-                title: "Hint on the username",
+                title: 'Hint on the username',
                 content:
                     "<em>There's a message under the couch !</em><br><br>I always forget my username to login to my computer... But I know it's the name of my favorite school subject backwards !",
               ),

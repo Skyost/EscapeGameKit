@@ -21,37 +21,36 @@ class InventoryDialog extends InventoryWidget {
     BuildContext context, {
     required EscapeGame escapeGame,
     EscapeGameObjectWidgetBuilder objectWidgetBuilder = InventoryWidget.defaultObjectWidgetBuilder,
-  }) =>
-      showDialog(
-        context: context,
-        builder: (context) => InventoryDialog(
-          escapeGame: escapeGame,
-          objectWidgetBuilder: objectWidgetBuilder,
-        ),
-      );
+  }) => showDialog(
+    context: context,
+    builder: (context) => InventoryDialog(
+      escapeGame: escapeGame,
+      objectWidgetBuilder: objectWidgetBuilder,
+    ),
+  );
 }
 
 /// The [InventoryDialog] state.
 class _InventoryDialogState extends InventoryWidgetState<InventoryDialog> {
   @override
   Widget build(BuildContext context) => EscapeGameAlertDialog.oneChild(
-        title: widget.escapeGame.inventory.title,
-        actions: const [
-          EscapeGameAlertDialogCloseButton(cancel: false),
-        ],
-        child: widget.escapeGame.inventory.objects.isEmpty
-            ? Text(
-                widget.escapeGame.inventory.emptyMessage,
-                textAlign: TextAlign.center,
-              )
-            : Wrap(
-                alignment: WrapAlignment.center,
-                runSpacing: 10,
-                spacing: 10,
-                children: [
-                  for (EscapeGameObject object in objects) //
-                    widget.objectWidgetBuilder(context, widget.escapeGame, object)
-                ],
-              ),
-      );
+    title: widget.escapeGame.inventory.title,
+    actions: const [
+      EscapeGameAlertDialogCloseButton(cancel: false),
+    ],
+    child: widget.escapeGame.inventory.objects.isEmpty
+        ? Text(
+            widget.escapeGame.inventory.emptyMessage,
+            textAlign: TextAlign.center,
+          )
+        : Wrap(
+            alignment: WrapAlignment.center,
+            runSpacing: 10,
+            spacing: 10,
+            children: [
+              for (EscapeGameObject object in objects) //
+                widget.objectWidgetBuilder(context, widget.escapeGame, object),
+            ],
+          ),
+  );
 }

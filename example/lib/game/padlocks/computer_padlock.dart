@@ -65,8 +65,8 @@ class _ComputerPadlockkDialogState extends State<ComputerPadlockDialog> {
   }
 
   @override
-  Widget build(BuildContext context) => WillPopScope(
-        onWillPop: () => Future.value(!hasSucceeded),
+  Widget build(BuildContext context) => PopScope(
+        onPopInvokedWithResult: (willPop, result) => Future.value(!hasSucceeded),
         child: GestureDetector(
           onTap: commandFocus.requestFocus,
           child: EscapeGameAlertDialog(
@@ -147,7 +147,7 @@ class _ComputerPadlockkDialogState extends State<ComputerPadlockDialog> {
   Future<void> onSuccess() async {
     audioPlayer.play();
     await Future.delayed(const Duration(seconds: 2));
-    if (context.mounted) {
+    if (mounted) {
       showDialog(
         context: context,
         barrierDismissible: false,
@@ -158,14 +158,14 @@ class _ComputerPadlockkDialogState extends State<ComputerPadlockDialog> {
           shape: const RoundedRectangleBorder(),
           content: Image.asset(
             'assets/glitch/image.webp',
-            width: MediaQuery.of(context).size.width,
+            width: MediaQuery.sizeOf(context).width,
           ),
         ),
       );
     }
     await Future.delayed(const Duration(seconds: 7));
     hasSucceeded = false;
-    if (context.mounted) {
+    if (mounted) {
       Navigator.pop(context);
       Navigator.pop(context);
     }

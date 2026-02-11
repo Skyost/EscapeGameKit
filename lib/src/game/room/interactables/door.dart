@@ -17,8 +17,8 @@ class Door extends LockedInteractable {
     super.onTap,
     super.onHover,
   }) : super(
-          id: id ?? roomId,
-        );
+         id: id ?? roomId,
+       );
 
   @override
   ActionResult onTap(EscapeGame escapeGame) {

@@ -21,7 +21,7 @@ class TitleScreen extends StatelessWidget {
             child: Image.asset(
               'assets/backgrounds/title.png',
               fit: BoxFit.fitWidth,
-              width: MediaQuery.of(context).size.width,
+              width: MediaQuery.sizeOf(context).width,
             ),
           ),
           Positioned(
@@ -40,7 +40,7 @@ class TitleScreen extends StatelessWidget {
                         'assets/icon.png',
                         height: 60,
                       ),
-                      applicationLegalese: "Copyright © 2022 Hugo Delaunay. All rights reserved.\nThanks to FreePik for the icon, and thanks to upklyak for the sets and the objects.",
+                      applicationLegalese: 'Copyright © 2022 Hugo Delaunay. All rights reserved.\nThanks to FreePik for the icon, and thanks to upklyak for the sets and the objects.',
                     ),
                   );
                 },

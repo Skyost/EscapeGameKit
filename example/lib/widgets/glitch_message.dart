@@ -60,7 +60,7 @@ class _GlitchMessageWidgetState extends State<GlitchMessageWidget> {
                           shape: const RoundedRectangleBorder(),
                           content: Image.asset(
                             'assets/glitch/image.webp',
-                            width: MediaQuery.of(context).size.width,
+                            width: MediaQuery.sizeOf(context).width,
                           ),
                         ),
                       );

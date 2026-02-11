@@ -46,40 +46,41 @@ class _InventoryButtonState extends State<InventoryButton> {
 
   @override
   Widget build(BuildContext context) => TextButton.icon(
-        icon: Padding(
-          padding: const EdgeInsets.only(
-            top: 8,
-            left: 10,
-            bottom: 8,
-          ).copyWith(right: widget.escapeGame.inventory.title == null ? 10 : 0),
-          child: widget.inventoryIcon,
+    icon: Padding(
+      padding: const EdgeInsets.only(
+        top: 8,
+        left: 10,
+        bottom: 8,
+      ).copyWith(right: widget.escapeGame.inventory.title == null ? 10 : 0),
+      child: widget.inventoryIcon,
+    ),
+    label: widget.escapeGame.inventory.title == null
+        ? const SizedBox.shrink()
+        : Padding(
+            padding: const EdgeInsets.only(right: 10),
+            child: Text(widget.escapeGame.inventory.title! + (inventoryHasChanged && widget.changedText != null ? widget.changedText! : '')),
+          ),
+    style:
+        widget.buttonStyle ??
+        ButtonStyle(
+          backgroundColor: WidgetStateProperty.all(Colors.black54),
+          foregroundColor: WidgetStateProperty.all(Colors.white),
+          shape: WidgetStateProperty.all(const RoundedRectangleBorder()),
         ),
-        label: widget.escapeGame.inventory.title == null
-            ? const SizedBox.shrink()
-            : Padding(
-                padding: const EdgeInsets.only(right: 10),
-                child: Text(widget.escapeGame.inventory.title! + (inventoryHasChanged && widget.changedText != null ? widget.changedText! : '')),
-              ),
-        style: widget.buttonStyle ??
-            ButtonStyle(
-              backgroundColor: MaterialStateProperty.all(Colors.black54),
-              foregroundColor: MaterialStateProperty.all(Colors.white),
-              shape: MaterialStateProperty.all(const RoundedRectangleBorder()),
-            ),
-        onPressed: () {
-          if (inventoryHasChanged) {
-            setState(() => inventoryHasChanged = false);
-          }
-          if (widget.onPressed == null) {
-            InventoryDialog.openDialog(
-              context,
-              escapeGame: widget.escapeGame,
-            );
-          } else {
-            widget.onPressed!();
-          }
-        },
-      );
+    onPressed: () {
+      if (inventoryHasChanged) {
+        setState(() => inventoryHasChanged = false);
+      }
+      if (widget.onPressed == null) {
+        InventoryDialog.openDialog(
+          context,
+          escapeGame: widget.escapeGame,
+        );
+      } else {
+        widget.onPressed!();
+      }
+    },
+  );
 
   @override
   void dispose() {

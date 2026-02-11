@@ -12,10 +12,10 @@ typedef Action<T> = ActionResult<T> Function(EscapeGame escapeGame);
 /// Represents an in-game displayed object that is interactable.
 class Interactable with PropertiesEquatable, ChangeNotifier {
   /// The default action when tapped.
-  static ActionResult _defaultOnTap (escapeGame) => const ActionResult.success();
+  static ActionResult _defaultOnTap(escapeGame) => const ActionResult.success();
 
   /// The default action when hovered.
-  static ActionResult<InteractableTooltip> _defaultOnHover (escapeGame) => const ActionResult.success();
+  static ActionResult<InteractableTooltip> _defaultOnHover(escapeGame) => const ActionResult.success();
 
   /// The interactable identifier.
   final String id;
@@ -38,9 +38,9 @@ class Interactable with PropertiesEquatable, ChangeNotifier {
     InteractableRenderSettings? renderSettings,
     Action onTap = _defaultOnTap,
     Action<InteractableTooltip> onHover = _defaultOnHover,
-  })  : _renderSettings = renderSettings,
-        _onTap = onTap,
-        _onHover = onHover;
+  }) : _renderSettings = renderSettings,
+       _onTap = onTap,
+       _onHover = onHover;
 
   /// Should be called when the user taps on this interactable.
   ActionResult onTap(EscapeGame escapeGame) => _onTap(escapeGame);

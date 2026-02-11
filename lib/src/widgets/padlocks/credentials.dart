@@ -26,9 +26,9 @@ class CredentialsPadlockDialog extends PadlockAlertDialog<CredentialsPadlock> {
 
   /// The [CredentialsPadlockDialog] builder.
   static CredentialsPadlockDialog builder(BuildContext context, EscapeGame escapeGame, Padlock padlock) => CredentialsPadlockDialog(
-        escapeGame: escapeGame,
-        padlock: padlock as CredentialsPadlock,
-      );
+    escapeGame: escapeGame,
+    padlock: padlock as CredentialsPadlock,
+  );
 }
 
 /// The [CredentialsPadlockDialog] state.
@@ -41,29 +41,29 @@ class _CredentialPadlockDialogState extends PadlockAlertDialogState<CredentialsP
 
   @override
   List<Widget> buildBody(BuildContext context) => [
-        TextField(
-          controller: usernameController,
-          decoration: widget.usernameText == null
-              ? const InputDecoration()
-              : InputDecoration(
-                  icon: const Icon(Icons.person),
-                  labelText: widget.usernameText,
-                ),
-          onSubmitted: (value) => tryUnlock(),
-          autofocus: true,
-        ),
-        TextField(
-          controller: passwordController,
-          decoration: widget.passwordText == null
-              ? const InputDecoration()
-              : InputDecoration(
-                  icon: const Icon(Icons.password),
-                  labelText: widget.passwordText,
-                ),
-          obscureText: true,
-          onSubmitted: (value) => tryUnlock(),
-        ),
-      ];
+    TextField(
+      controller: usernameController,
+      decoration: widget.usernameText == null
+          ? const InputDecoration()
+          : InputDecoration(
+              icon: const Icon(Icons.person),
+              labelText: widget.usernameText,
+            ),
+      onSubmitted: (value) => tryUnlock(),
+      autofocus: true,
+    ),
+    TextField(
+      controller: passwordController,
+      decoration: widget.passwordText == null
+          ? const InputDecoration()
+          : InputDecoration(
+              icon: const Icon(Icons.password),
+              labelText: widget.passwordText,
+            ),
+      obscureText: true,
+      onSubmitted: (value) => tryUnlock(),
+    ),
+  ];
 
   @override
   dynamic getCode() => [usernameController.text, passwordController.text];

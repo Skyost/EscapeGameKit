@@ -26,13 +26,12 @@ class RoomTransition {
   Widget createAnimatedSwitch({
     required Widget child,
     AnimatedSwitcherTransitionBuilder transitionBuilder = AnimatedSwitcher.defaultTransitionBuilder,
-  }) =>
-      AnimatedSwitcher(
-        transitionBuilder: transitionBuilder,
-        duration: duration,
-        reverseDuration: reverseDuration,
-        switchInCurve: inCurve,
-        switchOutCurve: outCurve,
-        child: child,
-      );
+  }) => AnimatedSwitcher(
+    transitionBuilder: transitionBuilder,
+    duration: duration,
+    reverseDuration: reverseDuration,
+    switchInCurve: inCurve,
+    switchOutCurve: outCurve,
+    child: child,
+  );
 }

@@ -4,7 +4,7 @@
 
 list(APPEND FLUTTER_PLUGIN_LIST
   just_audio_windows
-  screen_retriever
+  screen_retriever_windows
   url_launcher_windows
   window_manager
 )

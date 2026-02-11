@@ -55,7 +55,7 @@ class BedroomPresentRoom extends Room {
                 height: 50,
                 width: 130,
               ),
-              onHover: (escapeGame) => const ActionResult.success(object: InteractableTooltip(text: "Computer screens are arranged on the desk.")),
+              onHover: (escapeGame) => const ActionResult.success(object: InteractableTooltip(text: 'Computer screens are arranged on the desk.')),
             ),
             Interactable(
               id: 'top-computer-screen',
@@ -65,7 +65,7 @@ class BedroomPresentRoom extends Room {
                 height: 60,
                 width: 100,
               ),
-              onHover: (escapeGame) => const ActionResult.success(object: InteractableTooltip(text: "A computer screen displaying a statistical curve.")),
+              onHover: (escapeGame) => const ActionResult.success(object: InteractableTooltip(text: 'A computer screen displaying a statistical curve.')),
             ),
             Interactable(
               id: 'papers',
@@ -78,7 +78,7 @@ class BedroomPresentRoom extends Room {
               onTap: (escapeGame) {
                 escapeGame.showDialog(const EscapeGameDialog(
                   title: 'Things to do',
-                  content: "An exam is scheduled for tomorrow, I should <strong>above all</strong> not forget to check my messages once I come back from school !!",
+                  content: 'An exam is scheduled for tomorrow, I should <strong>above all</strong> not forget to check my messages once I come back from school !!',
                 ));
                 return const ActionResult.success();
               },

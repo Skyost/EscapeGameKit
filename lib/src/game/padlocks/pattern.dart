@@ -16,8 +16,8 @@ class PatternPadlock extends ListEqualPadlock<PatternCoordinate> {
     super.failedToUnlockMessage = kDefaultFailedToUnlockMessage,
     super.hintBuilder,
   }) : super(
-          validList: validPattern,
-        );
+         validList: validPattern,
+       );
 
   @override
   @protected

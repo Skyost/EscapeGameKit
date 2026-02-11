@@ -16,25 +16,25 @@ class ActionResult<T> {
   const ActionResult.success({
     T? object,
   }) : this(
-          state: ActionResultState.success,
-          object: object,
-        );
+         state: ActionResultState.success,
+         object: object,
+       );
 
   /// Creates a new [ActionResult] instance with the [state] being [ActionResultState.needAction].
   const ActionResult.needAction({
     T? object,
   }) : this(
-          state: ActionResultState.needAction,
-          object: object,
-        );
+         state: ActionResultState.needAction,
+         object: object,
+       );
 
   /// Creates a new [ActionResult] instance with the [state] being [ActionResultState.failed].
   const ActionResult.failed({
     T? object,
   }) : this(
-          state: ActionResultState.failed,
-          object: object,
-        );
+         state: ActionResultState.failed,
+         object: object,
+       );
 }
 
 /// An [ActionResult] state.

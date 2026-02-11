@@ -77,14 +77,14 @@ class EscapeGameWidget extends StatefulWidget {
 
   /// The default [Room] widget builder.
   static Widget defaultRoomWidgetBuilder(BuildContext context, EscapeGame escapeGame, Room room) => RoomWidget(
-        escapeGame: escapeGame,
-        room: room,
-      );
+    escapeGame: escapeGame,
+    room: room,
+  );
 
   /// The default [Inventory] widget builder.
   static Widget defaultInventoryWidgetBuilder(BuildContext context, EscapeGame escapeGame) => InventoryButton(
-        escapeGame: escapeGame,
-      );
+    escapeGame: escapeGame,
+  );
 
   /// The default [Countdown] widget builder.
   static Widget defaultCountdownWidgetBuilder(BuildContext context, EscapeGame escapeGame) => escapeGame.countdown == null
@@ -184,8 +184,8 @@ class _EscapeGameWidgetState extends State<EscapeGameWidget> {
       child = const SizedBox.shrink();
     }
 
-    return WillPopScope(
-      onWillPop: widget.onTryToExit == null ? null : () => widget.onTryToExit!(widget.escapeGame),
+    return PopScope(
+      onPopInvokedWithResult: widget.onTryToExit == null ? null : (didPop, result) => widget.onTryToExit!(widget.escapeGame),
       child: roomTransition.createAnimatedSwitch(
         child: child,
       ),

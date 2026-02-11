@@ -19,15 +19,15 @@ class InventoryList extends InventoryWidget {
 class _InventoryListState extends InventoryWidgetState<InventoryList> {
   @override
   Widget build(BuildContext context) => ListView(
-        shrinkWrap: true,
-        children: [
-          if (widget.escapeGame.inventory.objects.isEmpty)
-            Text(
-              widget.escapeGame.inventory.emptyMessage,
-              textAlign: TextAlign.center,
-            ),
-          for (EscapeGameObject object in objects) //
-            widget.objectWidgetBuilder(context, widget.escapeGame, object),
-        ],
-      );
+    shrinkWrap: true,
+    children: [
+      if (widget.escapeGame.inventory.objects.isEmpty)
+        Text(
+          widget.escapeGame.inventory.emptyMessage,
+          textAlign: TextAlign.center,
+        ),
+      for (EscapeGameObject object in objects) //
+        widget.objectWidgetBuilder(context, widget.escapeGame, object),
+    ],
+  );
 }

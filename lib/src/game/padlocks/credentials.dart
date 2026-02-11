@@ -22,8 +22,8 @@ class CredentialsPadlock extends ListEqualPadlock<String> {
     super.failedToUnlockMessage = kDefaultFailedToUnlockMessage,
     super.hintBuilder,
   }) : super(
-          validList: caseSensitive ? [username, password] : [username.toLowerCase(), password.toLowerCase()],
-        );
+         validList: caseSensitive ? [username, password] : [username.toLowerCase(), password.toLowerCase()],
+       );
 
   @override
   @protected

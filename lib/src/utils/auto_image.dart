@@ -27,11 +27,11 @@ class AutoImage extends StatelessWidget {
     RenderSettings? renderSettings,
     String? defaultAssetPath,
   }) : this(
-          key: key,
-          asset: renderSettings?.asset ?? defaultAssetPath,
-          height: renderSettings?.height,
-          width: renderSettings?.width,
-        );
+         key: key,
+         asset: renderSettings?.asset ?? defaultAssetPath,
+         height: renderSettings?.height,
+         width: renderSettings?.width,
+       );
 
   @override
   Widget build(BuildContext context) {

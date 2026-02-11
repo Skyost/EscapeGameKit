@@ -23,7 +23,7 @@ it into English, so that you can try it [here](https://skyost.github.io/EscapeGa
   <img src="https://github.com/Skyost/EscapeGameKit/raw/master/example/screenshots/screenshot-7.png" width="30%">
 </details>
 
-Here's what I've created using this package :
+Also, here's what I've created using this package :
 
 * [Voyage à Cendlard](https://skyost.github.io/VoyageACendlard/).
 * [Murder Mystery](https://skyost.github.io/MurderMystery/).

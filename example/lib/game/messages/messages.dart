@@ -5,7 +5,8 @@ class Messages {
     author: 'DELAUNAY Hugo',
     title: 'Bug',
     date: DateTime.now(),
-    text: "Apparently the audio file has made the computer of some of you completely crazy... Consequently the exam of tomorrow is cancelled, we will talk about it soon.\n\nHave a nice day.\nH. Delaunay",
+    text:
+        'Apparently the audio file has made the computer of some of you completely crazy... Consequently the exam of tomorrow is cancelled, we will talk about it soon.\n\nHave a nice day.\nH. Delaunay',
     unread: true,
   );
 
@@ -36,7 +37,7 @@ class Messages {
       author: 'NABOT Axel',
       title: 'Work for tomorrow',
       date: DateTime(2022, 4, 4, 18, 47),
-      text: "Hi !\n\nWhat do we have to do for tomorrow ?",
+      text: 'Hi !\n\nWhat do we have to do for tomorrow ?',
     ),
     TextMessageInfo(
       author: 'LEPTI Leo',

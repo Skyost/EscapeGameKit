@@ -18,9 +18,8 @@ class PlayButton extends StatelessWidget {
         icon: const Icon(Icons.play_arrow),
         label: const Text('PLAY'),
         style: ButtonStyle(
-          shape: MaterialStateProperty.all(const RoundedRectangleBorder()),
-          foregroundColor: MaterialStateProperty.all(Colors.white),
-          padding: MaterialStateProperty.all(const EdgeInsets.symmetric(horizontal: 40, vertical: 20)),
+          shape: WidgetStateProperty.all(const RoundedRectangleBorder()),
+          padding: WidgetStateProperty.all(const EdgeInsets.symmetric(horizontal: 40, vertical: 20)),
         ),
       );
 }

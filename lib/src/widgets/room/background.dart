@@ -13,12 +13,12 @@ class RoomBackgroundWidget extends StatelessWidget {
     Key? key,
     required this.room,
   }) : super(
-          key: key ?? ValueKey<String>('background-${room.id}'),
-        );
+         key: key ?? ValueKey<String>('background-${room.id}'),
+       );
 
   @override
   Widget build(BuildContext context) => AutoImage.fromRenderSettings(
-        renderSettings: room.renderSettings,
-        defaultAssetPath: room.defaultAssetPath,
-      );
+    renderSettings: room.renderSettings,
+    defaultAssetPath: room.defaultAssetPath,
+  );
 }

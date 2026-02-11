@@ -10,7 +10,7 @@ class PatternPadlockDialog extends PadlockAlertDialog<PatternPadlock> {
   /// Padding of points area relative to distance between points.
   final double relativePadding;
 
-  /// Color of selected points. `Theme.of(context).primaryColor` if null.
+  /// Color of selected points. `Theme.of(context).colorScheme.primary` if null.
   final Color? selectedColor;
 
   /// Color of not selected points.
@@ -39,9 +39,9 @@ class PatternPadlockDialog extends PadlockAlertDialog<PatternPadlock> {
 
   /// The [PatternPadlockDialog] builder.
   static PatternPadlockDialog builder(BuildContext context, EscapeGame escapeGame, Padlock padlock) => PatternPadlockDialog(
-        escapeGame: escapeGame,
-        padlock: padlock as PatternPadlock,
-      );
+    escapeGame: escapeGame,
+    padlock: padlock as PatternPadlock,
+  );
 }
 
 /// The [PatternPadlockDialog] state.
@@ -54,28 +54,28 @@ class _PatternPadlockDialogState extends PadlockAlertDialogState<PatternPadlockD
 
   @override
   List<Widget> buildBody(BuildContext context) => [
-        Center(
-          child: GestureDetector(
-            onPanStart: onPanStart,
-            onPanUpdate: onPanUpdate,
-            onPanEnd: onPanEnd,
-            child: CustomPaint(
-              painter: _PatternPainter(
-                dimension: widget.padlock.dimension,
-                codes: codes,
-                offset: offset,
-                onSelect: onSelect,
-                relativePadding: widget.relativePadding,
-                selectedColor: widget.selectedColor ?? Theme.of(context).primaryColor,
-                notSelectedColor: widget.notSelectedColor,
-                showInput: widget.showInput,
-                fillPoints: widget.fillPoints,
-              ),
-              size: Size.square(MediaQuery.of(context).size.shortestSide / 2),
-            ),
+    Center(
+      child: GestureDetector(
+        onPanStart: onPanStart,
+        onPanUpdate: onPanUpdate,
+        onPanEnd: onPanEnd,
+        child: CustomPaint(
+          painter: _PatternPainter(
+            dimension: widget.padlock.dimension,
+            codes: codes,
+            offset: offset,
+            onSelect: onSelect,
+            relativePadding: widget.relativePadding,
+            selectedColor: widget.selectedColor ?? Theme.of(context).colorScheme.primary,
+            notSelectedColor: widget.notSelectedColor,
+            showInput: widget.showInput,
+            fillPoints: widget.fillPoints,
           ),
+          size: Size.square(MediaQuery.sizeOf(context).shortestSide / 2),
         ),
-      ];
+      ),
+    ),
+  ];
 
   @override
   dynamic getCode() => codes.map((index) => PatternCoordinate(x: index % widget.padlock.dimension, y: index ~/ widget.padlock.dimension)).toList();
@@ -136,7 +136,7 @@ class _PatternPainter extends CustomPainter {
   /// Padding of points area relative to distance between points.
   final double relativePadding;
 
-  /// Color of selected points. `Theme.of(context).primaryColor` if null.
+  /// Color of selected points.
   final Color selectedColor;
 
   /// Color of not selected points.

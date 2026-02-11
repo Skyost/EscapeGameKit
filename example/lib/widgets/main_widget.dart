@@ -28,15 +28,17 @@ class _MainWidgetState extends State<MainWidget> {
   @override
   void initState() {
     super.initState();
-    for (String asset in [
-      'assets/backgrounds/bedroom.png',
-      'assets/backgrounds/bedroom-present.png',
-      'assets/backgrounds/desk.png',
-      'assets/backgrounds/living-room.png',
-      'assets/glitch/image.webp',
-    ]) {
-      precacheImage(AssetImage(asset), context);
-    }
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      for (String asset in [
+        'assets/backgrounds/bedroom.png',
+        'assets/backgrounds/bedroom-present.png',
+        'assets/backgrounds/desk.png',
+        'assets/backgrounds/living-room.png',
+        'assets/glitch/image.webp',
+      ]) {
+        precacheImage(AssetImage(asset), context);
+      }
+    });
     // for (String asset in [
     //   'assets/interactables/arrow.svg',
     //   'assets/objects/eight-key.svg',
@@ -54,8 +56,10 @@ class _MainWidgetState extends State<MainWidget> {
         navigatorKey: navigatorKey,
         title: 'ERROR 1980',
         theme: ThemeData(
-          primarySwatch: Colors.indigo,
-          scrollbarTheme: ScrollbarThemeData(thumbVisibility: MaterialStateProperty.all(true)),
+          colorScheme: ColorScheme.fromSeed(
+            seedColor: Colors.indigo,
+          ),
+          scrollbarTheme: ScrollbarThemeData(thumbVisibility: WidgetStateProperty.all(true)),
         ),
         locale: const Locale('en'),
         localizationsDelegates: const [

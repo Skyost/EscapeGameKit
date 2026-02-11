@@ -22,8 +22,8 @@ class InteractableWidget extends StatefulWidget {
     required this.escapeGame,
     required this.interactable,
   }) : super(
-          key: key ?? ValueKey<String>('interactable-${interactable.id}'),
-        );
+         key: key ?? ValueKey<String>('interactable-${interactable.id}'),
+       );
 
   @override
   State<StatefulWidget> createState() => _InteractableWidgetState();
@@ -118,7 +118,7 @@ class _InteractableWidgetState extends State<InteractableWidget> {
 
   /// Shows the specified [tooltip].
   void showTooltip(BuildContext context, PointerEvent event, InteractableTooltip tooltip) {
-    Size size = MediaQuery.of(context).size;
+    Size size = MediaQuery.sizeOf(context);
     updateTooltipPosition(event);
     tooltipOverlayEntry = OverlayEntry(
       builder: (context) {

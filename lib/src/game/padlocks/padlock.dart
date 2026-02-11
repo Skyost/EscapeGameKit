@@ -74,7 +74,7 @@ abstract class ObjectEqualPadlock<T> extends Padlock<T> {
     super.unlockMessage,
     super.failedToUnlockMessage,
     super.hintBuilder,
-  })  : _validObject = validObject;
+  }) : _validObject = validObject;
 
   /// Returns whether the given object is valid.
   @protected
@@ -104,8 +104,8 @@ abstract class ListEqualPadlock<T> extends ObjectEqualPadlock<List<T>> {
     super.failedToUnlockMessage,
     super.hintBuilder,
   }) : super(
-          validObject: validList,
-        );
+         validObject: validList,
+       );
 
   @override
   @protected

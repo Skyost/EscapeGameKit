@@ -17,7 +17,7 @@ class BedroomRoom extends Room {
       : super(
           id: roomId,
           onFirstVisit: (escapeGame) {
-            escapeGame.showDialog(const EscapeGameDialog(content: "<em>Shit, what has just happened ?<br>And above all, where are we !?</em>"));
+            escapeGame.showDialog(const EscapeGameDialog(content: '<em>Shit, what has just happened ?<br>And above all, where are we !?</em>'));
             return const ActionResult.success();
           },
           interactables: [
@@ -112,7 +112,7 @@ class BedroomRoom extends Room {
               clueDialog: const EscapeGameDialog(
                 title: 'Hint on a padlock',
                 content:
-                    "<em>There seems to be a hint behind this lamp !</em><br><br>I was always forgetting the code of the chest padlock that is hidden in the flower pot in the living room... But now no more worries !<br>To unlock it, we just need to input the number of possible 3-digit code combinations !",
+                    '<em>There seems to be a hint behind this lamp !</em><br><br>I was always forgetting the code of the chest padlock that is hidden in the flower pot in the living room... But now no more worries !<br>To unlock it, we just need to input the number of possible 3-digit code combinations !',
               ),
             ),
             Interactable(
@@ -127,7 +127,7 @@ class BedroomRoom extends Room {
             ),
             Door(
               id: 'desk-door',
-              renderSettings: InteractableRenderSettings(
+              renderSettings: const InteractableRenderSettings(
                 asset: 'assets/interactables/arrow.svg',
                 top: 200,
                 left: 20,
@@ -151,7 +151,7 @@ class BedroomRoom extends Room {
             ),
             Door(
               id: 'living-room-door',
-              renderSettings: InteractableRenderSettings(
+              renderSettings: const InteractableRenderSettings(
                 asset: 'assets/interactables/arrow.svg',
                 top: 200,
                 right: 20,

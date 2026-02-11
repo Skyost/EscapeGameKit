@@ -67,7 +67,7 @@ class InteractableAnimation with PropertiesEquatable {
   final double from;
 
   /// Whether this animation is infinite. Not used by all types.
-  final bool infinite;
+  final bool? _infinite;
 
   /// Creates a new [InteractableAnimation] instance.
   const InteractableAnimation({
@@ -77,11 +77,14 @@ class InteractableAnimation with PropertiesEquatable {
     this.manualTrigger = false,
     this.from = 0,
     bool? infinite,
-  }) : infinite = infinite ?? (type == InteractableAnimationType.bounce || type == InteractableAnimationType.flash || type == InteractableAnimationType.pulse || type == InteractableAnimationType.swing || type == InteractableAnimationType.spin || type == InteractableAnimationType.spinPerfect || type == InteractableAnimationType.dance || type == InteractableAnimationType.roulette);
+  }) : _infinite = infinite;
+
+  /// Whether this animation is infinite.
+  bool get infinite => _infinite ?? type.isInfiniteByDefault;
 
   @override
   @protected
-  List<Object?> get props => [type, duration, delay, manualTrigger, from, infinite];
+  List<Object?> get props => [type, duration, delay, manualTrigger, from, _infinite];
 }
 
 /// Represents an interactable animation type.
@@ -195,26 +198,34 @@ enum InteractableAnimationType {
   jelloIn,
 
   /// Bounce animation.
-  bounce,
+  bounce(isInfiniteByDefault: true),
 
   /// Flash animation.
-  flash,
+  flash(isInfiniteByDefault: true),
 
   /// Pulse animation.
-  pulse,
+  pulse(isInfiniteByDefault: true),
 
   /// Swing animation.
-  swing,
+  swing(isInfiniteByDefault: true),
 
   /// Spin animation.
-  spin,
+  spin(isInfiniteByDefault: true),
 
   /// Spin perfect animation.
-  spinPerfect,
+  spinPerfect(isInfiniteByDefault: true),
 
   /// Dance animation.
-  dance,
+  dance(isInfiniteByDefault: true),
 
   /// Roulette animation.
-  roulette,
+  roulette(isInfiniteByDefault: true)
+  ;
+
+  /// Whether this animation type is infinite by default.
+  final bool isInfiniteByDefault;
+
+  const InteractableAnimationType({
+    this.isInfiniteByDefault = false,
+  });
 }

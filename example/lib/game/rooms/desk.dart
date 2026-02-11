@@ -16,7 +16,7 @@ class DeskRoom extends Room {
           interactables: [
             Door(
               id: 'bedroom-door',
-              renderSettings: InteractableRenderSettings(
+              renderSettings: const InteractableRenderSettings(
                 asset: 'assets/interactables/arrow.svg',
                 top: 200,
                 right: 20,

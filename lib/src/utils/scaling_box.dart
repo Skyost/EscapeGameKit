@@ -18,16 +18,16 @@ class ScalingBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => AspectRatio(
-        aspectRatio: baseSize.aspectRatio,
-        child: SizedBox.expand(
-          child: FittedBox(
-            fit: BoxFit.contain,
-            alignment: Alignment.center,
-            child: SizedBox.fromSize(
-              size: baseSize,
-              child: child,
-            ),
-          ),
+    aspectRatio: baseSize.aspectRatio,
+    child: SizedBox.expand(
+      child: FittedBox(
+        fit: BoxFit.contain,
+        alignment: Alignment.center,
+        child: SizedBox.fromSize(
+          size: baseSize,
+          child: child,
         ),
-      );
+      ),
+    ),
+  );
 }

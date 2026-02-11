@@ -19,11 +19,11 @@ class CreateInteractableDialog extends StatefulWidget {
 
   /// Opens the dialog.
   static void openDialog(BuildContext context, {required Rect translucentRectangle}) => showDialog(
-        context: context,
-        builder: (context) => CreateInteractableDialog(
-          translucentRectangle: translucentRectangle,
-        ),
-      );
+    context: context,
+    builder: (context) => CreateInteractableDialog(
+      translucentRectangle: translucentRectangle,
+    ),
+  );
 }
 
 /// The [CreateInteractableDialog] state.
@@ -55,51 +55,51 @@ class _CreateInteractableDialogState extends State<CreateInteractableDialog> {
 
   @override
   Widget build(BuildContext context) => EscapeGameAlertDialog(
-        title: 'Interactable creator',
-        actions: [
-          TextButton(
-            onPressed: () {
-              Clipboard.setData(ClipboardData(text: codeController.text));
-              setState(() => copyText = 'COPIED');
-              Debouncer.debounce('interactable-creator-copy-button', const Duration(seconds: 1), () {
-                if (mounted) {
-                  setState(() => copyText = copyToClipboard);
-                }
-              });
-            },
-            child: Text(copyText),
-          ),
-          const EscapeGameAlertDialogCloseButton(cancel: false),
-        ],
-        children: [
-          const Text(
-            'This dialog allows you to quickly create an Interactable object.',
-            style: TextStyle(fontStyle: FontStyle.italic),
-          ),
-          TextField(
-            controller: idController,
-            decoration: const InputDecoration(
-              icon: Icon(Icons.person),
-              labelText: 'Identifier',
-            ),
-          ),
-          TextField(
-            controller: tooltipController,
-            decoration: const InputDecoration(
-              icon: Icon(Icons.info),
-              labelText: 'Tooltip',
-            ),
-          ),
-          TextField(
-            controller: codeController,
-            maxLines: null,
-            decoration: const InputDecoration(
-              icon: Icon(Icons.code),
-              labelText: 'Code',
-            ),
-          ),
-        ],
-      );
+    title: 'Interactable creator',
+    actions: [
+      TextButton(
+        onPressed: () {
+          Clipboard.setData(ClipboardData(text: codeController.text));
+          setState(() => copyText = 'COPIED');
+          Debouncer.debounce('interactable-creator-copy-button', const Duration(seconds: 1), () {
+            if (mounted) {
+              setState(() => copyText = copyToClipboard);
+            }
+          });
+        },
+        child: Text(copyText),
+      ),
+      const EscapeGameAlertDialogCloseButton(cancel: false),
+    ],
+    children: [
+      const Text(
+        'This dialog allows you to quickly create an Interactable object.',
+        style: TextStyle(fontStyle: FontStyle.italic),
+      ),
+      TextField(
+        controller: idController,
+        decoration: const InputDecoration(
+          icon: Icon(Icons.person),
+          labelText: 'Identifier',
+        ),
+      ),
+      TextField(
+        controller: tooltipController,
+        decoration: const InputDecoration(
+          icon: Icon(Icons.info),
+          labelText: 'Tooltip',
+        ),
+      ),
+      TextField(
+        controller: codeController,
+        maxLines: null,
+        decoration: const InputDecoration(
+          icon: Icon(Icons.code),
+          labelText: 'Code',
+        ),
+      ),
+    ],
+  );
 
   @override
   void dispose() {
@@ -111,7 +111,8 @@ class _CreateInteractableDialogState extends State<CreateInteractableDialog> {
 
   /// Updates the code.
   void updateCode() {
-    codeController.text = '''Interactable(
+    codeController.text =
+        '''Interactable(
   id: ${buildDartString(idController)},
   renderSettings: const InteractableRenderSettings(
     top: ${widget.translucentRectangle.top.round()},

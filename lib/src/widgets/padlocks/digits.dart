@@ -22,9 +22,9 @@ class DigitsPadlockDialog extends PadlockAlertDialog<DigitsPadlock> {
 
   /// The [DigitsPadlockDialog] builder.
   static DigitsPadlockDialog builder(BuildContext context, EscapeGame escapeGame, Padlock padlock) => DigitsPadlockDialog(
-        escapeGame: escapeGame,
-        padlock: padlock as DigitsPadlock,
-      );
+    escapeGame: escapeGame,
+    padlock: padlock as DigitsPadlock,
+  );
 }
 
 /// The [DigitsPadlockDialog] state.
@@ -54,43 +54,43 @@ class _DigitsPadlockDialogState extends PadlockAlertDialogState<DigitsPadlockDia
 
   @override
   List<Widget> buildBody(BuildContext context) => [
-        if (controllers.length > 1)
-          Wrap(
-            alignment: WrapAlignment.center,
-            spacing: 10,
-            children: [
-              for (int i = 0; i < controllers.length; i++)
-                SizedBox(
-                  width: 20,
-                  child: TextField(
-                    controller: controllers[i],
-                    focusNode: focusNodes[i],
-                    textAlign: TextAlign.center,
-                    style: const TextStyle(fontSize: 20),
-                    maxLength: 1,
-                    decoration: const InputDecoration(counterText: ''),
-                    autofocus: i == 0,
-                    onChanged: (value) {
-                      if (value.isNotEmpty && i < controllers.length - 1) {
-                        focusNodes[i].nextFocus();
-                      }
-                    },
-                    onSubmitted: (value) => tryUnlock(),
-                  ),
-                ),
-            ],
-          )
-        else
-          TextField(
-            controller: controllers.first,
-            textAlign: TextAlign.center,
-            style: const TextStyle(fontSize: 20),
-            maxLength: widget.padlock.digits.length,
-            decoration: const InputDecoration(counterText: ''),
-            onSubmitted: (value) => tryUnlock(),
-            autofocus: true,
-          )
-      ];
+    if (controllers.length > 1)
+      Wrap(
+        alignment: WrapAlignment.center,
+        spacing: 10,
+        children: [
+          for (int i = 0; i < controllers.length; i++)
+            SizedBox(
+              width: 20,
+              child: TextField(
+                controller: controllers[i],
+                focusNode: focusNodes[i],
+                textAlign: TextAlign.center,
+                style: const TextStyle(fontSize: 20),
+                maxLength: 1,
+                decoration: const InputDecoration(counterText: ''),
+                autofocus: i == 0,
+                onChanged: (value) {
+                  if (value.isNotEmpty && i < controllers.length - 1) {
+                    focusNodes[i].nextFocus();
+                  }
+                },
+                onSubmitted: (value) => tryUnlock(),
+              ),
+            ),
+        ],
+      )
+    else
+      TextField(
+        controller: controllers.first,
+        textAlign: TextAlign.center,
+        style: const TextStyle(fontSize: 20),
+        maxLength: widget.padlock.digits.length,
+        decoration: const InputDecoration(counterText: ''),
+        onSubmitted: (value) => tryUnlock(),
+        autofocus: true,
+      ),
+  ];
 
   @override
   dynamic getCode() => controllers.map((controller) => controller.text).join();

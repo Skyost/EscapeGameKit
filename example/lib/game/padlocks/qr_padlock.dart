@@ -1,7 +1,7 @@
 import 'package:escape_game_kit/escape_game_kit.dart';
 import 'package:escape_game_kit_example/widgets/padlock_input.dart';
 import 'package:flutter/material.dart';
-import 'package:qr_flutter/qr_flutter.dart';
+import 'package:pretty_qr_code/pretty_qr_code.dart';
 import 'package:url_launcher/url_launcher.dart' as launcher;
 
 /// A padlock that displays a QR code.
@@ -48,18 +48,23 @@ class _QrPadlockDialogState extends PadlockAlertDialogState<QrPadlockDialog> {
 
   @override
   List<Widget> buildBody(BuildContext context) => [
-        Align(
-          alignment: Alignment.center,
-          child: GestureDetector(
-            onTap: () async {
-              Uri url = Uri.parse(widget.padlock.url);
-              if (await launcher.canLaunchUrl(url)) {
-                launcher.launchUrl(url);
-              }
-            },
-            child: QrImage(
-              data: widget.padlock.url,
-              size: 200,
+        Padding(
+          padding: const EdgeInsets.only(top: 10),
+          child: Align(
+            alignment: Alignment.center,
+            child: GestureDetector(
+              onTap: () async {
+                Uri url = Uri.parse(widget.padlock.url);
+                if (await launcher.canLaunchUrl(url)) {
+                  launcher.launchUrl(url);
+                }
+              },
+              child: SizedBox.square(
+                dimension: 200,
+                child: PrettyQrView.data(
+                  data: widget.padlock.url,
+                ),
+              ),
             ),
           ),
         ),

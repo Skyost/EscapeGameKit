@@ -84,10 +84,10 @@ class _CaesarPadlockDialogState extends PadlockAlertDialogState<CaesarPadlockDia
                 setState(() => turns += 1);
               },
               icon: const Icon(Icons.rotate_right),
-              label: const Text('Tourner vers la gauche'),
+              label: const Text('Left rotation'),
               style: ButtonStyle(
-                shape: MaterialStateProperty.all(const RoundedRectangleBorder()),
-                padding: MaterialStateProperty.all(const EdgeInsets.symmetric(horizontal: 20, vertical: 15)),
+                shape: WidgetStateProperty.all(const RoundedRectangleBorder()),
+                padding: WidgetStateProperty.all(const EdgeInsets.symmetric(horizontal: 20, vertical: 15)),
               ),
             ),
             Text(
@@ -100,10 +100,10 @@ class _CaesarPadlockDialogState extends PadlockAlertDialogState<CaesarPadlockDia
                 setState(() => turns -= 1);
               },
               icon: const Icon(Icons.rotate_left),
-              label: const Text('Tourner vers la droite'),
+              label: const Text('Right rotation'),
               style: ButtonStyle(
-                shape: MaterialStateProperty.all(const RoundedRectangleBorder()),
-                padding: MaterialStateProperty.all(const EdgeInsets.symmetric(horizontal: 20, vertical: 15)),
+                shape: WidgetStateProperty.all(const RoundedRectangleBorder()),
+                padding: WidgetStateProperty.all(const EdgeInsets.symmetric(horizontal: 20, vertical: 15)),
               ),
             ),
           ],

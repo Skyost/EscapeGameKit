@@ -14,8 +14,8 @@ class DigitsPadlock extends ObjectEqualPadlock<String> {
     super.failedToUnlockMessage = kDefaultFailedToUnlockMessage,
     super.hintBuilder,
   }) : super(
-          validObject: digits,
-        );
+         validObject: digits,
+       );
 
   @override
   @protected

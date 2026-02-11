@@ -9,7 +9,7 @@ import 'package:escape_game_kit/src/game/room/interactables/tooltip.dart';
 /// A [LockedInteractable] that is meant to be a clue.
 class Clue extends LockedInteractable {
   /// The default action when hovered.
-  static ActionResult<InteractableTooltip> _defaultOnHover (escapeGame) => const ActionResult.success();
+  static ActionResult<InteractableTooltip> _defaultOnHover(escapeGame) => const ActionResult.success();
 
   /// If this [Interactable] should be found only when the user has a specific key, provides its id here.
   String? keyId;
@@ -51,26 +51,26 @@ class Clue extends LockedInteractable {
     bool removeAfterFound = false,
     InteractableTooltip? removedTooltip,
   }) : this(
-          id: id,
-          renderSettings: renderSettings,
-          onHover: onHover,
-          padlock: padlock,
-          keyId: keyId,
-          onCantUnlock: (escapeGame) {
-            if (noKeyDialog != null) {
-              escapeGame.showDialog(noKeyDialog);
-            }
-            return const ActionResult.failed();
-          },
-          onFound: (escapeGame) {
-            if (clueDialog != null) {
-              escapeGame.showDialog(clueDialog);
-            }
-            return const ActionResult.success();
-          },
-          removeAfterFound: removeAfterFound,
-          removedTooltip: removedTooltip,
-        );
+         id: id,
+         renderSettings: renderSettings,
+         onHover: onHover,
+         padlock: padlock,
+         keyId: keyId,
+         onCantUnlock: (escapeGame) {
+           if (noKeyDialog != null) {
+             escapeGame.showDialog(noKeyDialog);
+           }
+           return const ActionResult.failed();
+         },
+         onFound: (escapeGame) {
+           if (clueDialog != null) {
+             escapeGame.showDialog(clueDialog);
+           }
+           return const ActionResult.success();
+         },
+         removeAfterFound: removeAfterFound,
+         removedTooltip: removedTooltip,
+       );
 
   @override
   ActionResult onTap(EscapeGame escapeGame) {
@@ -92,11 +92,13 @@ class Clue extends LockedInteractable {
     if (removeAfterFound) {
       escapeGame.currentRoom.removeInteractable(this, notify: false);
       if (removedTooltip != null) {
-        escapeGame.currentRoom.addInteractable(Interactable(
-          id: '$id-found',
-          renderSettings: renderSettings,
-          onHover: (escapeGame) => ActionResult.success(object: removedTooltip!),
-        ));
+        escapeGame.currentRoom.addInteractable(
+          Interactable(
+            id: '$id-found',
+            renderSettings: renderSettings,
+            onHover: (escapeGame) => ActionResult.success(object: removedTooltip!),
+          ),
+        );
       }
     }
 

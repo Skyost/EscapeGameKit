@@ -46,7 +46,7 @@ extension PadlockDialogs on Padlock {
       await showDialog(
         context: context,
         builder: (context) =>
-        _buildPadlockDialog(context, escapeGame, this) ??
+            _buildPadlockDialog(context, escapeGame, this) ??
             EscapeGameAlertDialog.oneChild(
               actions: const [EscapeGameAlertDialogCloseButton(cancel: false)],
               child: Text('Dialog not found for padlock type "${runtimeType.toString()}".'),

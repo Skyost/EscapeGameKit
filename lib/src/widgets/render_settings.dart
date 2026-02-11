@@ -54,7 +54,7 @@ class RenderSettingsWidget extends StatelessWidget {
         child: child,
       );
 
-      if ((invisibleBackground?.opacity ?? 0) != 0) {
+      if ((invisibleBackground?.a ?? 0) != 0) {
         child = DecoratedBox(
           decoration: BoxDecoration(color: invisibleBackground),
           child: child,
