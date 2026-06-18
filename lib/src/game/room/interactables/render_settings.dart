@@ -219,8 +219,7 @@ enum InteractableAnimationType {
   dance(isInfiniteByDefault: true),
 
   /// Roulette animation.
-  roulette(isInfiniteByDefault: true)
-  ;
+  roulette(isInfiniteByDefault: true);
 
   /// Whether this animation type is infinite by default.
   final bool isInfiniteByDefault;
