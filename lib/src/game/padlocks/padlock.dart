@@ -69,12 +69,12 @@ abstract class ObjectEqualPadlock<T> extends Padlock<T> {
 
   /// Creates a new [ObjectEqualPadlock] instance.
   ObjectEqualPadlock({
-    T? validObject,
+    this._validObject,
     super.title,
     super.unlockMessage,
     super.failedToUnlockMessage,
     super.hintBuilder,
-  }) : _validObject = validObject;
+  });
 
   /// Returns whether the given object is valid.
   @protected

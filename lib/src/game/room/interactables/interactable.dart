@@ -35,12 +35,10 @@ class Interactable with PropertiesEquatable, ChangeNotifier {
   /// Creates a new [Interactable] instance.
   Interactable({
     required this.id,
-    InteractableRenderSettings? renderSettings,
-    Action onTap = _defaultOnTap,
-    Action<InteractableTooltip> onHover = _defaultOnHover,
-  }) : _renderSettings = renderSettings,
-       _onTap = onTap,
-       _onHover = onHover;
+    this._renderSettings,
+    this._onTap = _defaultOnTap,
+    this._onHover = _defaultOnHover,
+  });
 
   /// Should be called when the user taps on this interactable.
   ActionResult onTap(EscapeGame escapeGame) => _onTap(escapeGame);

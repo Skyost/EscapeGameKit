@@ -76,8 +76,8 @@ class InteractableAnimation with PropertiesEquatable {
     this.delay = Duration.zero,
     this.manualTrigger = false,
     this.from = 0,
-    bool? infinite,
-  }) : _infinite = infinite;
+    this._infinite,
+  });
 
   /// Whether this animation is infinite.
   bool get infinite => _infinite ?? type.isInfiniteByDefault;
